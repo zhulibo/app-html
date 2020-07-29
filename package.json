@@ -1,0 +1,30 @@
+{
+  "name": "app-html",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "s": "vue-cli-service serve",
+    "b": "vue-cli-service build",
+    "t": "vue-cli-service build --mode test",
+    "a": "vue-cli-service build && vue-cli-service build --mode test"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "mint-ui": "^2.2.13",
+    "swiper": "^5.4.5",
+    "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-router": "^3.2.0",
+    "vue-wechat-title": "^2.0.5",
+    "vuex": "^3.4.0",
+    "weixin-js-sdk": "^1.6.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
