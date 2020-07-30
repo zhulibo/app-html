@@ -1,6 +1,7 @@
 <template>
   <div>
     <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
+    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
     <div>
       <div class="countdown-time">
         <div class="title">开奖倒计时</div>
@@ -11,13 +12,13 @@
         <div>
           <img class="img" :src="lotteryDetail.icon" alt="">
         </div>
+        <div class="time">开奖时间：{{lotteryDetail.drawTime}}</div>
         <h2>{{lotteryDetail.title}}</h2>
         <div class="info clearfix">
           <span class="s1">￥0抽奖价</span>
           <span class="s2">1个名额</span>
           <span class="s3">￥{{lotteryDetail.oldPrice}}</span>
         </div>
-        <div class="time">开奖时间：{{lotteryDetail.drawTime}}</div>
       </div>
     </div>
     <div class="h6em"></div>
@@ -26,6 +27,7 @@
 
 <script>
   import openApp from "../../components/openApp/openApp";
+  import openAppBtn from "../../components/openAppBtn/openAppBtn";
 
   export default {
     name: 'lotteryDetail',
@@ -42,11 +44,11 @@
     },
     components: {
       openApp,
+      openAppBtn,
     },
     created() {
       this.drawId = this.$route.query.drawId
       this.getLotteryDetail()
-      console.log(new Date())
     },
     mounted() {
     },
@@ -67,7 +69,7 @@
 
             let lotteryBeijingTimestamp = new Date(this.lotteryDetail.drawTime.replace(/-/g, '/')).getTime(); // 开奖北京时间戳
             let nowLocalTime = new Date();
-            let nowLocalTimestamp = nowLocalTime.getTime();// 此时当地时间戳
+            let nowLocalTimestamp = nowLocalTime.getTime(); // 此时当地时间戳
 
             // 将此时当地时间戳转换为此时北京utf+8时间戳
             let nowLocalTimeStr = nowLocalTime.toString()
@@ -117,8 +119,7 @@
 
 <style lang="stylus" scoped>
   .countdown-time{
-    padding: 1em
-    padding-bottom: 0
+    padding: 4.2em 1em 0
     background-color: #fff
     .title{
       display: inline-block
@@ -148,7 +149,7 @@
       width: 100%
     }
     h2{
-      margin-top: 1em
+      margin-top: .5em
       font-size 18rem
       line2()
     }
@@ -163,6 +164,7 @@
         padding: 2px 3px
         font-size 12rem
         border: 1px solid #000
+        vertical-align: text-bottom;
       }
       .s3{
         font-size 18rem
@@ -172,10 +174,11 @@
       }
     }
     .time{
-      margin-top: 4em
+      margin-top: .5em
       text-align: center
       font-size 12rem
       color: #999
+      text-align: left;
     }
   }
   .h6em{

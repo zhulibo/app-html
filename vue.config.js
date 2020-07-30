@@ -1,4 +1,6 @@
 const path = require('path')
+const time = new Date()
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   outputDir: process.env.outputDir,

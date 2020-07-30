@@ -1,26 +1,25 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档</h1>
+    <h1>app-html交互文档 <span>最后修改日期：2020.7.29</span></h1>
 
     <!--月-->
     <h2><span>2020.7</span></h2>
     <div><router-link :to="{path: '/coupon'}">coupon 分享优惠券</router-link><span>http://app.mxjclub.com/share/#/coupon</span>参数：userId：用户id；pageId:礼包id</div>
     <h3>html调app方法：（type：ios：object | android：string）</h3>
     <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
-    <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
-    <h3 class="app">app调html方法：（type：object）</h3>
-    <p>分享优惠券：invokeHtmlCouponShare 参数：userId：用户id；pageId:礼包id</p>
+    <!--<h3 class="app">app调html方法：（type：object）</h3>-->
+    <!--<p>分享优惠券：invokeHtmlCouponShare 参数：userId：用户id；pageId:礼包id</p>-->
     <div><router-link :to="{path: '/couponInvite'}">couponInvite 分享优惠券邀请新用户注册</router-link><span>http://app.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id；pageId:礼包id</div>
     <div><router-link :to="{path: '/activityRule'}">activityRule 协议</router-link></div>
     <div><router-link :to="{path: '/couponNewUser'}">couponNewUser 新用户受邀注册</router-link></div>
     <div><router-link :to="{path: '/couponNewUserHasCode'}">couponNewUserHasCode 邀请码礼包</router-link><span>http://app.mxjclub.com/share/#/couponNewUserHasCode</span>参数：userId：用户id；pageId:礼包id</div>
-    <div><router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link></div>
+    <div><router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link><span>http://app.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id</div>
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
-    <div><router-link :to="{path: '/socialDetail'}">socialDetail 社区动态详情</router-link></div>
+    <div><router-link :to="{path: '/socialDetail'}">socialDetail 社区动态详情</router-link><span>http://app.mxjclub.com/share/#/socialDetail</span>参数：shareId：社区动态id</div>
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
-    <div><router-link :to="{path: '/socialDetailVideo'}">socialDetailVideo 社区动态详情视频</router-link></div>
+    <div><router-link :to="{path: '/socialDetailVideo'}">socialDetailVideo 社区动态详情视频</router-link><span>http://app.mxjclub.com/share/#/socialDetailVideo</span>参数：shareId：社区动态id</div>
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
-    <div><router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖详情</router-link></div>
+    <div><router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖详情</router-link><span>http://app.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id</div>
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
     <div><router-link :to="{path: '/test'}">test 测试</router-link></div>
 
@@ -55,6 +54,10 @@
       font-size 18rem
       font-weight: bold;
       color: #666
+      span{
+        font-weight: normal
+        font-size 12rem
+      }
     }
     h2{
       margin-top: 1em

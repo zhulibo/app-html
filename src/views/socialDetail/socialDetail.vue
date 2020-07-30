@@ -1,8 +1,9 @@
 <template>
   <div>
     <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
+    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
     <div v-swiper:mySwiper="swiperOption">
-      <div class="swiper-wrapper" style="height: auto">
+      <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in socialDetail.articleImageList">
           <img :src="item.image">
         </div>
@@ -51,6 +52,7 @@
   import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
   import 'swiper/css/swiper.css'
   import openApp from "../../components/openApp/openApp";
+  import openAppBtn from "../../components/openAppBtn/openAppBtn";
 
   export default {
     name: 'socialDetail',
@@ -81,6 +83,7 @@
       Swiper,
       SwiperSlide,
       openApp,
+      openAppBtn,
     },
     directives: {
       swiper: directive
@@ -166,6 +169,7 @@
   }
   .swiper-slide img{
     width: 100%
+    transition all 1s
   }
   .param{
     padding: .8em .6em 1em
@@ -262,8 +266,10 @@
           display: inline-block
           height: 1.5em
           line-height: 1.5
+          padding-left: .2em
           width: 8em
           overflow: hidden
+          vertical-align top
         }
         b{
           font-weight: normal

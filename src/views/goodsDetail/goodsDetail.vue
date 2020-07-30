@@ -1,6 +1,7 @@
 <template>
   <div>
     <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
+    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in bannerList">
@@ -33,6 +34,7 @@
   import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
   import 'swiper/css/swiper.css'
   import openApp from "../../components/openApp/openApp";
+  import openAppBtn from "../../components/openAppBtn/openAppBtn";
 
   export default {
     name: 'goodsDetail',
@@ -63,6 +65,7 @@
       Swiper,
       SwiperSlide,
       openApp,
+      openAppBtn,
     },
     directives: {
       swiper: directive

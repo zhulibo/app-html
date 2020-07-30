@@ -1,12 +1,13 @@
 <template>
   <div>
-    <open-app :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app>
+    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
     <video controls autoplay :src="socialDetailVideo.videoUrl" :poster="socialDetailVideo.videoImage"></video>
+    <h1>{{socialDetailVideo.content}}</h1>
   </div>
 </template>
 
 <script>
-  import openApp from "../../components/openApp/openApp";
+  import openAppBtn from "../../components/openAppBtn/openAppBtn";
 
   export default {
     name: 'socialDetailVideo',
@@ -17,7 +18,7 @@
       }
     },
     components: {
-      openApp,
+      openAppBtn,
     },
     created() {
       this.shareId = this.$route.query.shareId
@@ -48,7 +49,17 @@
 <style lang="stylus" scoped>
   video{
     width: 100%
-    height: calc(100vh - 80px)
+    min-height 100vh
     background-color: #000
+    vertical-align: bottom;
+  }
+  h1{
+    position: absolute
+    bottom: 150px
+    left: 10px
+    padding: .5em
+    color: #fff
+    background-color: rgba(255,255,255,.2)
+    border-radius: .4em;
   }
 </style>

@@ -3,22 +3,13 @@
 		<div class="launch-app-ct" v-if="wechatState">
 		  <wx-open-launch-app class="launch-app" @launch="launch" @error="error" appid="wxc0c9a1b05291389d" :extinfo="extinfo">
 		    <script type="text/wxtag-template">
-		      <div class="btn" style="opacity: 0;height: 4em;">打开APP</div>
+		      <div class="btn" style="opacity: 0;height: 2.4em;">打开漫想家APP</div>
 		    </script>
 		  </wx-open-launch-app>
 		</div>
-		<div class="launch-app" v-else @click="openApp"></div>
+		<div class="launch-app" v-else @click="openApp">打开漫想家APP</div>
 		<div class="launch-app-bg">
-			<div class="l">
-				<img src="../../assets/img/openApp1.png" alt="">
-			</div>
-			<div class="m">
-        <img src="../../assets/img/openApp2.png" alt="">
-        <p>为玩具而生 为玩家而来</p>
-			</div>
-			<div class="r">
-				<div>打开漫想家</div>
-			</div>
+      <div>打开漫想家APP</div>
 		</div>
 		<!--<p>{{y}}</p>-->
 		<!--<p v-if="z">微信浏览器环境 && >7.0.12</p>-->
@@ -38,7 +29,7 @@
   import wx from 'weixin-js-sdk';
 
   export default {
-    name: 'openApp',
+    name: 'openAppBtn',
     // props: ['extinfo'],
     data() {
       return {
@@ -163,60 +154,32 @@
   .launch-app{
     position: fixed;
     z-index: 1000;
-    left: 0;
-    right: 0;
-    top: 0
-    width: 100%;
-    height: 4em;
+    bottom: 3em
+    left: 50%
+    transform translateX(-50%)
+    display: inline-block
+    width: 9em
+    height: 2.4em;
+    line-height: 2.4
     opacity: 0;
+    font-size 16rem
+    text-align: center
   }
   .launch-app-bg{
     position: fixed;
     z-index: 100;
-    left: 0;
-    right: 0;
-    top: 0
-    box-sizing: border-box;
-    width: 100%;
-    height: 4em;
-    padding: .4em .6em 0;
-    background-color: rgba(50,50,50,.5);
-    display: flex;
+    bottom: 3em
+    left: 50%
+    transform translateX(-50%)
+    display: inline-block
+    width: 9em
+    height: 2.4em;
+    line-height: 2.4
     color: #fff
-    .l{
-      width: 3.2em;
-      height: 3.2em;
-      img{
-        width: 100%;
-      }
-    }
-    .m{
-      overflow: hidden;
-      flex: 1;
-      padding-left: .6em;
-      img{
-        padding-top: .2em
-        height: 1.5em;
-      }
-      p{
-        margin-top: .2em
-        color: #eee
-        line1()
-      }
-    }
-    .r{
-      padding-top: .4em;
-      width: 8em;
-      text-align: center;
-      div{
-        display: inline-block;
-        padding: 0 1em;
-        height: 2.4em;
-        line-height: 2.4;
-        background-color: purple
-        color: #fff;
-        border-radius: 1.2em;
-      }
-    }
+    background-color: purple
+    border-radius: 1.2em;
+    font-size 16rem
+    box-shadow 0 0 .3em rgba(0,0,0,.5)
+    text-align: center
   }
 </style>
