@@ -26,7 +26,6 @@
     <div class="content">
       <div v-html="goodDetail.content"></div>
     </div>
-    <div class="h6em"></div>
   </div>
 </template>
 

@@ -44,7 +44,6 @@
         </li>
       </ul>
     </div>
-    <div class="h6em"></div>
   </div>
 </template>
 

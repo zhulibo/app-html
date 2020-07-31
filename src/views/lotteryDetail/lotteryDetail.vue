@@ -21,7 +21,6 @@
         </div>
       </div>
     </div>
-    <div class="h6em"></div>
   </div>
 </template>
 
@@ -180,8 +179,5 @@
       color: #999
       text-align: left;
     }
-  }
-  .h6em{
-    background-color: #fff
   }
 </style>

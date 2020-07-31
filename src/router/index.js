@@ -97,5 +97,13 @@ export default new Router({
         title: '抽奖详情'
       }
     },
+    {
+      path: '/downloadApp',
+      name: '/downloadApp',
+      component: () => import (/* webpackChunkName: 'downloadApp' */ '@/views/downloadApp/downloadApp'),
+      meta:{
+        title: '下载漫想家APP'
+      }
+    },
   ]
 })
