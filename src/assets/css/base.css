@@ -1,17 +1,14 @@
-@charset "utf-8";
 * {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-
 html {
   min-height: 100%;
   /*1rem = 16px*/
   font-size: 6.25%;
   /*1rem = 16px*6.25% 1px*/
 }
-
 @media screen and (max-width: 350px) {
   html {
     font-size: 5.3%;
@@ -20,7 +17,6 @@ html {
     /*16rem = 13.568px*/
   }
 }
-
 @media screen and (min-width: 351px) {
   html {
     font-size: 5.5%;
@@ -29,7 +25,6 @@ html {
     /*16rem = 14.08px*/
   }
 }
-
 @media screen and (min-width: 375px) {
   html {
     font-size: 6%;
@@ -38,7 +33,6 @@ html {
     /*16rem = 15.36px*/
   }
 }
-
 @media screen and (min-width: 400px) {
   html {
     font-size: 7%;
@@ -47,7 +41,6 @@ html {
     /*16rem = 17.92px*/
   }
 }
-
 body {
   font-size: 14rem !important;
   line-height: 1.4 !important;
@@ -56,18 +49,15 @@ body {
   background-color: #f1f1f1;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
 a {
   color: inherit;
   outline: none;
   text-decoration: none;
 }
-
 h1, h2, h3, h4, h5, h6 {
   color: inherit;
   font: inherit;
 }
-
 input, select, textarea {
   color: inherit;
   font: inherit;
@@ -75,7 +65,6 @@ input, select, textarea {
   outline: none;
   border: 1px solid #ccc;
 }
-
 button {
   box-sizing: border-box;
   color: inherit;
@@ -83,7 +72,6 @@ button {
   text-align: center;
   outline: none;
 }
-
 img {
   /*火狐下，img没有src属性时，设置宽高不生效*/
   display: inline-block;
@@ -92,7 +80,6 @@ img {
   /*去掉ie8-10黑边*/
   border: none;
 }
-
 .iconfont {
   font-size: inherit;
 }

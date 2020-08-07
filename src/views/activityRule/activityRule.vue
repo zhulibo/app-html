@@ -9,35 +9,34 @@
 </template>
 
 <script>
-  export default {
-    name: 'activityRule',
-    data() {
-      return {
-      }
-    },
-    computed: {},
-    created() {
-    },
-    mounted() {
-    }
+export default {
+  name: 'activityRule',
+  data() {
+    return {}
+  },
+  computed: {},
+  created() {
+  },
+  mounted() {
   }
+}
 </script>
 
 <style lang="stylus" scoped>
-  .activity-rule{
-    padding: 1em
-  }
-  h2{
-    padding: .5em 0
-    font-size 18rem
-    text-align: center
-    font-weight: bold
-    color: #666
-  }
-  p{
-    margin-top: 1em
-    margin-bottom: 1em
-    text-indent: 2em;
-    text-align: justify
-  }
+.activity-rule {
+  padding: 1em
+}
+h2 {
+  padding: .5em 0
+  font-size 18rem
+  text-align: center
+  font-weight: bold
+  color: #666
+}
+p {
+  margin-top: 1em
+  margin-bottom: 1em
+  text-indent: 2em;
+  text-align: justify
+}
 </style>

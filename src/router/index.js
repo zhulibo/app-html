@@ -13,7 +13,7 @@ export default new Router({
       path: '/home',
       name: '/home',
       component: () => import (/* webpackChunkName: 'home' */ '@/views/home/home'),
-      meta:{
+      meta: {
         title: '首页'
       }
     },
@@ -21,7 +21,7 @@ export default new Router({
       path: '/coupon',
       name: '/coupon',
       component: () => import (/* webpackChunkName: 'coupon' */ '@/views/coupon/coupon'),
-      meta:{
+      meta: {
         title: '分享优惠券'
       }
     },
@@ -29,7 +29,7 @@ export default new Router({
       path: '/couponInvite',
       name: '/couponInvite',
       component: () => import (/* webpackChunkName: 'couponInvite' */ '@/views/couponInvite/couponInvite'),
-      meta:{
+      meta: {
         title: '送你漫想家APP优惠券'
       }
     },
@@ -37,7 +37,7 @@ export default new Router({
       path: '/activityRule',
       name: '/activityRule',
       component: () => import (/* webpackChunkName: 'activityRule' */ '@/views/activityRule/activityRule'),
-      meta:{
+      meta: {
         title: '活动规则'
       }
     },
@@ -45,7 +45,7 @@ export default new Router({
       path: '/couponNewUser',
       name: '/couponNewUser',
       component: () => import (/* webpackChunkName: 'couponNewUser' */ '@/views/couponNewUser/couponNewUser'),
-      meta:{
+      meta: {
         title: '送你漫想家APP优惠券'
       }
     },
@@ -53,23 +53,31 @@ export default new Router({
       path: '/couponNewUserHasCode',
       name: '/couponNewUserHasCode',
       component: () => import (/* webpackChunkName: 'couponNewUserHasCode' */ '@/views/couponNewUserHasCode/couponNewUserHasCode'),
-      meta:{
+      meta: {
         title: '新人大礼包'
       }
     },
     {
-      path: '/test',
-      name: '/test',
-      component: () => import (/* webpackChunkName: 'test' */ '@/views/test/test'),
-      meta:{
-        title: 'test'
+      path: '/test1',
+      name: '/test1',
+      component: () => import (/* webpackChunkName: 'test1' */ 'views/test1/test1'),
+      meta: {
+        title: 'test1'
+      }
+    },
+    {
+      path: '/test2',
+      name: '/test2',
+      component: () => import (/* webpackChunkName: 'test2' */ '@/views/test2/test2'),
+      meta: {
+        title: 'test2'
       }
     },
     {
       path: '/goodsDetail',
       name: '/goodsDetail',
       component: () => import (/* webpackChunkName: 'goodsDetail' */ '@/views/goodsDetail/goodsDetail'),
-      meta:{
+      meta: {
         title: '商品详情'
       }
     },
@@ -77,7 +85,7 @@ export default new Router({
       path: '/socialDetail',
       name: '/socialDetail',
       component: () => import (/* webpackChunkName: 'socialDetail' */ '@/views/socialDetail/socialDetail'),
-      meta:{
+      meta: {
         title: '社区详情'
       }
     },
@@ -85,7 +93,7 @@ export default new Router({
       path: '/socialDetailVideo',
       name: '/socialDetailVideo',
       component: () => import (/* webpackChunkName: 'socialDetailVideo' */ '@/views/socialDetailVideo/socialDetailVideo'),
-      meta:{
+      meta: {
         title: '社区详情视频'
       }
     },
@@ -93,7 +101,7 @@ export default new Router({
       path: '/lotteryDetail',
       name: '/lotteryDetail',
       component: () => import (/* webpackChunkName: 'lotteryDetail' */ '@/views/lotteryDetail/lotteryDetail'),
-      meta:{
+      meta: {
         title: '抽奖详情'
       }
     },
@@ -101,8 +109,24 @@ export default new Router({
       path: '/downloadApp',
       name: '/downloadApp',
       component: () => import (/* webpackChunkName: 'downloadApp' */ '@/views/downloadApp/downloadApp'),
-      meta:{
+      meta: {
         title: '下载漫想家APP'
+      }
+    },
+    {
+      path: '/drainage',
+      name: '/drainage',
+      component: () => import (/* webpackChunkName: 'drainage' */ 'views/drainage/drainage'),
+      meta: {
+        title: '全部正版授权的模玩、潮玩的平台'
+      }
+    },
+    {
+      path: '/drainageChart',
+      name: '/drainageChart',
+      component: () => import (/* webpackChunkName: 'drainageChart' */ 'views/drainageChart/drainageChart'),
+      meta: {
+        title: '全部正版授权的模玩、潮玩的平台'
       }
     },
   ]
