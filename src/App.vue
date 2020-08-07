@@ -1,8 +1,26 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title="$route.meta.title"></router-view>
+    <router-view></router-view>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'activityRule',
+  data() {
+    return {}
+  },
+  computed: {
+  },
+  created() {
+  },
+  mounted() {
+    window.onload = () => {
+      document.title = this.$route.meta.title
+    }
+  }
+}
+</script>
 
 <style>
 @import '//at.alicdn.com/t/font_1970543_mrtlznf76ph.css';

@@ -1,27 +1,26 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import axios from './axios'
+import store from './store'
+import common from './utils/filters/common' // 过滤器
 import global from './components/global/global' // 全局变量
-import common from './utils/filters/common'
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
-Vue.use(Mint);
-Vue.use(require('vue-wechat-title')); // 自定义title
-Vue.prototype.$http = axios
-Vue.prototype.global = global // 全局变量
+Vue.config.productionTip = false
 
-// 导出的是对象，可以直接通过 key 和 value 来获得过滤器的名和过滤器的方法
+Vue.prototype.$http = axios
+
 Object.keys(common).forEach(key => {
   Vue.filter(key, common[key])
 })
 
-Vue.config.productionTip = false
+Vue.prototype.global = global // 全局变量
 
-// 忽略微信自定义标签
-Vue.config.ignoredElements = [
+Vue.use(Mint);
+
+Vue.config.ignoredElements = [ // 忽略微信开放标签
   'wx-open-launch-app',
 ];
 
@@ -35,8 +34,8 @@ new Vue({
 
 // 根据路由设置标题
 router.beforeEach((to, from, next) => {
-  // if(to.meta.title) {
-  //   document.title = to.meta.title
-  // }
+  if(to.meta.title) {
+    document.title = to.meta.title
+  }
   next();
 })

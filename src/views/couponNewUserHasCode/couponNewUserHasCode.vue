@@ -34,7 +34,7 @@ export default {
 
     _this.userId = _this.$route.query.userId
     _this.pageId = _this.$route.query.pageId
-    _this.invokeAppSetTitle()
+    // _this.invokeAppSetTitle()
 
     let formData = new FormData();
     formData.append('userId', _this.userId);

@@ -167,7 +167,6 @@ export default {
   }
   .time {
     margin-top: .5em
-    text-align: center
     font-size 12rem
     color: #999
     text-align: left;

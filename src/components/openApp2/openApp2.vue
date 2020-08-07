@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="launch-app-ct" v-if="wechatState">
-      <wx-open-launch-app class="launch-app" @launch="launch" @error="error" appid="wxc0c9a1b05291389d"
+      <wx-open-launch-app ref="wxOpenLaunchApp" class="launch-app" @launch="launch" @error="error" appid="wxc0c9a1b05291389d"
                           :extinfo="extinfo">
         <script type="text/wxtag-template">
           <div class="btn" style="opacity: 0;height: 4em;">打开APP</div>
         </script>
       </wx-open-launch-app>
     </div>
-    <div class="launch-app" v-else @click="openApp"></div>
+    <div class="launch-app" v-else @click="openApp2"></div>
     <div class="launch-app-bg">
       <div class="l">
         <img src="../../assets/img/openApp1.png" alt="">
@@ -21,17 +21,17 @@
         <div>打开漫想家</div>
       </div>
     </div>
-    <!--<p>{{y}}</p>-->
-    <!--<p v-if="z">微信浏览器环境 && >7.0.12</p>-->
-    <!--<p v-if="a">请求成功</p>-->
-    <!--<p v-if="a">请求res{{a1}}</p>-->
-    <!--<br>-->
-    <!--<br>-->
-    <!--<p v-if="b">wx.ready</p>-->
-    <!--<p v-if="c">签名失败</p>-->
-    <!--<p v-if="c">签名res{{c1}}</p>-->
-    <!--<p v-if="d">打开成功</p>-->
-    <!--<p v-if="e">打开失败</p>-->
+    <p>{{y}}</p>
+    <p v-if="z">微信浏览器环境 && >7.0.12</p>
+    <p v-if="a">请求成功</p>
+    <p v-if="a">请求res{{a1}}</p>
+    <br>
+    <br>
+    <p v-if="b">wx.ready</p>
+    <p v-if="c">签名失败</p>
+    <p v-if="c">签名res{{c1}}</p>
+    <p v-if="d">打开成功</p>
+    <p v-if="e">打开失败</p>
   </div>
 </template>
 
@@ -39,7 +39,7 @@
 import wx from 'weixin-js-sdk';
 
 export default {
-  name: 'openApp',
+  name: 'openApp2',
   // props: ['extinfo'],
   data() {
     return {
@@ -64,22 +64,23 @@ export default {
     this.y = location.href.split('#')[0]
 
     // 微信版本号大于7.0.12支持开放标签
-    try {
-      let wechat = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
-      let judgewechat = wechat[1].split('.')
-      if (judgewechat[0] >= 7) {
-        if (judgewechat[1] >= 0) {
-          if (judgewechat[2] >= 12) {
-            this.wechatState = true
-            this.z = true
-            this.wxInit()
-          }
-        }
-      }
-    } catch (e) {
-    }
-    // this.wechatState = true
-    // this.wxInit()
+    // try {
+    //   let wechat = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
+    //   let judgewechat = wechat[1].split('.')
+    //   if (judgewechat[0] >= 7) {
+    //     if (judgewechat[1] >= 0) {
+    //       if (judgewechat[2] >= 12) {
+    //         this.wechatState = true
+    //         this.z = true
+    //         this.wxInit()
+    //       }
+    //     }
+    //   }
+    // } catch (e) {
+    // }
+    this.wechatState = true
+    this.z = true
+    this.wxInit()
   },
   mounted() {
   },

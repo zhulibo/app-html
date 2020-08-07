@@ -10,9 +10,7 @@ axios.interceptors.request.use(
     // if (userInfo.token) {
     //   config.headers.token = userInfo.token;
     // }
-    // config.headers = {
-    //   'Content-Type':'multipart/form-data'
-    // };
+
     return config;
   },
   err => {

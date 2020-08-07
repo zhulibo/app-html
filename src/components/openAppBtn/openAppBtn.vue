@@ -70,8 +70,8 @@ export default {
       }
     } catch (e) {
     }
-    // _this.wechatState = true
-    // _this.wxInit()
+    // this.wechatState = true
+    // this.wxInit()
   },
   mounted() {
   },
