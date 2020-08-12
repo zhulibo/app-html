@@ -5,7 +5,7 @@
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
-          <img :src="item.image" preview>
+          <img :src="item.image">
         </div>
       </div>
     </div>
@@ -140,7 +140,6 @@ export default {
                 swiper: galleryThumbs
               }
             });
-            this.$previewRefresh() // vue-photo-preview图片全屏预览组件 异步数据需要刷新一下
           })
           // 赋值swiper-wrapper高度（swiper的imagesReady事件貌似没有执行）
           this.$nextTick(() => {

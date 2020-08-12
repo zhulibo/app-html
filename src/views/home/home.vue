@@ -4,14 +4,6 @@
 
     <!--月-->
     <h2><span>2020.8</span></h2>
-    <div class="disable">
-      <router-link :to="{path: '/drainage'}">drainage 引流下载app</router-link>
-      <span>http://app.mxjclub.com/share/#/drainage</span>参数：
-    </div>
-    <div class="disable">
-      <router-link :to="{path: '/drainageChart'}">drainageChart 引流下载量图表</router-link>
-      <span>http://app.mxjclub.com/share/#/drainageChart</span>参数：
-    </div>
     <!--月-->
     <h2><span>2020.7</span></h2>
     <div>

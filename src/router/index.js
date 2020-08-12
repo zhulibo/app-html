@@ -113,21 +113,5 @@ export default new Router({
         title: '下载漫想家APP'
       }
     },
-    {
-      path: '/drainage',
-      name: '/drainage',
-      component: () => import (/* webpackChunkName: 'drainage' */ '@/views/drainage/drainage'),
-      meta: {
-        title: '全部正版授权的模玩、潮玩的平台'
-      }
-    },
-    {
-      path: '/drainageChart',
-      name: '/drainageChart',
-      component: () => import (/* webpackChunkName: 'drainageChart' */ '@/views/drainageChart/drainageChart'),
-      meta: {
-        title: '全部正版授权的模玩、潮玩的平台'
-      }
-    },
   ]
 })

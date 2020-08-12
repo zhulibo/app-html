@@ -7,8 +7,7 @@ module.exports = {
   devServer:{
     proxy: {
       '/api': {
-        target: 'https://app.mxjclub.com',
-        // target: 'http://192.168.0.139:8080',
+        target: process.env.VUE_APP_REAL_URL,
         secure: false, // 默认情况下，不接受运行在HTTPS上且使用了无效证书的后端服务器。
         changeOrigin: true,
         pathRewrite: {

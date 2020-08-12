@@ -5,7 +5,7 @@
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in bannerList">
-          <img :src="item" preview>
+          <img :src="item">
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -22,6 +22,7 @@
       <li>品牌<span>{{goodDetail.brandName}}</span></li>
       <li>货号<span>{{goodDetail.cargoNo}}</span></li>
       <li>材质<span>{{goodDetail.material}}</span></li>
+      <li>尺寸<span>{{goodDetail.size}}</span></li>
     </ul>
     <div class="content">
       <div v-html="goodDetail.content"></div>
@@ -97,7 +98,6 @@ export default {
               document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
             }
           })
-          this.$previewRefresh() // 异步数据vue-photo-preview需要刷新一下
         })
     }
   }

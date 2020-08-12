@@ -1,7 +1,7 @@
 import router from '../router'
 import axios from 'axios'
 
-axios.defaults.baseURL = process.env.VUE_APP_URL
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
 
 // http request 拦截器
 axios.interceptors.request.use(
