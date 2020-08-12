@@ -35,7 +35,7 @@ export default {
   name: 'coupon',
   data() {
     return {
-      title: '分享优惠券',
+      // title: '分享优惠券',
       userId: '',
       pageId: '',
       inviteNumber: 0
@@ -64,21 +64,21 @@ export default {
   mounted() {
   },
   methods: {
-    invokeAppSetTitle() {
-      try {
-        let params = {
-          title: this.title
-        }
-        console.log(params)
-        if (this.global.isIos) {
-          window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
-        } else {
-          window.android.invokeAppSetTitle(params)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
+    // invokeAppSetTitle() {
+    //   try {
+    //     let params = {
+    //       title: this.title
+    //     }
+    //     console.log(params)
+    //     if (this.global.isIos) {
+    //       window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
+    //     } else {
+    //       window.android.invokeAppSetTitle(params)
+    //     }
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // },
     invokeAppCouponShare() {
       let params = {
         userId: this.userId,

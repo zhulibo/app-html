@@ -5,7 +5,7 @@
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
-          <img :src="item.image">
+          <img :src="item.image" preview>
         </div>
       </div>
     </div>
@@ -72,8 +72,8 @@
 <script>
 import Swiper from 'swiper';
 import 'swiper/css/swiper.css'
-import openApp from "../../components/openApp/openApp";
-import openAppBtn from "../../components/openAppBtn/openAppBtn";
+import openApp from "@/components/openApp/openApp";
+import openAppBtn from "@/components/openAppBtn/openAppBtn";
 
 export default {
   name: 'socialDetail',
@@ -124,14 +124,7 @@ export default {
       })
         .then(res => {
           this.socialDetail = res.data
-          // 赋值swiper-wrapper高度（swiper的imagesReady事件貌似没有执行）
-          this.$nextTick(() => {
-            let img = document.querySelector('.swiper-wrapper .swiper-slide:first-child img')
-            img.onload = function () {
-              document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
-            }
-          })
-          // 关联缩略图
+          // 初始化轮播图并关联缩略图
           this.$nextTick(() => {
             let galleryThumbs = new Swiper('.gallery-thumbs', {
               spaceBetween: 5,
@@ -147,6 +140,14 @@ export default {
                 swiper: galleryThumbs
               }
             });
+            this.$previewRefresh() // vue-photo-preview图片全屏预览组件 异步数据需要刷新一下
+          })
+          // 赋值swiper-wrapper高度（swiper的imagesReady事件貌似没有执行）
+          this.$nextTick(() => {
+            let img = document.querySelector('.swiper-wrapper .swiper-slide:first-child img')
+            img.onload = function () {
+              document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
+            }
           })
         })
     },

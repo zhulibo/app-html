@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import areaCodeList from '../../assets/data/areaCode.json'
+import areaCodeList from '@/assets/data/areaCode.json'
 
 export default {
   name: 'areaSelect',

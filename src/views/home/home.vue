@@ -3,6 +3,16 @@
     <h1>app-html交互文档<span>最后修改日期：2020.7.31</span></h1>
 
     <!--月-->
+    <h2><span>2020.8</span></h2>
+    <div class="disable">
+      <router-link :to="{path: '/drainage'}">drainage 引流下载app</router-link>
+      <span>http://app.mxjclub.com/share/#/drainage</span>参数：
+    </div>
+    <div class="disable">
+      <router-link :to="{path: '/drainageChart'}">drainageChart 引流下载量图表</router-link>
+      <span>http://app.mxjclub.com/share/#/drainageChart</span>参数：
+    </div>
+    <!--月-->
     <h2><span>2020.7</span></h2>
     <div>
       <router-link :to="{path: '/coupon'}">coupon 分享优惠券</router-link>
@@ -52,6 +62,9 @@
       <span>http://app.mxjclub.com/share/#/downloadApp</span></div>
     <div>
       <router-link :to="{path: '/test1'}">test 测试</router-link>
+    </div>
+    <div>
+      <router-link :to="{path: '/test2'}">test2 测试2</router-link>
     </div>
 
   </div>
@@ -109,6 +122,9 @@ export default {
     span {
       margin-left: 2em
       margin-right: 2em
+    }
+    &.disable{
+      opacity .4
     }
   }
   h3 {

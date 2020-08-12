@@ -79,6 +79,7 @@ img {
   vertical-align: bottom;
   /*去掉ie8-10黑边*/
   border: none;
+  /*pointer-events:none; !* 禁止保存图片 *!*/
 }
 .iconfont {
   font-size: inherit;

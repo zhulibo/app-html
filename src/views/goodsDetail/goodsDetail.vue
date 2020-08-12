@@ -4,8 +4,8 @@
     <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="item in bannerList">
-          <img :src="item">
+        <div class="swiper-slide" v-for="(item, index) in bannerList">
+          <img :src="item" preview>
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -32,8 +32,8 @@
 <script>
 import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
-import openApp from "../../components/openApp/openApp";
-import openAppBtn from "../../components/openAppBtn/openAppBtn";
+import openApp from "@/components/openApp/openApp";
+import openAppBtn from "@/components/openAppBtn/openAppBtn";
 
 export default {
   name: 'goodsDetail',
@@ -97,6 +97,7 @@ export default {
               document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
             }
           })
+          this.$previewRefresh() // 异步数据vue-photo-preview需要刷新一下
         })
     }
   }

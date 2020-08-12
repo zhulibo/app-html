@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'activityRule',
+  name: 'App',
   data() {
     return {}
   },

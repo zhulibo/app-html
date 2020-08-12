@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import openAppBtn from "../../components/openAppBtn/openAppBtn";
+import openAppBtn from "@/components/openAppBtn/openAppBtn";
 export default {
   name: 'socialDetailVideo',
   data() {

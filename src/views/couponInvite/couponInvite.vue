@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import areaSelect from "../../components/areaSelect/areaSelect";
+import areaSelect from "@/components/areaSelect/areaSelect";
 
 export default {
   name: 'couponInvite',

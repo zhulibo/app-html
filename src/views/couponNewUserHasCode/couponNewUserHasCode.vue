@@ -23,7 +23,7 @@ export default {
   name: 'couponNewUserHasCode',
   data() {
     return {
-      title: '新人礼包',
+      // title: '新人礼包',
       userId: '',
       pageId: '',
       couponList: [],
@@ -59,21 +59,21 @@ export default {
   mounted() {
   },
   methods: {
-    invokeAppSetTitle() {
-      try {
-        let params = {
-          title: this.title
-        }
-        console.log(params)
-        if (this.global.isIos) {
-          window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
-        } else {
-          window.android.invokeAppSetTitle(params)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-    },
+    // invokeAppSetTitle() {
+    //   try {
+    //     let params = {
+    //       title: this.title
+    //     }
+    //     console.log(params)
+    //     if (this.global.isIos) {
+    //       window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
+    //     } else {
+    //       window.android.invokeAppSetTitle(params)
+    //     }
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // },
   },
 }
 </script>

@@ -60,7 +60,7 @@ export default new Router({
     {
       path: '/test1',
       name: '/test1',
-      component: () => import (/* webpackChunkName: 'test1' */ 'views/test1/test1'),
+      component: () => import (/* webpackChunkName: 'test1' */ '@/views/test1/test1'),
       meta: {
         title: 'test1'
       }
@@ -116,7 +116,7 @@ export default new Router({
     {
       path: '/drainage',
       name: '/drainage',
-      component: () => import (/* webpackChunkName: 'drainage' */ 'views/drainage/drainage'),
+      component: () => import (/* webpackChunkName: 'drainage' */ '@/views/drainage/drainage'),
       meta: {
         title: '全部正版授权的模玩、潮玩的平台'
       }
@@ -124,7 +124,7 @@ export default new Router({
     {
       path: '/drainageChart',
       name: '/drainageChart',
-      component: () => import (/* webpackChunkName: 'drainageChart' */ 'views/drainageChart/drainageChart'),
+      component: () => import (/* webpackChunkName: 'drainageChart' */ '@/views/drainageChart/drainageChart'),
       meta: {
         title: '全部正版授权的模玩、潮玩的平台'
       }

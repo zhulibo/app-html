@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import openApp from "../../components/openApp/openApp";
-import openAppBtn from "../../components/openAppBtn/openAppBtn";
+import openApp from "@/components/openApp/openApp";
+import openAppBtn from "@/components/openAppBtn/openAppBtn";
 
 export default {
   name: 'lotteryDetail',
