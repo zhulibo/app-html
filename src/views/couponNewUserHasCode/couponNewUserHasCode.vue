@@ -30,16 +30,13 @@ export default {
     }
   },
   created() {
-    let _this = this
-
-    _this.userId = _this.$route.query.userId
-    _this.pageId = _this.$route.query.pageId
-    // _this.invokeAppSetTitle()
+    this.userId = this.$route.query.userId
+    this.pageId = this.$route.query.pageId
 
     let formData = new FormData();
-    formData.append('userId', _this.userId);
-    formData.append('id', _this.pageId);
-    _this.$http({
+    formData.append('userId', this.userId);
+    formData.append('id', this.pageId);
+    this.$http({
       url: '/cartoonThinker/app/discountuser/selectPageDiscounts/json', // 获取优惠券
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -47,33 +44,18 @@ export default {
       method: 'POST',
       data: formData,
     })
-      .then(function (res) {
-        _this.couponList = res.data
-        _this.couponList.forEach(function (value, index, array) {
+      .then(res => {
+        this.couponList = res.data
+        this.couponList.forEach(function (value, index, array) {
           let arr = value.name.trim().split(" ")
-          _this.couponList[index].realName = arr[1]
-          _this.couponList[index].realBrandName = arr[0]
+          this.couponList[index].realName = arr[1]
+          this.couponList[index].realBrandName = arr[0]
         })
-      })
+      }).catch(e => {console.log(e)})
   },
   mounted() {
   },
   methods: {
-    // invokeAppSetTitle() {
-    //   try {
-    //     let params = {
-    //       title: this.title
-    //     }
-    //     console.log(params)
-    //     if (this.global.isIos) {
-    //       window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
-    //     } else {
-    //       window.android.invokeAppSetTitle(params)
-    //     }
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // },
   },
 }
 </script>

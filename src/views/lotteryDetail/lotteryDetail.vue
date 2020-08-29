@@ -1,7 +1,7 @@
 <template>
   <div>
-    <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
-    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
+    <open-app></open-app>
+    <open-app-btn></open-app-btn>
     <div>
       <div class="countdown-time">
         <div class="title">开奖倒计时</div>
@@ -74,7 +74,7 @@ export default {
             this.leftTime = (lotteryBeijingTimestamp - nowBeijingTimestamp) / 1000
             this.countdownTime()
           }
-        })
+        }).catch(e => {console.log(e)})
     },
     countdownTime() { // 倒计时
       let leftTime = this.leftTime

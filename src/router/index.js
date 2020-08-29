@@ -34,9 +34,9 @@ export default new Router({
       }
     },
     {
-      path: '/activityRule',
-      name: '/activityRule',
-      component: () => import (/* webpackChunkName: 'activityRule' */ '@/views/activityRule/activityRule'),
+      path: '/couponActivityRule',
+      name: '/couponActivityRule',
+      component: () => import (/* webpackChunkName: 'couponActivityRule' */ '@/views/couponActivityRule/couponActivityRule'),
       meta: {
         title: '活动规则'
       }
@@ -111,6 +111,30 @@ export default new Router({
       component: () => import (/* webpackChunkName: 'downloadApp' */ '@/views/downloadApp/downloadApp'),
       meta: {
         title: '下载漫想家APP'
+      }
+    },
+    {
+      path: '/drainageChart',
+      name: '/drainageChart',
+      component: () => import (/* webpackChunkName: 'drainageChart' */ '@/views/drainageChart/drainageChart'),
+      meta: {
+        title: '全部正版授权的模玩、潮玩的平台'
+      }
+    },
+    {
+      path: '/agreementUser',
+      name: '/agreementUser',
+      component: () => import (/* webpackChunkName: 'agreementUser' */ '@/views/agreementUser/agreementUser'),
+      meta: {
+        title: '用户协议'
+      }
+    },
+    {
+      path: '/agreementPrivacy',
+      name: '/agreementPrivacy',
+      component: () => import (/* webpackChunkName: 'agreementPrivacy' */ '@/views/agreementPrivacy/agreementPrivacy'),
+      meta: {
+        title: '隐私协议'
       }
     },
   ]

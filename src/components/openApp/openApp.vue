@@ -40,7 +40,6 @@ import wx from 'weixin-js-sdk';
 
 export default {
   name: 'openApp',
-  // props: ['extinfo'],
   data() {
     return {
       extinfo: {
@@ -99,7 +98,7 @@ export default {
       let formData = new FormData();
       formData.append('url', _this.y);
       this.$http({
-        url: 'https://app.mxjclub.com/cartoonThinker/app/weChatPay/accessToken/json',
+        url: '/cartoonThinker/app/weChatPay/accessToken/json',
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -127,7 +126,7 @@ export default {
             _this.c = true
             _this.c1 = res
           });
-        })
+        }).catch(e => {console.log(e)})
     },
     openApp() {
       if (this.global.isIos) {

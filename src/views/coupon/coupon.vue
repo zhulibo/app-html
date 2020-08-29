@@ -42,14 +42,13 @@ export default {
     }
   },
   created() {
-    let _this = this
-    _this.userId = _this.$route.query.userId
-    _this.pageId = _this.$route.query.pageId
-    // _this.invokeAppSetTitle()
+    this.userId = this.$route.query.userId
+    this.pageId = this.$route.query.pageId
+    // this.invokeAppSetTitle()
 
     let formData = new FormData();
-    formData.append('userId', _this.userId);
-    _this.$http({
+    formData.append('userId', this.userId);
+    this.$http({
       url: '/cartoonThinker/app/discountuser/invitationNumber/json', // 邀请了几个人
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -57,9 +56,9 @@ export default {
       method: 'POST',
       data: formData,
     })
-      .then(function (res) {
-        _this.inviteNumber = res.data
-      })
+      .then(res => {
+        this.inviteNumber = res.data
+      }).catch(e => {console.log(e)})
   },
   mounted() {
   },

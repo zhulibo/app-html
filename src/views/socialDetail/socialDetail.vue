@@ -1,7 +1,7 @@
 <template>
   <div>
-    <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
-    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
+    <open-app></open-app>
+    <open-app-btn></open-app-btn>
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="swiper-container gallery-thumbs">
+    <div class="swiper-container gallery-thumbs" v-show="socialDetail.articleImageList.length>1">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
           <div :style="{backgroundImage: 'url(' + item.image +  ')'}"></div>
@@ -17,12 +17,13 @@
       </div>
     </div>
     <div class="param">
-      <h2>{{socialDetail.content}}</h2>
+      <h2>{{socialDetail.title}}</h2>
+      <h3>{{socialDetail.content}}</h3>
       <p>{{socialDetail.createTime | dateToCustomizeTime}}</p>
     </div>
     <div class="related-goods" v-if="socialDetail.good">
       <div class="related-goods-ct">
-        <img :src="socialDetail.good.icon" mode=""></img>
+        <img :src="socialDetail.good.icon" mode="">
         <span>{{socialDetail.good.title}}</span>
       </div>
     </div>
@@ -33,6 +34,27 @@
       <div class="r">
         <span>已有{{likeTotalCount}}位用户赞<i class="iconfont icon-youjiantou"></i></span>
       </div>
+    </div>
+    <div class="social-comment" v-if="socialCommentList.length>0">
+      <dl>
+        <dt>共{{socialDetail.commentNum}}条评论</dt>
+        <dd v-for="item in socialCommentList">
+          <div class="l"><img :src="item.userHeader" alt=""></div>
+          <div class="r">
+            <h3>{{item.userName}}</h3>
+            <p>{{item.content}}<span>{{item.createTime | dateToCustomizeTime}}</span></p>
+            <ul v-if="item.level2Comment">
+              <li v-for="item2 in item.level2Comment">
+                <div class="l"><img :src="item2.userHeader" alt=""></div>
+                <div class="r">
+                  <h3>{{item2.userName}}</h3>
+                  <p>{{item2.content}}<span>{{item2.createTime | dateToCustomizeTime}}</span></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </dd>
+      </dl>
     </div>
     <div class="social-recommend">
       <h2>为您推荐</h2>
@@ -85,6 +107,7 @@ export default {
       },
       likeList: [],
       likeTotalCount: null,
+      socialCommentList: [],
       socialRecommendList: [],
       socialRecommendList1: [],
       socialRecommendList2: [],
@@ -102,18 +125,19 @@ export default {
     this.shareId = this.$route.query.shareId
     this.getSocialDetail()
     this.getLikeList()
+    this.getSocialCommentList()
     this.getSocialRecommendList()
   },
   mounted() {
     window.addEventListener('scroll', this.scroll)
     this.$on("hook:beforeDestroy", () => {
-      window.removeEventListener('scroll', this.scroll);
+      window.removeEventListener('scroll', this.scroll)
     })
   },
   methods: {
     getSocialDetail() {
-      let formData = new FormData();
-      formData.append('id', this.shareId);
+      let formData = new FormData()
+      formData.append('id', this.shareId)
       this.$http({
         url: '/cartoonThinker/system/article/look/json',
         headers: {
@@ -132,14 +156,14 @@ export default {
               freeMode: true,
               watchSlidesVisibility: true,
               watchSlidesProgress: true,
-            });
+            })
             let galleryTop = new Swiper('.gallery-top', {
               autoHeight: true, // 高度随内容变化
               spaceBetween: 0,
               thumbs: {
                 swiper: galleryThumbs
               }
-            });
+            })
           })
           // 赋值swiper-wrapper高度（swiper的imagesReady事件貌似没有执行）
           this.$nextTick(() => {
@@ -148,11 +172,11 @@ export default {
               document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
             }
           })
-        })
+        }).catch(e => {console.log(e)})
     },
     getLikeList() {
       let formData = new FormData();
-      formData.append('articleId', this.shareId);
+      formData.append('articleId', this.shareId)
       this.$http({
         url: '/cartoonThinker/system/userinfo/supportList/json',
         headers: {
@@ -168,14 +192,54 @@ export default {
             this.likeList = res.data
           }
           this.likeTotalCount = res.page.totalCount
-        })
+        }).catch(e => {console.log(e)})
+    },
+    getSocialCommentList() {
+      let formData = new FormData()
+      formData.append('itemId', this.shareId)
+      formData.append('type', 2)
+      this.$http({
+        url: '/cartoonThinker/system/articlecomment/articleList/json',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        data: formData,
+      })
+        .then(res => {
+          this.socialCommentList = res.data
+          for (let i = 0; i < this.socialCommentList.length; i++) {
+            this.socialCommentList[i].level2Comment = []
+            this.getSocialCommentList2(this.socialCommentList[i].id)
+          }
+        }).catch(e => {console.log(e)})
+    },
+    getSocialCommentList2(id) {
+      let formData = new FormData()
+      formData.append('itemId', id)
+      formData.append('type', 2)
+      this.$http({
+        url: '/cartoonThinker/system/articlecomment/articlelevel2list/json',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        data: formData,
+      })
+        .then(res => {
+          for (let i = 0; i < this.socialCommentList.length; i++) {
+            if(this.socialCommentList[i].id == id && res.data[0] != null){
+              this.$set(this.socialCommentList[i], 'level2Comment', res.data)
+            }
+          }
+        }).catch(e => {console.log(e)})
     },
     getSocialRecommendList() {
       this.waterfallLoading = true
-      let formData = new FormData();
-      formData.append('pageSize', this.pageSize);
-      formData.append('pageIndex', this.pageNum);
-      formData.append('position', '2');
+      let formData = new FormData()
+      formData.append('pageSize', this.pageSize)
+      formData.append('pageIndex', this.pageNum)
+      formData.append('position', '2')
       this.$http({
         url: '/cartoonThinker/app/articleOther/list/json',
         headers: {
@@ -188,7 +252,7 @@ export default {
           this.socialRecommendList = res.data
           this.pageNum++
           this.doSort()
-        })
+        }).catch(e => {console.log(e)})
     },
     doSort() {
       let socialRecommendList1 = document.querySelector('.socialRecommendList1')
@@ -258,9 +322,9 @@ export default {
   background-color: #fff
   h2 {
     font-size 16rem
-    margin-bottom: .3em
   }
   p {
+    padding: .2em 0
     font-size 12rem
     color: #999
   }
@@ -311,23 +375,67 @@ export default {
     }
   }
 }
+.social-comment {
+  margin-top: .6em
+  padding: 1em
+  font-size 13rem
+  background-color: #fff
+  dd{
+    margin-top: 1em
+    display: flex
+  }
+  li{
+    display: flex
+    margin-top: .4em
+    padding: .6em 0
+    .l{
+      display: inline-block
+      img{
+        width: 1.8em
+        height: 1.8em
+      }
+    }
+  }
+  .l{
+    margin-right: .6em
+    display: inline-block
+    img{
+      width: 2em
+      height: 2em
+      border-radius: 50%;
+    }
+  }
+  .r{
+    flex: 1
+    h3{
+      color: #999
+      padding-bottom: .4em
+    }
+    span{
+      display: inline-block
+      padding-left: .5em
+      font-size 10rem
+      color: #999
+    }
+  }
+}
 .social-recommend {
-  padding: 1em 0
+  padding: .6em 0
   overflow: hidden
   h2 {
     padding: 0 .6em
-    font-size 18rem
-    font-weight: bold
   }
   ul {
     float: left
     display: inline-block
-    margin-left: .6em
-    width: calc((100vw - 1.8em) / 2)
+    margin-left: .3em
+    width: calc((100vw - .9em) / 2)
   }
   li {
-    margin-top: .6em
+    margin-top: .3em
     background-color: #fff
+    border-radius: .3em;
+    overflow: hidden
     > img {
       width: 100%
     }

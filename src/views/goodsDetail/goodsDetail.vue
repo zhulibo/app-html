@@ -1,7 +1,7 @@
 <template>
   <div>
-    <open-app :extinfo="{page: 'socialDetail', id: 123}"></open-app>
-    <open-app-btn :extinfo="{page: 'socialDetailVideo', id: 123}"></open-app-btn>
+    <open-app></open-app>
+    <open-app-btn></open-app-btn>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in bannerList">
@@ -98,7 +98,7 @@ export default {
               document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
             }
           })
-        })
+        }).catch(e => {console.log(e)})
     }
   }
 }

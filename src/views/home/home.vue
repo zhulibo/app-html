@@ -1,34 +1,23 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.7.31</span></h1>
+    <h1>app-html交互文档<span>最后修改日期：2020.8.29</span></h1>
 
     <!--月-->
     <h2><span>2020.8</span></h2>
+    <div>
+      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>
+      <span>http://app.mxjclub.com/share/#/agreementUser</span>
+    </div>
+    <div>
+      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>
+      <span>http://app.mxjclub.com/share/#/agreementPrivacy</span>
+    </div>
+    <div>
+      <router-link :to="{path: '/drainageChart'}">drainageChart 引流人数表格</router-link>
+      <span>http://app.mxjclub.com/share/#/drainageChart</span>
+    </div>
     <!--月-->
     <h2><span>2020.7</span></h2>
-    <div>
-      <router-link :to="{path: '/coupon'}">coupon 分享优惠券</router-link>
-      <span>http://app.mxjclub.com/share/#/coupon</span>参数：userId：用户id；pageId:礼包id
-    </div>
-    <h3>html调app方法：（type：ios：object | android：string）</h3>
-    <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
-    <h3 class="app">app调html方法：（type：object）</h3>
-    <p>测试：invokeHtmlTest 参数：userId：用户id</p>
-    <p>测试：invokeHtmlTest 参数：userId：用户id</p>
-    <div>
-      <router-link :to="{path: '/couponInvite'}">couponInvite 分享优惠券邀请新用户注册</router-link>
-      <span>http://app.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id；pageId:礼包id
-    </div>
-    <div>
-      <router-link :to="{path: '/activityRule'}">activityRule 协议</router-link>
-    </div>
-    <div>
-      <router-link :to="{path: '/couponNewUser'}">couponNewUser 新用户受邀注册</router-link>
-    </div>
-    <div>
-      <router-link :to="{path: '/couponNewUserHasCode'}">couponNewUserHasCode 邀请码礼包</router-link>
-      <span>http://app.mxjclub.com/share/#/couponNewUserHasCode</span>参数：userId：用户id；pageId:礼包id
-    </div>
     <div>
       <router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link>
       <span>http://app.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id
@@ -51,7 +40,31 @@
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
     <div>
       <router-link :to="{path: '/downloadApp'}">downloadApp 下载APP中间页</router-link>
-      <span>http://app.mxjclub.com/share/#/downloadApp</span></div>
+      <span>http://app.mxjclub.com/share/#/downloadApp</span>
+    </div>
+    <div>
+      <router-link :to="{path: '/coupon'}">coupon 分享优惠券</router-link>
+      <span>http://app.mxjclub.com/share/#/coupon</span>参数：userId：用户id；pageId:礼包id
+    </div>
+    <h3>html调app方法：（type：ios：object | android：string）</h3>
+    <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
+<!--    <h3 class="app">app调html方法：（type：object）</h3>-->
+<!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+<!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+    <div>
+      <router-link :to="{path: '/couponInvite'}">couponInvite 分享优惠券邀请新用户注册</router-link>
+      <span>http://app.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id；pageId:礼包id
+    </div>
+    <div>
+      <router-link :to="{path: '/couponActivityRule'}">couponActivityRule 优惠券活动规则</router-link>
+    </div>
+    <div>
+      <router-link :to="{path: '/couponNewUser'}">couponNewUser 新用户受邀注册</router-link>
+    </div>
+    <div>
+      <router-link :to="{path: '/couponNewUserHasCode'}">couponNewUserHasCode 邀请码礼包</router-link>
+      <span>http://app.mxjclub.com/share/#/couponNewUserHasCode</span>参数：userId：用户id；pageId:礼包id
+    </div>
     <div>
       <router-link :to="{path: '/test1'}">test 测试</router-link>
     </div>

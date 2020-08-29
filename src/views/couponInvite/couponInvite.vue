@@ -17,7 +17,7 @@
       <input class="submit" type="button" value="立刻领取" @click="submitForm">
       <div class="protocol-ct">
         <span :class="{on:checked}" v-model="checked" @click="checkboxChange"></span>我已阅读并同意漫想家的
-        <router-link :to="{path: '/activityRule'}">活动规则</router-link>
+        <router-link :to="{path: '/couponActivityRule'}">活动规则</router-link>
       </div>
     </div>
   </div>
@@ -48,34 +48,33 @@ export default {
   },
   methods: {
     submitForm() {
-      let _this = this
       let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
-      if (!phone.test(_this.phone)) {
-        _this.$toast('请输入正确的手机号');
+      if (!phone.test(this.phone)) {
+        this.$toast('请输入正确的手机号');
         return false
       }
       if (!this.checked) {
-        _this.$toast('请同意活动规则');
+        this.$toast('请同意活动规则');
         return false
       }
-      // _this.$http({
+      // this.$http({
       //   url: '/cartoonThinker/app/appuser/getdiscount/json',
       //   method: 'POST',
       //   params: {
-      //     phone: _this.phone,
-      //     userId: _this.userId,
-      //     pageId: _this.pageId
+      //     phone: this.phone,
+      //     userId: this.userId,
+      //     pageId: this.pageId
       //   }
       // })
-      //   .then(function (res) {
+      //   .then(res => {
       //     console.log(res)
-      //     _this.$toast(res.msg);
-      //   })
+      //     this.$toast(res.msg);
+      //   }).catch(e => {console.log(e)})
       let formData = new FormData();
-      formData.append('phone', _this.phone);
-      formData.append('userId', _this.userId);
-      formData.append('pageId', _this.pageId);
-      _this.$http({
+      formData.append('phone', this.phone);
+      formData.append('userId', this.userId);
+      formData.append('pageId', this.pageId);
+      this.$http({
         url: '/cartoonThinker/app/appuser/getdiscount/json', // 邀请新用户注册
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -83,14 +82,10 @@ export default {
         method: 'POST',
         data: formData,
       })
-        .then(function (res) {
-          if (res.statusCode == 200) {
-            _this.$toast(res.message);
-            _this.$router.push({path: '/couponNewUser', query: {phone: _this.phone}});
-          } else {
-            _this.$toast(res.message);
-          }
-        })
+        .then(res => {
+          this.$toast(res.message);
+          this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
+        }).catch(e => {console.log(e)})
     },
     checkboxChange() {
       this.checked = !this.checked

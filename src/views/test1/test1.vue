@@ -11,6 +11,9 @@ export default {
   created() {
   },
   mounted() {
+    // window['showPhotoAPPFuction'] = res => { // 上传图片回调
+    //   this.showPhotoAPPFuction(res)
+    // }
   },
   methods: {}
 }

@@ -10,7 +10,7 @@
     </div>
     <div class="launch-app" v-else @click="openApp">打开漫想家APP</div>
     <div class="launch-app-bg">
-      <div>打开漫想家APP</div>
+      <div>APP内打开</div>
     </div>
     <!--<p>{{y}}</p>-->
     <!--<p v-if="z">微信浏览器环境 && >7.0.12</p>-->
@@ -31,7 +31,6 @@ import wx from 'weixin-js-sdk';
 
 export default {
   name: 'openAppBtn',
-  // props: ['extinfo'],
   data() {
     return {
       extinfo: {
@@ -91,7 +90,7 @@ export default {
       let formData = new FormData();
       formData.append('url', _this.y);
       this.$http({
-        url: 'https://app.mxjclub.com/cartoonThinker/app/weChatPay/accessToken/json',
+        url: '/cartoonThinker/app/weChatPay/accessToken/json',
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -119,7 +118,7 @@ export default {
             _this.c = true
             _this.c1 = res
           });
-        })
+        }).catch(e => {console.log(e)})
     },
     openApp() {
       if (this.global.isIos) {
@@ -141,7 +140,7 @@ export default {
   left: 50%
   transform translateX(-50%)
   display: inline-block
-  width: 9em
+  width: 7em
   height: 2.4em;
   line-height: 2.4
   opacity: 0;
@@ -155,7 +154,7 @@ export default {
   left: 50%
   transform translateX(-50%)
   display: inline-block
-  width: 9em
+  width: 7em
   height: 2.4em;
   line-height: 2.4
   color: #fff

@@ -1,0 +1,107 @@
+<template>
+  <div class="vue-echarts-wrap">
+    <h1>激活人数统计</h1>
+    <v-chart :options="eChartsOptions"/>
+    <div class="text">
+      <div>昨天激活人数：<span>{{todayNumber}}</span>人</div>
+      <div>共激活人数: <span>{{allNumber}}</span>人</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/bar'
+
+export default {
+  name: 'vueEcharts',
+  components: {
+    'v-chart': ECharts
+  },
+  data() {
+    return {
+      numberArr: [
+        {date: '8.23', number: null,},
+        {date: '8.24', number: null,},
+        {date: '8.25', number: null,},
+        {date: '8.26', number: 161,},
+        {date: '8.27', number: 75,},
+        {date: '8.28', number: 43,},
+        // {date: '8.29', number: 30,},
+      ],
+      eChartsOptions: {
+        xAxis: {
+          name: '日期',
+          type: 'category',
+          data: []
+        },
+        yAxis: {
+          name: '人数',
+          type: 'value'
+        },
+        series: [
+          {
+            data: [],
+            type: 'bar',
+            color: 'rgba(64,158,255,.6)',
+          },
+          {
+            data: [],
+            type: 'line',
+            color: 'rgba(64,158,255,1)',
+            itemStyle : { normal: {label : {show: true}}}
+          },
+        ]
+      }
+    }
+  },
+  computed: {
+    allNumber() {
+      let sum = 0
+      for (let i = 0; i < this.numberArr.length; i++) {
+        sum = sum + this.numberArr[i].number
+      }
+      return sum
+    },
+    todayNumber() {
+      return this.numberArr[this.numberArr.length - 1].number
+    }
+  },
+  created() {
+    let echartArr = this.numberArr.slice(this.numberArr.length - 6, 6)
+    for (let i = 0; i < echartArr.length; i++) {
+      this.eChartsOptions.xAxis.data.push(echartArr[i].date)
+      this.eChartsOptions.series[0].data.push(echartArr[i].number)
+      this.eChartsOptions.series[1].data.push(echartArr[i].number)
+    }
+  },
+  mounted() {
+  },
+  methods: {},
+}
+</script>
+
+<style lang="stylus" scoped>
+.vue-echarts-wrap {
+  padding: 1em
+  background-color: #fff;
+  h1{
+    padding-top: 1em
+    font-size 18rem
+    text-align: center
+  }
+  .text{
+    padding-bottom: 1em
+    font-size 16rem
+    padding-left: 2em
+    span{
+      color: #409eff
+    }
+  }
+}
+.echarts {
+  width: 100%;
+}
+</style>
