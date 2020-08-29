@@ -19,6 +19,7 @@
           <span class="s2">1个名额</span>
           <span class="s3">￥{{lotteryDetail.oldPrice}}</span>
         </div>
+        <div class="h6em"></div>
       </div>
     </div>
   </div>
@@ -65,7 +66,7 @@ export default {
         .then(res => {
           this.lotteryDetail = res.data
 
-          let lotteryBeijingTimestamp = new Date(this.lotteryDetail.drawTime.replace(/-/g, '/')).getTime(); // 开奖北京时间戳
+          let lotteryBeijingTimestamp = new Date(this.lotteryDetail.drawTime.replace(/-/g, '/')).getTime() // 开奖北京时间戳
           let nowBeijingTimestamp = this.global.getNowBeijingTimestamp()
 
           if (nowBeijingTimestamp > lotteryBeijingTimestamp) { // 开奖北京时间戳 - 此时北京时间戳

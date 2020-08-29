@@ -14,6 +14,14 @@
         <span>{{socialDetailVideo.good.title}}</span>
       </div>
     </div>
+    <div class="like" v-if="likeList.length > 0">
+      <div class="l">
+        <img :src="item.header" v-for="item in likeList">
+      </div>
+      <div class="r">
+        <span>已有{{likeTotalCount}}位用户赞<i class="iconfont icon-youjiantou"></i></span>
+      </div>
+    </div>
     <div class="social-comment" v-if="socialCommentList.length>0">
       <dl>
         <dt>共{{socialDetailVideo.commentNum}}条评论</dt>
@@ -80,6 +88,8 @@ export default {
     return {
       shareId: '',
       socialDetailVideo: {},
+      likeList: [],
+      likeTotalCount: null,
       socialCommentList: [],
       socialRecommendList: [],
       socialRecommendList1: [],
@@ -97,6 +107,7 @@ export default {
   created() {
     this.shareId = this.$route.query.shareId
     this.getSocialDetailVideo()
+    this.getLikeList()
     this.getSocialCommentList()
     this.getSocialRecommendList()
   },
@@ -120,6 +131,26 @@ export default {
       })
         .then(res => {
           this.socialDetailVideo = res.data
+        }).catch(e => {console.log(e)})
+    },
+    getLikeList() {
+      let formData = new FormData();
+      formData.append('articleId', this.shareId)
+      this.$http({
+        url: '/cartoonThinker/system/userinfo/supportList/json',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        method: 'POST',
+        data: formData,
+      })
+        .then(res => {
+          if (res.data.length > 5) {
+            this.likeList = res.data.slice(0, 5)
+          } else {
+            this.likeList = res.data
+          }
+          this.likeTotalCount = res.page.totalCount
         }).catch(e => {console.log(e)})
     },
     getSocialCommentList() {
@@ -254,6 +285,33 @@ video{
       align-items: center;
       line2()
       display: flex
+    }
+  }
+}
+.like {
+  display: flex
+  justify-content: space-between;
+  padding: 0 .6em 1em .6em
+  padding-top: 0
+  background-color: #fff
+  .l {
+    img {
+      box-sizing border-box
+      width: 2em
+      height: 2em
+      border-radius: 50%;
+      border: 2px solid #fff
+      &:not(:nth-child(1)) {
+        margin-left: -.4em
+      }
+    }
+  }
+  .r {
+    line-height: 2
+    text-align: right
+    span {
+      font-size 12rem
+      color: #999
     }
   }
 }

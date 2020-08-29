@@ -5,6 +5,7 @@ module.exports = {
   productionSourceMap: false,
   publicPath: './',
   devServer:{
+    port: '8081',
     proxy: {
       '/api': {
         target: process.env.VUE_APP_REAL_URL,

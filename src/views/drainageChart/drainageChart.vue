@@ -29,7 +29,7 @@ export default {
         {date: '8.26', number: 161,},
         {date: '8.27', number: 75,},
         {date: '8.28', number: 43,},
-        // {date: '8.29', number: 30,},
+        {date: '8.29', number: 28,},
       ],
       eChartsOptions: {
         xAxis: {
@@ -70,7 +70,8 @@ export default {
     }
   },
   created() {
-    let echartArr = this.numberArr.slice(this.numberArr.length - 6, 6)
+    let echartArr = this.numberArr.slice(this.numberArr.length - 6)
+    // console.log(echartArr)
     for (let i = 0; i < echartArr.length; i++) {
       this.eChartsOptions.xAxis.data.push(echartArr[i].date)
       this.eChartsOptions.series[0].data.push(echartArr[i].number)
