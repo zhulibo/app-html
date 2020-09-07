@@ -35,6 +35,8 @@ export default {
         {date: '9.1', number: 80,},
         {date: '9.2', number: 22,},
         {date: '9.3', number: 17,},
+        {date: '9.4', number: 58,},
+        {date: '9.5', number: 31,},
       ],
       eChartsOptions: {
         dataZoom: [
