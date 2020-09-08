@@ -1,6 +1,6 @@
 <template>
   <div class="couponInvite">
-    <h2>优惠卷已放入账户：{{phone}}</h2>
+    <h2>优惠卷已放入账户：{{ phone }}</h2>
     <div class="coupon-list">
       <ul>
         <li></li>

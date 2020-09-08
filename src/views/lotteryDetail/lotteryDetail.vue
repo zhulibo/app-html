@@ -5,19 +5,20 @@
     <div>
       <div class="countdown-time">
         <div class="title">开奖倒计时</div>
-        <div class="time" v-if="leftTime"><span>{{hour}}</span>时<span>{{minute}}</span>分<span>{{second}}</span>秒</div>
+        <div class="time" v-if="leftTime"><span>{{ hour }}</span>时<span>{{ minute }}</span>分<span>{{ second }}</span>秒
+        </div>
         <div class="expired" v-else>已过期</div>
       </div>
       <div class="lottery">
         <div>
           <img class="img" :src="lotteryDetail.icon" alt="">
         </div>
-        <div class="time">开奖时间：{{lotteryDetail.drawTime}}</div>
-        <h2>{{lotteryDetail.title}}</h2>
+        <div class="time">开奖时间：{{ lotteryDetail.drawTime }}</div>
+        <h2>{{ lotteryDetail.title }}</h2>
         <div class="info clearfix">
           <span class="s1">￥0抽奖价</span>
           <span class="s2">1个名额</span>
-          <span class="s3">￥{{lotteryDetail.oldPrice}}</span>
+          <span class="s3">￥{{ lotteryDetail.oldPrice }}</span>
         </div>
         <div class="h6em"></div>
       </div>
@@ -75,7 +76,9 @@ export default {
             this.leftTime = (lotteryBeijingTimestamp - nowBeijingTimestamp) / 1000
             this.countdownTime()
           }
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     countdownTime() { // 倒计时
       let leftTime = this.leftTime

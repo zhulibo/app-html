@@ -6,9 +6,9 @@
     <ul class="coupon-ct clearfix">
       <li v-for="item in couponList">
         <h3>新人礼包</h3>
-        <h4>￥{{item.price}}</h4>
-        <h5>{{item.realName}}</h5>
-        <h6>{{item.realBrandName}}</h6>
+        <h4>￥{{ item.price }}</h4>
+        <h5>{{ item.realName }}</h5>
+        <h6>{{ item.realBrandName }}</h6>
         <p v-if="item.isgetDiscount == 1">已领取</p>
       </li>
     </ul>
@@ -51,12 +51,13 @@ export default {
           this.couponList[index].realName = arr[1]
           this.couponList[index].realBrandName = arr[0]
         })
-      }).catch(e => {console.log(e)})
+      }).catch(e => {
+      console.log(e)
+    })
   },
   mounted() {
   },
-  methods: {
-  },
+  methods: {},
 }
 </script>
 

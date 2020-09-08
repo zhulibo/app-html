@@ -1,19 +1,41 @@
 # app-html
 
-## Project setup
+### 运行项目
 ```
 npm install
+npm run s // 端口固定在8081
 ```
 
-### Compiles and hot-reloads for development
+### 命令
 ```
-npm run serve
+npm run b // 正式包
+npm run t // 测试包
+npm run a // 一次打两个包
 ```
+### 简介
+app-html交互文档页面：/home
 
-### Compiles and minifies for production
-```
-npm run build
-```
+ui框架：mint-ui
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+css预处理器：stylus
+
+### 分支
+master：主分支
+
+dev：开发分支，日常提交代码
+
+### 规范
+tab键：两个空格
+
+引号：单引号
+
+### todo
+所有点击下载app
+
+动态轮播图动画
+
+跳转APP传参
+
+echart定时器更新数据
+
+重构接口

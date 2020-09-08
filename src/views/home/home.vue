@@ -48,9 +48,9 @@
     </div>
     <h3>html调app方法：（type：ios：object | android：string）</h3>
     <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
-<!--    <h3 class="app">app调html方法：（type：object）</h3>-->
-<!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
-<!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+    <!--    <h3 class="app">app调html方法：（type：object）</h3>-->
+    <!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+    <!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
     <div>
       <router-link :to="{path: '/couponInvite'}">couponInvite 分享优惠券邀请新用户注册</router-link>
       <span>http://app.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id；pageId:礼包id
@@ -128,7 +128,7 @@ export default {
       margin-left: 2em
       margin-right: 2em
     }
-    &.disable{
+    &.disable {
       opacity .4
     }
   }

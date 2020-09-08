@@ -4,7 +4,7 @@ import router from './router'
 import axios from './axios'
 import store from './store'
 import common from './utils/filters/common' // 过滤器
-import global from './components/global/global' // 全局变量
+import global from './utils/global/global' // 全局变量
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
@@ -20,9 +20,9 @@ Vue.prototype.global = global // 全局变量
 
 Vue.config.ignoredElements = [ // 忽略微信开放标签
   'wx-open-launch-app',
-];
+]
 
-Vue.use(Mint);
+Vue.use(Mint)
 
 new Vue({
   router,
@@ -34,7 +34,7 @@ new Vue({
 
 // 根据路由设置标题
 router.beforeEach((to, from, next) => {
-  if(to.meta.title) {
+  if (to.meta.title) {
     document.title = to.meta.title
   }
   next();

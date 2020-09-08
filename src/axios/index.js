@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Toast } from 'mint-ui'
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
-axios.defaults.timeout =  6000
+axios.defaults.timeout = 6000
 
 // http request 拦截器
 axios.interceptors.request.use(

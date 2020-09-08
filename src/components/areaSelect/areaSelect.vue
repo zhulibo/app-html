@@ -1,11 +1,11 @@
 <template>
   <div class="area-code-ct">
-    <div class="area-code" @click="areaDialogVisible = true">{{areaCode}}</div>
+    <div class="area-code" @click="areaDialogVisible = true">{{ areaCode }}</div>
     <div class="area-select" v-if="areaDialogVisible">
       <h2>选择国际电话区号</h2>
       <ul>
         <li v-for="item in areaCodeList" @click="selectAreaCode(item.code)" :class="{selected: areaCode == item.code}">
-          <span>{{item.city}}</span><span>{{item.code}}</span></li>
+          <span>{{ item.city }}</span><span>{{ item.code }}</span></li>
       </ul>
     </div>
     <div class="area-select-bg" v-if="areaDialogVisible" @click="areaDialogVisible = false"></div>

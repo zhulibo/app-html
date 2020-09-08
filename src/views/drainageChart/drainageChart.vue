@@ -3,8 +3,8 @@
     <h1>激活人数统计</h1>
     <v-chart :options="eChartsOptions"/>
     <div class="text">
-      <div>昨天激活人数：<span>{{todayNumber}}</span>人</div>
-      <div>共激活人数: <span>{{allNumber}}</span>人</div>
+      <div>昨天激活人数：<span>{{ todayNumber }}</span>人</div>
+      <div>共激活人数: <span>{{ allNumber }}</span>人</div>
     </div>
   </div>
 </template>
@@ -37,6 +37,7 @@ export default {
         {date: '9.3', number: 17,},
         {date: '9.4', number: 58,},
         {date: '9.5', number: 31,},
+        {date: '9.6', number: 12,},
       ],
       eChartsOptions: {
         dataZoom: [
@@ -65,7 +66,7 @@ export default {
             data: [],
             type: 'line',
             color: 'rgba(64,158,255,1)',
-            itemStyle : { normal: {label : {show: true}}}
+            itemStyle: {normal: {label: {show: true}}}
           },
         ]
       }
@@ -105,16 +106,16 @@ export default {
 .vue-echarts-wrap {
   padding: 1em
   background-color: #fff;
-  h1{
+  h1 {
     padding-top: 1em
     font-size 18rem
     text-align: center
   }
-  .text{
+  .text {
     padding-bottom: 1em
     font-size 16rem
     padding-left: 2em
-    span{
+    span {
       color: #409eff
     }
   }

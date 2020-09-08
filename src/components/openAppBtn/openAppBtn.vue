@@ -118,7 +118,9 @@ export default {
             _this.c = true
             _this.c1 = res
           });
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     openApp() {
       if (this.global.isIos) {

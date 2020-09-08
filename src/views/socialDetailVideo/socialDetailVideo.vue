@@ -4,14 +4,14 @@
     <open-app-btn></open-app-btn>
     <video controls autoplay :src="socialDetailVideo.videoUrl" :poster="socialDetailVideo.videoImage"></video>
     <div class="param">
-      <h2>{{socialDetailVideo.title}}</h2>
-      <h3>{{socialDetailVideo.content}}</h3>
-      <p>{{socialDetailVideo.createTime | dateToCustomizeTime}}</p>
+      <h2>{{ socialDetailVideo.title }}</h2>
+      <h3>{{ socialDetailVideo.content }}</h3>
+      <p>{{ socialDetailVideo.createTime | dateToCustomizeTime }}</p>
     </div>
     <div class="related-goods" v-if="socialDetailVideo.good">
       <div class="related-goods-ct">
         <img :src="socialDetailVideo.good.icon" mode="">
-        <span>{{socialDetailVideo.good.title}}</span>
+        <span>{{ socialDetailVideo.good.title }}</span>
       </div>
     </div>
     <div class="like" v-if="likeList.length > 0">
@@ -19,23 +19,23 @@
         <img :src="item.header" v-for="item in likeList">
       </div>
       <div class="r">
-        <span>已有{{likeTotalCount}}位用户赞<i class="iconfont icon-youjiantou"></i></span>
+        <span>已有{{ likeTotalCount }}位用户赞<i class="iconfont icon-youjiantou"></i></span>
       </div>
     </div>
     <div class="social-comment" v-if="socialCommentList.length>0">
       <dl>
-        <dt>共{{socialDetailVideo.commentNum}}条评论</dt>
+        <dt>共{{ socialDetailVideo.commentNum }}条评论</dt>
         <dd v-for="item in socialCommentList">
           <div class="l"><img :src="item.userHeader" alt=""></div>
           <div class="r">
-            <h3>{{item.userName}}</h3>
-            <p>{{item.content}}<span>{{item.createTime | dateToCustomizeTime}}</span></p>
+            <h3>{{ item.userName }}</h3>
+            <p>{{ item.content }}<span>{{ item.createTime | dateToCustomizeTime }}</span></p>
             <ul v-if="item.level2Comment">
               <li v-for="item2 in item.level2Comment">
                 <div class="l"><img :src="item2.userHeader" alt=""></div>
                 <div class="r">
-                  <h3>{{item2.userName}}</h3>
-                  <p>{{item2.content}}<span>{{item2.createTime | dateToCustomizeTime}}</span></p>
+                  <h3>{{ item2.userName }}</h3>
+                  <p>{{ item2.content }}<span>{{ item2.createTime | dateToCustomizeTime }}</span></p>
                 </div>
               </li>
             </ul>
@@ -50,11 +50,11 @@
           <img v-if="item.articleImageList" :src="item.articleImageList[0].image" alt="" @load="doSort()">
           <img v-else :src="item.videoImage" alt="" @load="doSort()">
           <div class="ct">
-            <h3>{{item.content}}</h3>
+            <h3>{{ item.content }}</h3>
             <div class="auther clearfix">
               <img :src="item.issuerHeader" alt="">
-              <span>{{item.issuerName}}</span>
-              <b><i class="iconfont icon-shoucang"></i> {{item.supportNum}}</b>
+              <span>{{ item.issuerName }}</span>
+              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>
             </div>
           </div>
         </li>
@@ -64,11 +64,11 @@
           <img v-if="item.articleImageList" :src="item.articleImageList[0].image" alt="" @load="doSort()">
           <img v-else :src="item.videoImage" alt="" @load="doSort()">
           <div class="ct">
-            <h3>{{item.content}}</h3>
+            <h3>{{ item.content }}</h3>
             <div class="auther clearfix">
               <img :src="item.issuerHeader" alt="">
-              <span>{{item.issuerName}}</span>
-              <b><i class="iconfont icon-shoucang"></i> {{item.supportNum}}</b>
+              <span>{{ item.issuerName }}</span>
+              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>
             </div>
           </div>
         </li>
@@ -131,7 +131,9 @@ export default {
       })
         .then(res => {
           this.socialDetailVideo = res.data
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     getLikeList() {
       let formData = new FormData();
@@ -151,7 +153,9 @@ export default {
             this.likeList = res.data
           }
           this.likeTotalCount = res.page.totalCount
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     getSocialCommentList() {
       let formData = new FormData()
@@ -171,7 +175,9 @@ export default {
             this.socialCommentList[i].level2Comment = []
             this.getSocialCommentList2(this.socialCommentList[i].id)
           }
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     getSocialCommentList2(id) {
       let formData = new FormData()
@@ -187,12 +193,14 @@ export default {
       })
         .then(res => {
           for (let i = 0; i < this.socialCommentList.length; i++) {
-            if(this.socialCommentList[i].id == id && res.data[0] != null){
+            if (this.socialCommentList[i].id == id && res.data[0] != null) {
               console.log(res.data)
               this.$set(this.socialCommentList[i], 'level2Comment', res.data)
             }
           }
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     getSocialRecommendList() {
       this.waterfallLoading = true
@@ -212,7 +220,9 @@ export default {
           this.socialRecommendList = res.data
           this.pageNum++
           this.doSort()
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     doSort() {
       let socialRecommendList1 = document.querySelector('.socialRecommendList1')
@@ -250,7 +260,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-video{
+video {
   width: 100%
   max-height 50vh
   background-color: #000
@@ -320,38 +330,38 @@ video{
   padding: 1em
   font-size 13rem
   background-color: #fff
-  dd{
+  dd {
     margin-top: 1em
     display: flex
   }
-  li{
+  li {
     display: flex
     margin-top: .4em
     padding: .6em 0
-    .l{
+    .l {
       display: inline-block
-      img{
+      img {
         width: 1.8em
         height: 1.8em
       }
     }
   }
-  .l{
+  .l {
     margin-right: .6em
     display: inline-block
-    img{
+    img {
       width: 2em
       height: 2em
       border-radius: 50%;
     }
   }
-  .r{
+  .r {
     flex: 1
-    h3{
+    h3 {
       color: #999
       padding-bottom: .4em
     }
-    span{
+    span {
       display: inline-block
       padding-left: .5em
       font-size 10rem

@@ -10,8 +10,7 @@ export default {
   data() {
     return {}
   },
-  computed: {
-  },
+  computed: {},
   created() {
   },
   mounted() {
@@ -22,8 +21,8 @@ export default {
 }
 </script>
 
-<style>
-@import '//at.alicdn.com/t/font_1970543_wbg20ubyuj8.css';
-@import './assets/css/base.css';
-@import './assets/css/common.css';
+<style lang="stylus">
+@import '//at.alicdn.com/t/font_1970543_wbg20ubyuj8.css'
+@import './assets/css/base.css'
+@import './assets/css/common.css'
 </style>

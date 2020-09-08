@@ -11,18 +11,18 @@
       <div class="swiper-pagination"></div>
     </div>
     <div class="goods-head">
-      <div class="price" v-if="goodDetail.sellPrice">￥{{goodDetail.sellPrice}}</div>
+      <div class="price" v-if="goodDetail.sellPrice">￥{{ goodDetail.sellPrice }}</div>
       <div class="price" v-else>￥---</div>
-      <div class="title">{{goodDetail.title}}</div>
+      <div class="title">{{ goodDetail.title }}</div>
     </div>
     <div class="genuine">
       <img :src="goodDetail.qualityAssuranceImage" alt="">
     </div>
     <ul class="param">
-      <li>品牌<span>{{goodDetail.brandName}}</span></li>
-      <li>货号<span>{{goodDetail.cargoNo}}</span></li>
-      <li>材质<span>{{goodDetail.material}}</span></li>
-      <li>尺寸<span>{{goodDetail.size}}</span></li>
+      <li>品牌<span>{{ goodDetail.brandName }}</span></li>
+      <li>货号<span>{{ goodDetail.cargoNo }}</span></li>
+      <li>材质<span>{{ goodDetail.material }}</span></li>
+      <li>尺寸<span>{{ goodDetail.size }}</span></li>
     </ul>
     <div class="content">
       <div v-html="goodDetail.content"></div>
@@ -98,7 +98,9 @@ export default {
               document.querySelector('.swiper-wrapper').style.height = img.height + 'px'
             }
           })
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     }
   }
 }

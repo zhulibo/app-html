@@ -23,7 +23,7 @@
         </li>
       </ul>
       <div class="inviteNumber" v-if="inviteNumber>0">
-        <p><span>已完成{{inviteNumber}}人</span></p>
+        <p><span>已完成{{ inviteNumber }}人</span></p>
         <i></i>
       </div>
     </div>
@@ -58,7 +58,9 @@ export default {
     })
       .then(res => {
         this.inviteNumber = res.data
-      }).catch(e => {console.log(e)})
+      }).catch(e => {
+      console.log(e)
+    })
   },
   mounted() {
   },

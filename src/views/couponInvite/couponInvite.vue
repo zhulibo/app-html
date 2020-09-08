@@ -85,7 +85,9 @@ export default {
         .then(res => {
           this.$toast(res.message);
           this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
-        }).catch(e => {console.log(e)})
+        }).catch(e => {
+        console.log(e)
+      })
     },
     checkboxChange() {
       this.checked = !this.checked
