@@ -3,9 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import getters from './getters'
+import login from './modules/login'
+
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+  getters,
+  modules: {
+    login,
+  }
 })

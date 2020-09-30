@@ -11,8 +11,12 @@
     </div>
     <div class="couponInvite-form">
       <div class="phone-ct">
-        <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>
-        <input class="phone" type="text" v-model="phone" placeholder="请输入手机号领取新人优惠券">
+<!--        <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>-->
+        <input class="phone" type="text" v-model="phone" placeholder="请输入手机号">
+        <span @click="getCode">获取验证码</span>
+      </div>
+      <div class="phone-ct">
+        <input class="phone" type="text" v-model="verificationCode" placeholder="请输入验证码">
       </div>
       <input class="submit" type="button" value="立刻领取" @click="submitForm">
       <div class="protocol-ct">
@@ -31,10 +35,11 @@ export default {
   data() {
     return {
       phone: '',
+      verificationCode: '',
       userId: '',
       pageId: '',
       checked: true,
-      areaCode: '+86'
+      areaCode: '+86',
     }
   },
   components: {
@@ -47,47 +52,57 @@ export default {
   mounted() {
   },
   methods: {
+    getCode() {
+      this.$http({
+        url: '/userorg/app/login/captcha',
+        method: 'GET',
+        params: {
+          phone: this.phone,
+        }
+      })
+        .then(res => {
+        }).catch(e => {console.log(e)})
+    },
     submitForm() {
-      let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+      let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
       if (!phone.test(this.phone)) {
-        this.$toast('请输入正确的手机号');
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!this.verificationCode) {
+        this.$toast('请输入验证码')
         return false
       }
       if (!this.checked) {
-        this.$toast('请同意活动规则');
+        this.$toast('请同意活动规则')
         return false
       }
-      // this.$http({
-      //   url: '/cartoonThinker/app/appuser/getdiscount/json',
-      //   method: 'POST',
-      //   params: {
-      //     phone: this.phone,
-      //     userId: this.userId,
-      //     pageId: this.pageId
-      //   }
-      // })
-      //   .then(res => {
-      //     console.log(res)
-      //     this.$toast(res.msg);
-      //   }).catch(e => {console.log(e)})
-      let formData = new FormData();
-      formData.append('phone', this.phone);
-      formData.append('userId', this.userId);
-      formData.append('pageId', this.pageId);
       this.$http({
-        url: '/cartoonThinker/app/appuser/getdiscount/json', // 邀请新用户注册
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+        url: '/userorg/app/login',
         method: 'POST',
-        data: formData,
+        data: {
+          phone: this.phone,
+          loginType: 2,
+          code: this.verificationCode,
+        }
       })
         .then(res => {
-          this.$toast(res.message);
-          this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
-        }).catch(e => {
-        console.log(e)
-      })
+          this.$http({
+            url: '/order/app/discount/sharePage',
+            method: 'POST',
+            headers: {
+              Authorization: res.data.token
+            },
+            data: {
+              id: this.pageId,
+              inviteId: this.userId,
+            }
+          })
+            .then(res => {
+              this.$toast(res.msg)
+              this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
+            }).catch(e => {console.log(e)})
+        }).catch(e => {console.log(e)})
     },
     checkboxChange() {
       this.checked = !this.checked
@@ -162,7 +177,14 @@ export default {
 }
 .couponInvite-form .phone-ct .phone {
   flex: 1
-  border-width: 0;
+  padding-left: 10px
+  width: 0
+  border-width: 0
+}
+.couponInvite-form .phone-ct span {
+  display: inline-block
+  width: 6em
+  text-align: center
 }
 .couponInvite-form .submit {
   btn2()

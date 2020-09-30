@@ -35,29 +35,23 @@ export default {
   name: 'coupon',
   data() {
     return {
-      // title: '分享优惠券',
       userId: '',
       pageId: '',
-      inviteNumber: 0
+      list: [],
+      inviteNumber: 0,
     }
   },
   created() {
     this.userId = this.$route.query.userId
     this.pageId = this.$route.query.pageId
-    // this.invokeAppSetTitle()
 
-    let formData = new FormData();
-    formData.append('userId', this.userId);
     this.$http({
-      url: '/cartoonThinker/app/discountuser/invitationNumber/json', // 邀请了几个人
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      method: 'POST',
-      data: formData,
+      url: '/order/app/discount/sharePage/' + this.userId + '/ls',
+      method: 'GET',
     })
       .then(res => {
-        this.inviteNumber = res.data
+        this.list = res.data.discounts
+        this.inviteNumber = res.data.inviteNumber
       }).catch(e => {
       console.log(e)
     })
@@ -65,31 +59,14 @@ export default {
   mounted() {
   },
   methods: {
-    // invokeAppSetTitle() {
-    //   try {
-    //     let params = {
-    //       title: this.title
-    //     }
-    //     console.log(params)
-    //     if (this.global.isIos) {
-    //       window.webkit.messageHandlers.invokeAppSetTitle.postMessage(params)
-    //     } else {
-    //       window.android.invokeAppSetTitle(params)
-    //     }
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // },
     invokeAppCouponShare() {
       let params = {
         userId: this.userId,
-        pageId: this.pageId
+        pageId: this.pageId,
       }
       if (this.global.isIos) {
-        console.log(params)
         window.webkit.messageHandlers.invokeAppCouponShare.postMessage(params)
       } else {
-        console.log(JSON.stringify(params))
         window.android.invokeAppCouponShare(JSON.stringify(params))
       }
     }

@@ -10,6 +10,30 @@ export default new Router({
       redirect: {path: '/home'},
     },
     {
+      path: '/articleSch',
+      name: '/articleSch',
+      component: () => import (/* webpackChunkName: 'articleSch' */ '@/views/article/articleSch'),
+      meta: {
+        title: '搜索文章'
+      }
+    },
+    {
+      path: '/article',
+      name: '/article',
+      component: () => import (/* webpackChunkName: 'article' */ '@/views/article/article'),
+      meta: {
+        title: '文章'
+      }
+    },
+    {
+      path: '/articleDetail',
+      name: '/articleDetail',
+      component: () => import (/* webpackChunkName: 'articleDetail' */ '@/views/article/articleDetail'),
+      meta: {
+        title: '文章详情'
+      }
+    },
+    {
       path: '/home',
       name: '/home',
       component: () => import (/* webpackChunkName: 'home' */ '@/views/home/home'),

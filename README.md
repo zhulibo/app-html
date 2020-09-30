@@ -3,7 +3,7 @@
 ### 运行项目
 ```
 npm install
-npm run s // 端口固定在8081
+npm run s
 ```
 
 ### 命令

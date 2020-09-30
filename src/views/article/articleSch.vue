@@ -1,0 +1,99 @@
+<template>
+  <div class="ct">
+    <div class="sch">
+      <div class="back" @click="back">
+        <i class="iconfont icon-fanhui"></i>
+      </div>
+      <div class="sch-ct">
+        <input type="text" v-model="title" @keyup.enter="doSch" placeholder="请输入您要查找的内容" v-autoFocus>
+        <span><i class="iconfont icon-search"></i></span>
+      </div>
+    </div>
+    <article-list ref="articleList" :title="title" :getArticleListCreated="false"></article-list>
+  </div>
+</template>
+
+<script>
+import articleList from "@/components/articleList/articleList"
+
+export default {
+  name: 'articleSch',
+  data() {
+    return {
+      title: '',
+      articleList: [],
+      pageSize: 10,
+      pageNumber: 1,
+    }
+  },
+  computed: {
+    userInfo() {
+      return this.$store.getters.userInfo
+    },
+  },
+  components: {
+    articleList,
+  },
+  mounted () {
+  },
+  methods: {
+    doSch() {
+      this.$refs.articleList.getArticleList(1)
+    },
+    back() {
+      this.$router.go(-1)
+    }
+  }
+}
+</script>
+
+<style lang="stylus" scoped>
+.sch{
+  display: flex
+  padding: .6em
+  background-color: #fff
+  .back{
+    width: 2.6em
+    text-align: center
+    i{
+      display: inline-block
+      padding-top: .3em
+      box-sizing border-box
+      height: 100%
+      font-size 18rem
+      color: #ccc
+    }
+  }
+  .sch-ct{
+    flex: 1
+    display: flex
+    margin-right: 2.6em
+    border-radius: 1.3em
+    background-color: #f5f5f5
+    input{
+      flex: 1
+      padding-left: 1em
+      height: 2.6em
+      line-height: 2.6
+      background-color: transparent
+      border: none
+      &::-webkit-input-placeholder {
+        font-size 13rem
+        color: #999
+      }
+    }
+    span{
+      width: 2.6em
+      text-align: center
+      i{
+        display: inline-block
+        padding-top: .35em
+        box-sizing border-box
+        height: 100%
+        font-size 18rem
+        color: #ccc
+      }
+    }
+  }
+}
+</style>

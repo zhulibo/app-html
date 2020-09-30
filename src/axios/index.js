@@ -1,5 +1,6 @@
 import router from '../router'
 import axios from 'axios'
+import store from '../store'
 import { Toast } from 'mint-ui'
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
@@ -8,6 +9,12 @@ axios.defaults.timeout = 6000
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
+
+    let token = store.getters.userInfo.token
+    if (token) {
+      config.headers.Authorization = token
+    }
+
     return config
   },
   err => {
@@ -19,14 +26,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
 
-    switch (Number(res.data.statusCode)) {
+    switch (res.data.code) {
 
-      case 200:
+      case 0:
         return res.data
 
       default:
-        Toast(res.data.message + res.data.statusCode)
-        return Promise.reject(res) // 请求结果异常(statusCode!=200)进入catch函数，避免报错
+        Toast(res.data.msg + res.data.code)
+        return Promise.reject(res) // 请求结果异常(code!=0)进入catch函数，避免页面因数据问题报错
     }
 
   },

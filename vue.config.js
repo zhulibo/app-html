@@ -5,12 +5,13 @@ module.exports = {
   productionSourceMap: false,
   publicPath: './',
   devServer:{
-    port: '8081',
+    port: 8081,
     proxy: {
       '/api': {
         target: process.env.VUE_APP_REAL_URL,
-        secure: false, // 默认情况下，不接受运行在HTTPS上且使用了无效证书的后端服务器。
         changeOrigin: true,
+        ws: true,
+        secure: false, // 默认情况下，不接受运行在HTTPS上且使用了无效证书的后端服务器。
         pathRewrite: {
           '^/api': ''
         }

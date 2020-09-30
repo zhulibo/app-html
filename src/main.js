@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import axios from './axios'
 import store from './store'
+import './utils/directive/common' // 指令
 import common from './utils/filters/common' // 过滤器
 import global from './utils/global/global' // 全局变量
 import Mint from 'mint-ui'

@@ -23,7 +23,6 @@ export default {
   name: 'couponNewUserHasCode',
   data() {
     return {
-      // title: '新人礼包',
       userId: '',
       pageId: '',
       couponList: [],
@@ -33,24 +32,16 @@ export default {
     this.userId = this.$route.query.userId
     this.pageId = this.$route.query.pageId
 
-    let formData = new FormData();
-    formData.append('userId', this.userId);
-    formData.append('id', this.pageId);
     this.$http({
-      url: '/cartoonThinker/app/discountuser/selectPageDiscounts/json', // 获取优惠券
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      method: 'POST',
-      data: formData,
+      url: '/order/backadmin/discount/discount',
+      method: 'GET',
+      data: {
+        packageId: this.packageId,
+        userId: this.userId,
+      }
     })
       .then(res => {
-        this.couponList = res.data
-        this.couponList.forEach(function (value, index, array) {
-          let arr = value.name.trim().split(" ")
-          this.couponList[index].realName = arr[1]
-          this.couponList[index].realBrandName = arr[0]
-        })
+        this.couponList = res.data.list
       }).catch(e => {
       console.log(e)
     })
