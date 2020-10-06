@@ -15,6 +15,11 @@
       <div class="content" v-html="detail.content">
       </div>
     </div>
+    <div class="fixed-icon">
+      <div class="icon-ct"><i class="iconfont icon-pinglun"></i></div>
+      <div class="icon-ct"><i class="iconfont icon-fenxiang"></i></div>
+      <div class="icon-ct"><i class="iconfont icon-shoucang"></i></div>
+    </div>
   </div>
 </template>
 
@@ -117,4 +122,40 @@ export default {
     }
   }
 }
+.fixed-icon {
+  position: fixed
+  z-index 100
+  box-sizing border-box
+  padding: 0 20px
+  width: 100%
+  left: 0
+  bottom: 20px
+  .icon-ct{
+    display: inline-block
+    margin-right: 10px
+    width: 3em
+    height: 3em
+    line-height: 3em
+    border-radius: 50%
+    box-shadow 0 0 10px rgba(0,0,0,.2)
+    color: #ccc
+    background-color: #fff
+    text-align: center
+    .on{
+
+    }
+    i{
+      display: inline-block
+      height: 100%
+      font-size 20rem
+    }
+    &:last-child{
+      float: right
+      margin-right: 0
+      color: #fff
+      background-color: #ccc
+    }
+  }
+}
+
 </style>
