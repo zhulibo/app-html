@@ -137,5 +137,21 @@ export default new Router({
         title: '隐私协议'
       }
     },
+    {
+      path: '/agreementUserNew',
+      name: '/agreementUserNew',
+      component: () => import (/* webpackChunkName: 'agreementUserNew' */ '@/views/agreementUserNew/agreementUserNew'),
+      meta: {
+        title: '用户协议'
+      }
+    },
+    {
+      path: '/agreementPrivacyNew',
+      name: '/agreementPrivacyNew',
+      component: () => import (/* webpackChunkName: 'agreementPrivacyNew' */ '@/views/agreementPrivacyNew/agreementPrivacyNew'),
+      meta: {
+        title: '隐私协议'
+      }
+    },
   ]
 })
