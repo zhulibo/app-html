@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '//at.alicdn.com/t/font_1970543_7fnwwdg4kih.css'
+@import '//at.alicdn.com/t/font_1970543_ger16a3owzw.css'
 @import './assets/css/base.css'
 @import './assets/css/common.css'
 </style>

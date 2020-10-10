@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="swiper-pagination"></div>
+<!--      <div class="swiper-pagination"></div>-->
     </div>
     <article-list></article-list>
   </div>
@@ -53,15 +53,7 @@ export default {
           slideShadows: false,
         },
       },
-      articleList: [],
-      pageSize: 10,
-      pageNumber: 1,
     }
-  },
-  computed: {
-    userInfo() {
-      return this.$store.getters.userInfo
-    },
   },
   components: {
     Swiper,
@@ -116,12 +108,9 @@ export default {
   .back{
     width: 2.6em
     text-align: center
+    line-height: 2.6em
     i{
-      display: inline-block
-      padding-top: .3em
-      box-sizing border-box
-      height: 100%
-      font-size 18rem
+      font-size 20rem
       color: #ccc
     }
   }
@@ -135,7 +124,7 @@ export default {
       flex: 1
       padding-left: 1em
       height: 2.6em
-      line-height: 2.6
+      line-height: 2.6em
       background-color: transparent
       border: none
       &::-webkit-input-placeholder {
@@ -145,13 +134,10 @@ export default {
     }
     span{
       width: 2.6em
+      line-height: 2.6em
       text-align: center
       i{
-        display: inline-block
-        padding-top: .35em
-        box-sizing border-box
-        height: 100%
-        font-size 18rem
+        font-size 20rem
         color: #ccc
       }
     }
