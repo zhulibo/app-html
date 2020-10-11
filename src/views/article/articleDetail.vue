@@ -363,8 +363,6 @@ export default {
     >>>img{
       display: block
       width: 100%
-      margin-top: .6em
-      margin-bottom: .6em
     }
   }
 }

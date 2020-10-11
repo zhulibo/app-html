@@ -1,7 +1,21 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.8.29</span></h1>
+    <h1>app-html交互文档<span>最后修改日期：2020.10.11</span></h1>
 
+    <!--月-->
+    <h2><span>2020.10</span></h2>
+    <div>
+      <router-link :to="{path: '/article'}">article 模玩文化列表</router-link>
+      <span>http://app.mxjclub.com/share/#/article</span>
+    </div>
+    <div>
+      <router-link :to="{path: '/articleDetail'}">articleDetail 模玩文化详情</router-link>
+      <span>http://app.mxjclub.com/share/#/articleDetail</span>
+    </div>
+    <div>
+      <router-link :to="{path: '/articleSch'}">articleSch 模玩文化搜索</router-link>
+      <span>http://app.mxjclub.com/share/#/articleSch</span>
+    </div>
     <!--月-->
     <h2><span>2020.8</span></h2>
     <div>
