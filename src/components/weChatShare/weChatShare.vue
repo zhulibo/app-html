@@ -21,10 +21,6 @@ export default {
   name: 'openAppBtn',
   data() {
     return {
-      extinfo: {
-        url: ''
-      },
-      isIos: null,
       wechatState: false,
       y: '',
       z: false,
@@ -39,7 +35,6 @@ export default {
   },
   computed: {},
   created() {
-    this.extinfo.url = location.href
     this.y = location.href.split('#')[0]
 
     // 微信版本号大于7.0.12支持开放标签
@@ -63,22 +58,12 @@ export default {
   mounted() {
   },
   methods: {
-    launch() {
-      this.d = true
-      if (!this.global.isIos) {
-        setTimeout(this.global.downloadApp(), 1000)
-      }
-    },
-    error(e) {
-      this.e = true
-      this.global.downloadApp()
-    },
     wxInit() {
       let _this = this
       let formData = new FormData();
       formData.append('url', _this.y);
       this.$http({
-        url: '/cartoonThinker/app/weChatPay/accessToken/json',
+        url: 'https://app.mxjclub.com/cartoonThinker/app/weChatPay/accessToken/json',
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -88,30 +73,27 @@ export default {
         .then(res => {
           this.a1 = res
           wx.config({
-            // debug: true,
+            debug: true,
             appId: 'wx626b8475e0bff0a7',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signature,
             jsApiList: [
-              'onMenuShareTimeline', // 分享给好友
-              'onMenuShareAppMessage', // 分享到朋友圈
               'updateAppMessageShareData',
             ],
-            openTagList: ['wx-open-launch-app'] // 获取开放标签权限
           });
           wx.ready(function () {
             _this.b = true
-            wx.updateAppMessageShareData({
-              title: '111', // 分享标题
-              desc: '222', // 分享描述
-              link: 'http://app.mxjclub.com/share/#/agreementUser', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/png8778.png', // 分享图标
-              success: function () {
-                // 设置成功
-                alert('2333')
-              }
-            })
+            // wx.updateAppMessageShareData({
+            //   title: '111', // 分享标题
+            //   desc: '222', // 分享描述
+            //   link: 'http://app.mxjclub.com/share/#/agreementUser', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            //   imgUrl: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/png8778.png', // 分享图标
+            //   success: function () {
+            //     // 设置成功
+            //     alert('2333')
+            //   }
+            // })
           });
           wx.error(function (res) {
             _this.c = true
@@ -121,48 +103,9 @@ export default {
         console.log(e)
       })
     },
-    openApp() {
-      if (this.global.isIos) {
-        location.href = "cartoonThinkerService://";
-      } else {
-        location.href = "cartoonThinkerService://";
-      }
-      setTimeout(this.global.downloadApp(), 1000)
-    },
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.launch-app {
-  position: fixed;
-  z-index: 1000;
-  bottom: 3em
-  left: 50%
-  transform translateX(-50%)
-  display: inline-block
-  width: 7em
-  height: 2.4em;
-  line-height: 2.4
-  opacity: 0;
-  font-size 16rem
-  text-align: center
-}
-.launch-app-bg {
-  position: fixed;
-  z-index: 100;
-  bottom: 3em
-  left: 50%
-  transform translateX(-50%)
-  display: inline-block
-  width: 7em
-  height: 2.4em;
-  line-height: 2.4
-  color: #fff
-  background-color: purple
-  border-radius: 1.2em;
-  font-size 16rem
-  box-shadow 0 0 .3em rgba(0, 0, 0, .5)
-  text-align: center
-}
 </style>

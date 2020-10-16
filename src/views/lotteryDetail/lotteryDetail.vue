@@ -1,7 +1,8 @@
 <template>
   <div>
-    <open-app></open-app>
-    <open-app-btn></open-app-btn>
+<!--    <open-app></open-app>-->
+<!--    <open-app-btn></open-app-btn>-->
+    <we-chat-share></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
         <img v-if="detail" :src="detail.tbGoods.skus[0].skuImage" alt="">
@@ -78,8 +79,8 @@ export default {
     }
   },
   components: {
-    openApp,
-    openAppBtn,
+    // openApp,
+    // openAppBtn,
     weChatShare,
     Swiper,
     SwiperSlide,
