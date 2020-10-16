@@ -34,6 +34,7 @@
 <script>
 import openApp from "@/components/openApp/openApp";
 import openAppBtn from "@/components/openAppBtn/openAppBtn";
+import weChatShare from "@/components/weChatShare/weChatShare";
 import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
@@ -79,6 +80,7 @@ export default {
   components: {
     openApp,
     openAppBtn,
+    weChatShare,
     Swiper,
     SwiperSlide,
   },
@@ -97,7 +99,7 @@ export default {
   },
   created() {
     this.drawId = this.$route.query.drawId
-    this.getDetail()
+    // this.getDetail()
   },
   mounted() {
   },
