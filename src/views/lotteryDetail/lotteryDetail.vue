@@ -2,7 +2,7 @@
   <div>
 <!--    <open-app></open-app>-->
 <!--    <open-app-btn></open-app-btn>-->
-    <we-chat-share></we-chat-share>
+    <we-chat-share v-if="userInfo.userId" :inviteUserId="userInfo.userId" :drawId="drawId" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
         <img v-if="detail" :src="detail.tbGoods.skus[0].skuImage" alt="">
@@ -21,13 +21,42 @@
     </div>
     <div v-swiper:mySwiper="swiperOption" class="banner">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item, index) in articleRecommendList">
-          <div class="item-ct">
-            <img :src="item.topImage">
+        <div class="swiper-slide" v-for="(item, index) in lotteryList">
+          <div class="item-ct" @click="itemClick">
+            <h3>{{item.text}}</h3>
+            <p>{{item.code}}</p>
           </div>
         </div>
       </div>
     </div>
+    <div v-if="loginFlag" class="login">
+      <div class="title">
+        <h3>手机验证登录</h3>
+      </div>
+      <div class="ct">
+        <div class="li">
+          <i class="iconfont icon-shouji"></i>
+          <input type="text" v-model="phone">
+        </div>
+        <div class="li">
+          <i class="iconfont icon-xinxi"></i>
+          <input type="text" v-model="verificationCode">
+          <span class="code" @click="getCode">获取验证码</span>
+        </div>
+        <div class="li">
+          <button @click="submitForm">确定</button>
+        </div>
+      </div>
+    </div>
+    <div v-if="loginFlag" class="login-bg" @click="loginFlag = false"></div>
+    <br>
+    <br>
+    <br>
+    <button @click="getCodeList">getCodeList</button>
+    <p>0元抽奖结果</p>
+    {{a}}
+    <p>获取抽奖码列表</p>
+    {{c}}
     <div class="h6em"></div>
   </div>
 </template>
@@ -43,38 +72,58 @@ export default {
   name: 'lotteryDetail',
   data() {
     return {
+      a: '',
+      c: '',
       drawId: '',
+      inviteUserId: '',
       detail: {},
       leftTime: 0,
       hour: '',
       minute: '',
       second: '',
-      articleRecommendList: [
+      lotteryList: [
         {
-          id: 1,
-          topImage: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/timg3117.jpg'
+          text: '0元抽奖',
+          code: '',
+          url: '',
         },
         {
-          id: 2,
-          topImage: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/timg3117.jpg'
+          text: '好友助力',
+          code: '',
+          url: '',
         },
         {
-          id: 3,
-          topImage: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/timg3117.jpg'
+          text: '好友助力',
+          code: '',
+          url: '',
         },
         {
-          id: 4,
-          topImage: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/timg3117.jpg'
+          text: '好友助力',
+          code: '',
+          url: '',
         },
         {
-          id: 5,
-          topImage: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/timg3117.jpg'
-        }
+          text: '好友助力',
+          code: '',
+          url: '',
+        },
+        {
+          text: '好友助力',
+          code: '',
+          url: '',
+        },
       ],
       swiperOption: {
         slidesPerView: 3.5,
         spaceBetween: 10,
         centeredSlides: true,
+      },
+      loginFlag: false,
+      phone: '',
+      verificationCode: '',
+      userInfo: {
+        userId: '',
+        token: '',
       },
     }
   },
@@ -89,25 +138,18 @@ export default {
     swiper: directive
   },
   beforeCreate() {
-    // 存储url中的token
-    let userInfo ={
-      token: this.$route.query.token
-    }
-    if(userInfo.token) {
-      this.$store.dispatch('updateUserInfo', userInfo)
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
-    }
   },
   created() {
     this.drawId = this.$route.query.drawId
-    // this.getDetail()
+    this.inviteUserId = this.$route.query.inviteUserId
+    this.getDetail()
   },
   mounted() {
   },
   methods: {
     getDetail() {
       this.$http({
-        url: '/goodsmanage/app/draw/detail',
+        url: '/goodsmanage/app/draw/detail/ls',
         method: 'GET',
         params: {
           id: this.drawId,
@@ -156,13 +198,84 @@ export default {
       this.second = second
       this.leftTime = leftTime - 1
       let timer = setTimeout(this.countdownTime, 1000);
-    }
+    },
+    itemClick() {
+      if(!this.userInfo.token){
+        this.loginFlag = true
+        return
+      }
+      this.$http({
+        url: '/goodsmanage/app/draw',
+        method: 'POST',
+        data: {
+          drawId: this.drawId,
+          level: 1,
+          status: 2,
+          inviteUser: this.inviteUserId,
+        }
+      })
+        .then(res => {
+          this.a = res
+        }).catch(e => {console.log(e)})
+    },
+    getCode() {
+      this.$http({
+        url: '/userorg/app/login/captcha',
+        method: 'GET',
+        params: {
+          phone: this.phone,
+        }
+      })
+        .then(res => {
+        }).catch(e => {console.log(e)})
+    },
+    submitForm() {
+      let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
+      if (!phone.test(this.phone)) {
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!this.verificationCode) {
+        this.$toast('请输入验证码')
+        return false
+      }
+      this.$http({
+        url: '/userorg/app/login',
+        method: 'POST',
+        data: {
+          phone: this.phone,
+          loginType: 2,
+          code: this.verificationCode,
+        }
+      })
+        .then(res => {
+          this.loginFlag = false
+          this.userInfo.token = res.data.token
+          this.userInfo.userId = res.data.id
+          this.$store.dispatch('updateUserInfo', this.userInfo)
+          localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+          // this.getCodeList()
+        }).catch(e => {console.log(e)})
+    },
+    getCodeList() {
+      this.$http({
+        url: '/goodsmanage/app/draw/userNum/detail',
+        method: 'GET',
+        params:{
+          drawId: this.drawId
+        }
+      })
+        .then(res => {
+          this.c = res
+        }).catch(e => {console.log(e)})
+    },
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .lottery{
+  background-color: #fff
   .goods-banner{
     img{
       width: 100%
@@ -196,6 +309,7 @@ export default {
   justify-content center
   align-items: center;
   font-size 16rem
+  background-color: #fff
   .title{
     margin-right: .6em
     color: purple
@@ -215,11 +329,94 @@ export default {
     }
   }
 }
+.login-bg{
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  z-index: 1000
+}
+.login{
+  position: fixed
+  z-index: 2000
+  top: 50%
+  left: 50%
+  transform translate(-50%, -50%)
+  width: 20em
+  padding: 1em
+  background-color: #fff
+  border-radius: .5em;
+  box-shadow 0 0 1em rgba(0,0,0,.2)
+  .title{
+    font-size 18rem
+    text-align: center
+  }
+  .ct{
+    .li{
+      display: flex
+      padding: .6em 0
+      line-height: 2.6em
+      border-bottom: 1px solid #ddd
+      i{
+        font-size 24rem
+        color: #999
+      }
+      input{
+        flex: 1
+        padding-left: 1em
+        height: 2.6em
+        border: none
+        width: 0
+      }
+      .code{
+        width: 6em
+        text-align: center
+      }
+      button{
+        btn2()
+        border: none
+        color: #fff
+        font-size 18rem
+        background-image: linear-gradient(90deg, #814DFF, purple);
+      }
+      &:last-child{
+        border: none
+      }
+    }
+  }
+}
+.banner{
+  padding: 1em 0
+  background-color: #fff
+}
 .swiper-slide {
   transition: 300ms;
   transform: scale(0.9);
 }
 .swiper-slide-active,.swiper-slide-duplicate-active{
   transform: scale(1);
+}
+.item-ct{
+  width: 100%
+  height: 0
+  padding-bottom: 130%
+  background-color: purple
+  text-align: center
+  h3{
+    padding-top: 40%
+    color: #fff
+    font-size 18rem
+    font-weight: bold
+  }
+  border-radius: .6em;
+  box-shadow 0 0 .3em rgba(101, 36, 226, .6)
+}
+.swiper-slide-active{
+  .item-ct{
+    h3{
+      text-shadow 0 0 .2em rgba(255,255,255,.8)
+    }
+  }
 }
 </style>

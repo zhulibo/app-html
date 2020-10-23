@@ -25,7 +25,7 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   res => {
-if (res.data.statusCode == 200) return res.data
+// if (res.data.statusCode == 200) return res.data
     switch (res.data.code) {
 
       case 0:

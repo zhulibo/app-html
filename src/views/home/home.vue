@@ -1,9 +1,13 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.10.11</span></h1>
+    <h1>app-html交互文档<span>最后修改日期：2020.10.21</span></h1>
 
     <!--月-->
     <h2><span>2020.10</span></h2>
+    <div>
+      <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖</router-link>
+      <span>http://app.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；inviteUserId：邀请人id
+    </div>
     <div>
       <router-link :to="{path: '/article'}">article 模玩文化列表</router-link>
       <span>http://app.mxjclub.com/share/#/article</span>

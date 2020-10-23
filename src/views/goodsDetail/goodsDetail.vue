@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       goodId: '',
+      type: '',
       goodDetail: {
         sellPrice: ''
       },
@@ -72,6 +73,7 @@ export default {
   },
   created() {
     this.goodId = this.$route.query.goodId
+    this.type = this.$route.query.type
     this.getGoodsDetail()
   },
   mounted() {

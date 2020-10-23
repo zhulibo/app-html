@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '//at.alicdn.com/t/font_1970543_ger16a3owzw.css'
+@import '//at.alicdn.com/t/font_1970543_43ta1kb93h2.css'
 @import './assets/css/base.css'
 @import './assets/css/common.css'
 </style>

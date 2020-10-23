@@ -18,7 +18,13 @@
 import wx from 'weixin-js-sdk';
 
 export default {
-  name: 'openAppBtn',
+  name: 'weChatShare',
+  props: {
+    drawId: {},
+    inviteUserId: {},
+    title: '',
+    imgUrl: '',
+  },
   data() {
     return {
       wechatState: false,
@@ -59,18 +65,15 @@ export default {
   },
   methods: {
     wxInit() {
-      let _this = this
-      let formData = new FormData();
-      formData.append('url', _this.y);
       this.$http({
-        url: 'https://app.mxjclub.com/cartoonThinker/app/weChatPay/accessToken/json',
+        url: '/userorg/app/jsToken/ls',
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        data: formData,
+        data: {
+          url: this.y
+        }
       })
         .then(res => {
+          this.a = true
           this.a1 = res
           wx.config({
             debug: true,
@@ -82,22 +85,21 @@ export default {
               'updateAppMessageShareData',
             ],
           });
-          wx.ready(function () {
-            _this.b = true
-            // wx.updateAppMessageShareData({
-            //   title: '111', // 分享标题
-            //   desc: '222', // 分享描述
-            //   link: 'http://app.mxjclub.com/share/#/agreementUser', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            //   imgUrl: 'http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/png8778.png', // 分享图标
-            //   success: function () {
-            //     // 设置成功
-            //     alert('2333')
-            //   }
-            // })
+          wx.ready(() => {
+            this.b = true
+            wx.updateAppMessageShareData({
+              title: this.title, // 分享标题
+              desc: '漫想家', // 分享描述
+              link: 'http://new.mxjclub.com/share/#/inviteUserId=' + this.inviteUserId + '&drawId=' + this.drawId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: this.imgUrl, // 分享图标
+              success: () => {
+                alert('updateAppMessageShareData')
+              }
+            })
           });
-          wx.error(function (res) {
-            _this.c = true
-            _this.c1 = res
+          wx.error(res => {
+            this.c = true
+            this.c1 = res
           });
         }).catch(e => {
         console.log(e)
