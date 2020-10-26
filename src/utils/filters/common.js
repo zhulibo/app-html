@@ -13,7 +13,7 @@ let dateToCustomizeTime = value => {
   day = offTime / day
 
   if (day >= 3) {
-    return value
+    return timestampToDate(value)
   } else if (day >= 1) {
     return parseInt(day) + '天前'
   } else if (hour >= 1) {
@@ -26,25 +26,25 @@ let dateToCustomizeTime = value => {
 }
 
 let timestampToDate = value => {
-  let dt = new Date(value);
+  let dt = new Date(value)
 
-  let y = dt.getFullYear();
-  let m = dt.getMonth() + 1;
-  let d = dt.getDate();
-  let hh = dt.getHours();
-  let mm = dt.getMinutes();
+  let y = dt.getFullYear()
+  let m = dt.getMonth() + 1
+  let d = dt.getDate()
+  let hh = dt.getHours()
+  let mm = dt.getMinutes()
 
   function checkTime(i) {
     if (i < 10) {
-      i = "0" + i;
+      i = "0" + i
     }
-    return i;
+    return i
   }
 
-  m = checkTime(m);
-  d = checkTime(d);
-  hh = checkTime(hh);
-  mm = checkTime(mm);
+  m = checkTime(m)
+  d = checkTime(d)
+  hh = checkTime(hh)
+  mm = checkTime(mm)
 
   return y + "-" + m + "-" + d + "  " + hh + ":" + mm
 }

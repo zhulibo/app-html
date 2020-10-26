@@ -21,17 +21,11 @@
         <div>打开漫想家</div>
       </div>
     </div>
-    <!--<p>{{y}}</p>-->
-    <!--<p v-if="z">微信浏览器环境 && >7.0.12</p>-->
-    <!--<p v-if="a">请求成功</p>-->
-    <!--<p v-if="a">请求res{{a1}}</p>-->
-    <!--<br>-->
-    <!--<br>-->
-    <!--<p v-if="b">wx.ready</p>-->
-    <!--<p v-if="c">签名失败</p>-->
-    <!--<p v-if="c">签名res{{c1}}</p>-->
-    <!--<p v-if="d">打开成功</p>-->
-    <!--<p v-if="e">打开失败</p>-->
+    <p v-if="a">请求成功{{a1}}</p>
+    <p v-if="b">wx.ready</p>
+    <p v-if="c">签名失败{{c1}}</p>
+    <p v-if="d">打开成功</p>
+    <p v-if="e">打开失败{{e1}}</p>
   </div>
 </template>
 
@@ -46,8 +40,7 @@ export default {
         url: ''
       },
       wechatState: false,
-      y: '',
-      z: false,
+      url: '',
       a: false,
       a1: null,
       b: false,
@@ -55,16 +48,17 @@ export default {
       c1: null,
       d: false,
       e: false,
+      e1: null,
     }
   },
   computed: {},
   created() {
     this.extinfo.url = location.href
-    this.y = location.href.split('#')[0]
+    this.url = location.href.split('#')[0]
 
     // 微信版本号大于7.0.12支持开放标签
     try {
-      let wechat = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i);
+      let wechat = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i)
       let judgewechat = wechat[1].split('.')
       if (judgewechat[0] >= 7) {
         if (judgewechat[1] >= 0) {
@@ -77,38 +71,25 @@ export default {
       }
     } catch (e) {
     }
-    // this.wechatState = true
-    // this.wxInit()
+    this.wechatState = true
+    this.wxInit()
   },
   mounted() {
   },
   methods: {
-    launch() {
-      this.d = true
-      if (!this.global.isIos) {
-        setTimeout(this.global.downloadApp(), 1000)
-      }
-    },
-    error(e) {
-      this.e = true
-      this.global.downloadApp()
-    },
     wxInit() {
-      let _this = this
-      let formData = new FormData();
-      formData.append('url', _this.y);
       this.$http({
-        url: '/cartoonThinker/app/weChatPay/accessToken/json',
+        url: '/userorg/app/jsToken/ls',
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        data: formData,
+        data: {
+          url: this.url
+        }
       })
         .then(res => {
+          this.a = true
           this.a1 = res
           wx.config({
-            // debug: true,
+            debug: true,
             appId: 'wx626b8475e0bff0a7',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
@@ -118,23 +99,34 @@ export default {
               'onMenuShareAppMessage', // 分享到朋友圈
             ],
             openTagList: ['wx-open-launch-app'] // 获取开放标签权限
-          });
-          wx.ready(function () {
-            _this.b = true
-          });
-          wx.error(function (res) {
-            _this.c = true
-            _this.c1 = res
-          });
+          })
+          wx.ready(() => {
+            this.b = true
+          })
+          wx.error(res => {
+            this.c = true
+            this.c1 = res
+          })
         }).catch(e => {
         console.log(e)
       })
     },
+    launch() {
+      this.d = true
+      if (!this.global.isIos) {
+        setTimeout(this.global.downloadApp(), 1000)
+      }
+    },
+    error(e) {
+      this.e = true
+      this.e1 = e.detail
+      this.global.downloadApp()
+    },
     openApp() {
       if (this.global.isIos) {
-        location.href = "cartoonThinkerService://";
+        location.href = "cartoonThinkerService://"
       } else {
-        location.href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.chuizi.cartoonthinker&fromcase=40003";
+        location.href = "cartoonThinkerService://"
       }
       setTimeout(this.global.downloadApp(), 1000)
     },

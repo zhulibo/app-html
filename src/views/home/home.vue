@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.10.21</span></h1>
+    <h1>app-html交互文档<span>最后修改日期：2020.10.26</span></h1>
 
     <!--月-->
     <h2><span>2020.10</span></h2>
@@ -14,7 +14,7 @@
     </div>
     <div>
       <router-link :to="{path: '/articleDetail'}">articleDetail 模玩文化详情</router-link>
-      <span>http://app.mxjclub.com/share/#/articleDetail</span>
+      <span>http://app.mxjclub.com/share/#/articleDetail</span>参数：id：文章id
     </div>
     <div>
       <router-link :to="{path: '/articleSch'}">articleSch 模玩文化搜索</router-link>
@@ -38,7 +38,7 @@
     <h2><span>2020.7</span></h2>
     <div>
       <router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link>
-      <span>http://app.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id
+      <span>http://app.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id；type: 1现货 2预售
     </div>
     <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
     <div>

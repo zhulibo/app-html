@@ -1,5 +1,3 @@
-<script>
-
 let isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
 let downloadApp = () => {
@@ -46,4 +44,3 @@ export default {
   getParams, // 获取url中参数
   getNowBeijingTimestamp, // 获取此时北京时间戳
 }
-</script>

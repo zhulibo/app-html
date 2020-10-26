@@ -3,13 +3,15 @@
     <ul>
       <li v-for="(item, index) in articleList" @click="goArticleDetail(item.id)">
         <div class="l">
-          <div class="img-ct">
-            <img :src="item.topImage" alt="">
+          <div class="img-ct" :style="{backgroundImage: 'url(' + item.topImage +  ')'}">
           </div>
         </div>
         <div class="r">
           <h3>{{item.title}}</h3>
-          <div v-html="item.content"></div>
+          <div>
+            <span><i class="iconfont icon-liulan"></i>{{item.browseNumber}}</span>
+            <span><i class="iconfont icon-shoucang"></i>{{item.supportNumber}}</span>
+          </div>
         </div>
       </li>
     </ul>
@@ -35,13 +37,9 @@ export default {
   },
   props: {
     title: '',
+    token: '',
     getArticleListCreated: {
       default: true
-    },
-  },
-  computed: {
-    userInfo() {
-      return this.$store.getters.userInfo
     },
   },
   components: {
@@ -63,7 +61,7 @@ export default {
       }
       this.articleLoading = true
       this.$http({
-        url: '/userorg/app/news',
+        url: '/userorg/app/news/ls',
         method: 'GET',
         params: {
           title: this.title,
@@ -76,10 +74,6 @@ export default {
             this.articleLoaded = true
           }
           this.pageNumber++
-          // 提取文章html的前一百个字符
-          for (let i = 0; i < res.data.list.length; i++) {
-            res.data.list[i].content = res.data.list[i].content.substring(0,100);
-          }
           this.articleList = this.articleList.concat(res.data.list)
           this.articleLoading = false
         }).catch(e => {
@@ -96,7 +90,7 @@ export default {
       }
     },
     goArticleDetail(id) {
-      this.$router.push({path: '/articleDetail', query: {id: id}})
+      this.$router.push({path: '/articleDetail', query: {id: id, token: this.token}})
     }
   }
 }
@@ -104,25 +98,22 @@ export default {
 
 <style lang="stylus" scoped>
 .list{
+  margin-top: .6em
   padding: .6em
   li{
     display: flex
-    margin-top: .6em
+    //margin-top: .6em
     padding: .6em
     background-color: #fff
     .l{
       .img-ct{
         position: relative
-        padding-bottom: 50%
-        width: 10em
+        padding-bottom: 75%
+        width: 8em
         height: 0
-        img{
-          position: absolute
-          top: 0
-          left: 0
-          width: 100%
-          height: 100%
-        }
+        background-position: center center;
+        background-size: cover;
+        border-radius: .4em;
       }
     }
     .r{
@@ -130,17 +121,20 @@ export default {
       width: 0
       padding-left: .6em
       h3{
-        line1()
+        margin-top: .3em
+        line2()
+        height: 2.8em
       }
       div{
-        margin-top: .6em
-        height: 2.8em
-        line2()
-        >>>img{
-          display: none
-        }
-        >>>video{
-          display: none
+        margin-top: .3em
+        color: #999
+        span{
+          display: inline-block
+          margin-right: .6em
+          i{
+            display: inline-block
+            margin-right: .2em
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <open-app></open-app>
-    <open-app-btn></open-app-btn>
+<!--    <open-app-btn></open-app-btn>-->
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in bannerList">
@@ -18,14 +18,21 @@
     <div class="genuine">
       <img :src="goodDetail.qualityAssuranceImage" alt="">
     </div>
-    <ul class="param">
-      <li>品牌<span>{{ goodDetail.brandName }}</span></li>
-      <li>货号<span>{{ goodDetail.cargoNo }}</span></li>
-      <li>材质<span>{{ goodDetail.material }}</span></li>
-      <li>尺寸<span>{{ goodDetail.size }}</span></li>
+    <ul v-if="type == 1" class="param">
+      <li v-if="goodDetail.brandName">品牌<span>{{ goodDetail.brandName }}</span></li>
+      <li v-if="goodDetail.tbGoodsDetail.cargoNo">货号<span>{{ goodDetail.tbGoodsDetail.cargoNo }}</span></li>
+      <li>材质<span>{{ goodDetail.tbGoodsDetail.material }}</span></li>
+      <li>尺寸<span>{{ goodDetail.tbGoodsDetail.size }}</span></li>
+    </ul>
+    <ul v-else-if="type == 2" class="param">
+      <li v-if="goodDetail.brandName">品牌<span>{{ goodDetail.brandName }}</span></li>
+      <li v-if="goodDetail.tbPresellGoodsDetail.cargoNo">货号<span>{{ goodDetail.tbPresellGoodsDetail.cargoNo }}</span></li>
+      <li>材质<span>{{ goodDetail.tbPresellGoodsDetail.material }}</span></li>
+      <li>尺寸<span>{{ goodDetail.tbPresellGoodsDetail.size }}</span></li>
     </ul>
     <div class="content">
-      <div v-html="goodDetail.content"></div>
+      <h3>商品简介</h3>
+      <img v-for="item in contentList" :src="item" alt="">
     </div>
   </div>
 </template>
@@ -45,7 +52,8 @@ export default {
       goodDetail: {
         sellPrice: ''
       },
-      bannerList: null,
+      bannerList: [],
+      contentList: [],
       swiperOption: {
         autoHeight: true, // 高度随内容变化
         // preloadImages: true,
@@ -80,20 +88,20 @@ export default {
   },
   methods: {
     getGoodsDetail() {
-      let formData = new FormData();
-      formData.append('id', this.goodId);
+      console.log(this.goodId)
       this.$http({
-        url: '/cartoonThinker/system/good/goodDetail/json',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        method: 'POST',
-        data: formData,
+        url: this.type == 1 ? '/goodsmanage/app/goods/ls/' + this.goodId : '/goodsmanage/login/presellgoods/detail/' + this.goodId,
+        method: 'GET',
       })
         .then(res => {
           this.goodDetail = res.data
-          this.bannerList = res.data.images.split(';')
-          this.bannerList.pop()
+          for (let i = 0; i < res.data.images.length; i++) {
+            if (res.data.images[i].type == 1) {
+              this.bannerList.push(res.data.images[i].url)
+            }else if (res.data.images[i].type == 2){
+              this.contentList.push(res.data.images[i].url)
+            }
+          }
           this.$nextTick(function () { // 赋值swiper-wrapper高度（swiper的imagesReady事件貌似没有执行）
             let img = document.querySelector('.swiper-wrapper .swiper-slide:first-child img')
             img.onload = function () {
@@ -152,6 +160,14 @@ export default {
   }
 }
 .content {
+  background-color: #fff
+  h3{
+    line-height: 2
+    padding-left: .6em
+  }
   margin-top: .6em
+  img{
+    width: 100%
+  }
 }
 </style>

@@ -14,12 +14,12 @@
         <div class="swiper-slide" v-for="(item, index) in articleRecommendList">
           <div class="item-ct" @click="goArticleDetail(item.id)">
             <img :src="item.topImage">
+            <span>去看看</span>
           </div>
         </div>
       </div>
-<!--      <div class="swiper-pagination"></div>-->
     </div>
-    <article-list></article-list>
+    <article-list :token="userInfo.token"></article-list>
   </div>
 </template>
 
@@ -32,25 +32,21 @@ export default {
   name: 'article1',
   data() {
     return {
+      userInfo:{
+        token: ''
+      },
       articleRecommendList: [],
       swiperOption: {
-        // pagination: {
-        //   el: '.swiper-pagination',
-        // },
-        // autoplay: {
-        //   delay: 5000,
-        // },
-        // loop : true,
         effect: 'coverflow',
         centeredSlides: true,
-        slidesPerView: 1.1,
-        spaceBetween: 30,
+        slidesPerView: 1.08,
+        spaceBetween: 20,
         coverflowEffect: {
-          rotate: 0,
-          // stretch: -20,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
+          rotate: 0, // slide做3d旋转时Y轴的旋转角度
+          stretch: 0, // 每个slide之间的拉伸值，越大slide靠得越紧。5.3.6 后可使用%百分比
+          depth: 80, // slide的位置深度。值越大z轴距离越远，看起来越小。
+          modifier: 1, // depth和rotate和stretch的倍率，相当于depth*modifier、rotate*modifier、stretch*modifier，值越大这三个参数的效果越明显。
+          slideShadows: false, // 是否开启slide阴影
         },
       },
     }
@@ -63,17 +59,13 @@ export default {
   directives: {
     swiper: directive
   },
-  beforeCreate() {
-    // 存储url中的token
-    let userInfo ={
-      token: this.$route.query.token
-    }
-    if(userInfo.token) {
-      this.$store.dispatch('updateUserInfo', userInfo)
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
-    }
-  },
   created() {
+    // 保存url中的token至vuex
+    this.userInfo.token = this.$route.query.token
+    if(this.userInfo.token) {
+      this.$store.dispatch('updateUserInfo', this.userInfo)
+    }
+
     this.getArticleRecommendList()
   },
   mounted() {
@@ -81,7 +73,7 @@ export default {
   methods: {
     getArticleRecommendList() {
       this.$http({
-        url: '/userorg/app/news/recommend',
+        url: '/userorg/app/news/recommend/ls',
         method: 'GET',
       })
         .then(res => {
@@ -90,17 +82,20 @@ export default {
         console.log(e)
       })
     },
-    goArticleSch(id) {
-      this.$router.push({path: '/articleSch', query: {}})
+    goArticleSch() {
+      this.$router.push({path: '/articleSch', query: {token: this.userInfo.token}})
     },
     goArticleDetail(id) {
-      this.$router.push({path: '/articleDetail', query: {id: id}})
+      this.$router.push({path: '/articleDetail', query: {id: id, token: this.userInfo.token}})
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.ct{
+  background-color: #fff
+}
 .sch{
   display: flex
   padding: .6em
@@ -119,7 +114,7 @@ export default {
     display: flex
     margin-right: 2.6em
     border-radius: 1.3em
-    background-color: #f5f5f5
+    background-color: #F5F5FA
     input{
       flex: 1
       padding-left: 1em
@@ -150,12 +145,23 @@ export default {
       padding-bottom: 50%
       width: 100%
       height: 0
+      border-radius: 1em;
+      overflow: hidden
       img{
         position: absolute
         top: 0
         left: 0
         width: 100%
         height: 100%
+      }
+      span{
+        position: absolute
+        bottom: 1em
+        right: 1em
+        z-index: 100
+        btn1()
+        color: purple
+        background-color: #fff
       }
     }
   }

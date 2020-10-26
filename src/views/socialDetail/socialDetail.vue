@@ -1,18 +1,18 @@
 <template>
   <div>
-    <open-app></open-app>
+<!--    <open-app></open-app>-->
     <open-app-btn></open-app-btn>
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
-          <img :src="item.image">
+        <div class="swiper-slide" v-for="item in socialDetail.images" :key="item.id">
+          <img :src="item.url">
         </div>
       </div>
     </div>
-    <div class="swiper-container gallery-thumbs" v-show="socialDetail.articleImageList.length>1">
+    <div class="swiper-container gallery-thumbs" v-show="socialDetail.images && socialDetail.images.length>1">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="item in socialDetail.articleImageList" :key="item.image">
-          <div :style="{backgroundImage: 'url(' + item.image +  ')'}"></div>
+        <div class="swiper-slide" v-for="item in socialDetail.images" :key="item.id">
+          <div :style="{backgroundImage: 'url(' + item.url +  ')'}"></div>
         </div>
       </div>
     </div>
@@ -21,34 +21,34 @@
       <h3>{{ socialDetail.content }}</h3>
       <p>{{ socialDetail.createTime | dateToCustomizeTime }}</p>
     </div>
-    <div class="related-goods" v-if="socialDetail.good">
-      <div class="related-goods-ct">
-        <img :src="socialDetail.good.icon" mode="">
-        <span>{{ socialDetail.good.title }}</span>
-      </div>
-    </div>
-    <div class="like" v-if="likeList.length > 0">
-      <div class="l">
-        <img :src="item.header" v-for="item in likeList">
-      </div>
-      <div class="r">
-        <span>已有{{ likeTotalCount }}位用户赞<i class="iconfont icon-youjiantou"></i></span>
-      </div>
-    </div>
+<!--    <div class="related-goods" v-if="socialDetail.good">-->
+<!--      <div class="related-goods-ct">-->
+<!--        <img :src="socialDetail.good.icon" mode="">-->
+<!--        <span>{{ socialDetail.good.title }}</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="like" v-if="likeList.length > 0">-->
+<!--      <div class="l">-->
+<!--        <img :src="item.header" v-for="item in likeList">-->
+<!--      </div>-->
+<!--      <div class="r">-->
+<!--        <span>已有{{ likeTotalCount }}位用户赞<i class="iconfont icon-youjiantou"></i></span>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="social-comment" v-if="socialCommentList.length>0">
       <dl>
-        <dt>共{{ socialDetail.commentNum }}条评论</dt>
+<!--        <dt>共{{ socialDetail.commentNum }}条评论</dt>-->
         <dd v-for="item in socialCommentList">
-          <div class="l"><img :src="item.userHeader" alt=""></div>
+          <div class="l"><img :src="item.tbAppUserDetail.header" alt=""></div>
           <div class="r">
-            <h3>{{ item.userName }}</h3>
+            <h3>{{ item.tbAppUserDetail.nickName }}</h3>
             <p>{{ item.content }}<span>{{ item.createTime | dateToCustomizeTime }}</span></p>
-            <ul v-if="item.level2Comment">
-              <li v-for="item2 in item.level2Comment">
-                <div class="l"><img :src="item2.userHeader" alt=""></div>
+            <ul v-if="item.comments">
+              <li v-for="item2 in item.comments">
+                <div class="l"><img :src="item2.tbAppUserDetail.header" alt=""></div>
                 <div class="r">
-                  <h3>{{ item2.userName }}</h3>
-                  <p>{{ item2.content }}<span>{{ item2.createTime | dateToCustomizeTime }}</span></p>
+                  <h3>{{ item2.tbAppUserDetail.nickName }}</h3>
+                  <p>回复：<b>{{item2.replyUserName}}</b>{{ item2.content }}<span>{{ item2.createTime | dateToCustomizeTime }}</span></p>
                 </div>
               </li>
             </ul>
@@ -60,29 +60,27 @@
       <h2>为您推荐</h2>
       <ul class="socialRecommendList1">
         <li v-if="item" v-for="item in socialRecommendList1">
-          <img v-if="item.articleImageList" :src="item.articleImageList[0].image" alt="" @load="doSort()">
-          <img v-else :src="item.videoImage" alt="" @load="doSort()">
-          <div class="ct">
+          <img :src="item.images[0].type == 1 ? item.images[0].url : item.images[0].videoImage" alt="" @load="doSort()">
+          <div class="ct" v-if="item.content">
             <h3>{{ item.content }}</h3>
-            <div class="auther clearfix">
-              <img :src="item.issuerHeader" alt="">
-              <span>{{ item.issuerName }}</span>
-              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>
-            </div>
+<!--            <div class="auther clearfix">-->
+<!--              <img :src="item.issuerHeader" alt="">-->
+<!--              <span>{{ item.issuerName }}</span>-->
+<!--              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>-->
+<!--            </div>-->
           </div>
         </li>
       </ul>
       <ul class="socialRecommendList2">
         <li v-if="item" v-for="item in socialRecommendList2">
-          <img v-if="item.articleImageList" :src="item.articleImageList[0].image" alt="" @load="doSort()">
-          <img v-else :src="item.videoImage" alt="" @load="doSort()">
-          <div class="ct">
+          <img :src="item.images[0].type == 1 ? item.images[0].url : item.images[0].videoImage" alt="" @load="doSort()">
+          <div class="ct" v-if="item.content">
             <h3>{{ item.content }}</h3>
-            <div class="auther clearfix">
-              <img :src="item.issuerHeader" alt="">
-              <span>{{ item.issuerName }}</span>
-              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>
-            </div>
+<!--            <div class="auther clearfix">-->
+<!--              <img :src="item.issuerHeader" alt="">-->
+<!--              <span>{{ item.issuerName }}</span>-->
+<!--              <b><i class="iconfont icon-shoucang"></i> {{ item.supportNum }}</b>-->
+<!--            </div>-->
           </div>
         </li>
       </ul>
@@ -114,7 +112,7 @@ export default {
       waterfallLoading: false,
       waterfallIndex: 0,
       pageSize: 10,
-      pageNum: 1,
+      pageNumber: 1,
     }
   },
   components: {
@@ -124,7 +122,7 @@ export default {
   created() {
     this.shareId = this.$route.query.shareId
     this.getSocialDetail()
-    this.getLikeList()
+    // this.getLikeList()
     this.getSocialCommentList()
     this.getSocialRecommendList()
   },
@@ -136,15 +134,9 @@ export default {
   },
   methods: {
     getSocialDetail() {
-      let formData = new FormData()
-      formData.append('id', this.shareId)
       this.$http({
-        url: '/cartoonThinker/system/article/look/json',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        method: 'POST',
-        data: formData,
+        url: '/userorg/app/login/article/' + this.shareId,
+        method: 'GET',
       })
         .then(res => {
           this.socialDetail = res.data
@@ -199,66 +191,32 @@ export default {
       })
     },
     getSocialCommentList() {
-      let formData = new FormData()
-      formData.append('itemId', this.shareId)
-      formData.append('type', 2)
       this.$http({
-        url: '/cartoonThinker/system/articlecomment/articleList/json',
-        headers: {
-          'Content-Type': 'multipart/form-data'
+        url: '/userorg/app/article/comment/ls',
+        method: 'GET',
+        params: {
+          articleId: this.shareId
         },
-        method: 'POST',
-        data: formData,
       })
         .then(res => {
-          this.socialCommentList = res.data
-          for (let i = 0; i < this.socialCommentList.length; i++) {
-            this.socialCommentList[i].level2Comment = []
-            this.getSocialCommentList2(this.socialCommentList[i].id)
-          }
-        }).catch(e => {
-        console.log(e)
-      })
-    },
-    getSocialCommentList2(id) {
-      let formData = new FormData()
-      formData.append('itemId', id)
-      formData.append('type', 2)
-      this.$http({
-        url: '/cartoonThinker/system/articlecomment/articlelevel2list/json',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        method: 'POST',
-        data: formData,
-      })
-        .then(res => {
-          for (let i = 0; i < this.socialCommentList.length; i++) {
-            if (this.socialCommentList[i].id == id && res.data[0] != null) {
-              this.$set(this.socialCommentList[i], 'level2Comment', res.data)
-            }
-          }
+          this.socialCommentList = res.data.list
         }).catch(e => {
         console.log(e)
       })
     },
     getSocialRecommendList() {
       this.waterfallLoading = true
-      let formData = new FormData()
-      formData.append('pageSize', this.pageSize)
-      formData.append('pageIndex', this.pageNum)
-      formData.append('position', '2')
       this.$http({
-        url: '/cartoonThinker/app/articleOther/list/json',
-        headers: {
-          'Content-Type': 'multipart/form-data'
+        url: '/userorg/app/login/article/list',
+        method: 'GET',
+        params: {
+          pageSize: this.pageSize,
+          pageNumber: this.pageNumber,
         },
-        method: 'POST',
-        data: formData,
       })
         .then(res => {
-          this.socialRecommendList = res.data
-          this.pageNum++
+          this.socialRecommendList = res.data.list
+          this.pageNumber++
           this.doSort()
         }).catch(e => {
         console.log(e)
@@ -420,6 +378,11 @@ export default {
     h3 {
       color: #999
       padding-bottom: .4em
+    }
+    b{
+      padding-right: .5em
+      font-weight: normal
+      color: #999
     }
     span {
       display: inline-block

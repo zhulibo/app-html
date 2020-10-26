@@ -9,7 +9,7 @@
         <span><i class="iconfont icon-search"></i></span>
       </div>
     </div>
-    <article-list ref="articleList" :title="title" :getArticleListCreated="false"></article-list>
+    <article-list ref="articleList" :title="title" :getArticleListCreated="false" :token="userInfo.token"></article-list>
   </div>
 </template>
 
@@ -20,19 +20,24 @@ export default {
   name: 'articleSch',
   data() {
     return {
+      userInfo:{
+        token: ''
+      },
       title: '',
       articleList: [],
       pageSize: 10,
       pageNumber: 1,
     }
   },
-  computed: {
-    userInfo() {
-      return this.$store.getters.userInfo
-    },
-  },
   components: {
     articleList,
+  },
+  created() {
+    // 保存url中的token至vuex
+    this.userInfo.token = this.$route.query.token
+    if(this.userInfo.token) {
+      this.$store.dispatch('updateUserInfo', this.userInfo)
+    }
   },
   mounted () {
   },
@@ -66,7 +71,7 @@ export default {
     display: flex
     margin-right: 2.6em
     border-radius: 1.3em
-    background-color: #f5f5f5
+    background-color: #F5F5FA
     input{
       flex: 1
       padding-left: 1em

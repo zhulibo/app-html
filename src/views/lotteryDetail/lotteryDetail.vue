@@ -22,7 +22,7 @@
     <div v-swiper:mySwiper="swiperOption" class="banner">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in lotteryList">
-          <div class="item-ct" @click="itemClick">
+          <div class="item-ct on" @click="itemClick">
             <h3>{{item.text}}</h3>
             <p>{{item.code}}</p>
           </div>
@@ -41,7 +41,7 @@
         <div class="li">
           <i class="iconfont icon-xinxi"></i>
           <input type="text" v-model="verificationCode">
-          <span class="code" @click="getCode">获取验证码</span>
+          <span class="code" @click="getCode">{{content}}</span>
         </div>
         <div class="li">
           <button @click="submitForm">确定</button>
@@ -125,6 +125,9 @@ export default {
         userId: '',
         token: '',
       },
+      content: '发送验证码',
+      time: 60,
+      canClick: true
     }
   },
   components: {
@@ -219,6 +222,13 @@ export default {
         }).catch(e => {console.log(e)})
     },
     getCode() {
+      let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
+      if (!phone.test(this.phone)) {
+        console.log(123)
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!this.canClick) return
       this.$http({
         url: '/userorg/app/login/captcha',
         method: 'GET',
@@ -227,6 +237,20 @@ export default {
         }
       })
         .then(res => {
+          // 60s验证码倒计时
+          this.canClick = false
+          this.content = this.time + ' s'
+          this.timer = setInterval(() => {
+            if (this.time <= 1) {
+              this.canClick = true
+              clearInterval(this.timer)
+              this.time = 60
+              this.content = '获取验证码'
+              return false
+            }
+            this.time--
+            this.content = this.time + ' s'
+          }, 1000)
         }).catch(e => {console.log(e)})
     },
     submitForm() {
@@ -259,7 +283,7 @@ export default {
     },
     getCodeList() {
       this.$http({
-        url: '/goodsmanage/app/draw/userNum/detail',
+        url: '/goodsmanage/app/draw/userNum',
         method: 'GET',
         params:{
           drawId: this.drawId
@@ -335,11 +359,11 @@ export default {
   top: 0
   right: 0
   bottom: 0
-  z-index: 1000
+  z-index: 100
 }
 .login{
   position: fixed
-  z-index: 2000
+  z-index: 200
   top: 50%
   left: 50%
   transform translate(-50%, -50%)
@@ -401,7 +425,6 @@ export default {
   width: 100%
   height: 0
   padding-bottom: 130%
-  background-color: purple
   text-align: center
   h3{
     padding-top: 40%
@@ -411,6 +434,10 @@ export default {
   }
   border-radius: .6em;
   box-shadow 0 0 .3em rgba(101, 36, 226, .6)
+  background: url(../../assets/img/lotteryDetail1.png) center center/100% 100% no-repeat
+  &.on{
+    background: url(../../assets/img/lotteryDetail2.png) center center/100% 100% no-repeat
+  }
 }
 .swiper-slide-active{
   .item-ct{

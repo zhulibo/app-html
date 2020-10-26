@@ -1,27 +1,23 @@
 <template>
   <div class="couponInvite">
-    <div class="couponInvite-top">
-      <div class="couponInvite-top-text1">
-        <h2>邀请函</h2>
-        <p>我在漫想家努力精进<br>忍不住把它推荐给你</p>
-      </div>
-      <div class="couponInvite-top-text2">
-        <p>送你365元新人专享优惠券<br>和我一起玩乐</p>
-      </div>
+    <div class="coupon-head">
+      <img src="../../assets/img/coupon1.png" alt="">
     </div>
-    <div class="couponInvite-form">
-      <div class="phone-ct">
-<!--        <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>-->
-        <input class="phone" type="text" v-model="phone" placeholder="请输入手机号">
-        <span @click="getCode">获取验证码</span>
-      </div>
-      <div class="phone-ct">
-        <input class="phone" type="text" v-model="verificationCode" placeholder="请输入验证码">
-      </div>
-      <input class="submit" type="button" value="立刻领取" @click="submitForm">
-      <div class="protocol-ct">
-        <span :class="{on:checked}" v-model="checked" @click="checkboxChange"></span>我已阅读并同意漫想家的
-        <router-link :to="{path: '/couponActivityRule'}">活动规则</router-link>
+    <div class="couponInvite-ct">
+      <div class="couponInvite-form">
+        <div class="phone-ct">
+          <!--        <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>-->
+          <input class="phone" type="text" v-model="phone" placeholder="请输入手机号">
+          <span @click="getCode">{{content}}</span>
+        </div>
+        <div class="phone-ct">
+          <input class="phone" type="text" v-model="verificationCode" placeholder="请输入验证码">
+        </div>
+        <input class="submit" type="button" value="立刻领取" @click="submitForm">
+        <div class="protocol-ct">
+          <span :class="{on:checked}" v-model="checked" @click="checkboxChange"></span>我已阅读并同意漫想家的
+          <router-link :to="{path: '/couponActivityRule'}">活动规则</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +36,9 @@ export default {
       pageId: '',
       checked: true,
       areaCode: '+86',
+      content: '发送验证码',
+      time: 60,
+      canClick: true
     }
   },
   components: {
@@ -53,6 +52,13 @@ export default {
   },
   methods: {
     getCode() {
+      let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
+      if (!phone.test(this.phone)) {
+        this.$toast('请输入正确的手机号')
+        return false
+      }
+      if (!this.canClick) return
+
       this.$http({
         url: '/userorg/app/login/captcha',
         method: 'GET',
@@ -61,6 +67,21 @@ export default {
         }
       })
         .then(res => {
+          // 60s验证码倒计时
+          this.canClick = false
+          this.content = this.time + ' s'
+          this.timer = setInterval(() => {
+            if (this.time <= 1) {
+              this.canClick = true
+              clearInterval(this.timer)
+              this.time = 60
+              this.content = '获取验证码'
+              return false
+            }
+            this.time--
+            this.content = this.time + ' s'
+          }, 1000)
+
         }).catch(e => {console.log(e)})
     },
     submitForm() {
@@ -87,21 +108,25 @@ export default {
         }
       })
         .then(res => {
-          this.$http({
-            url: '/order/app/discount/sharePage',
-            method: 'POST',
-            headers: {
-              Authorization: res.data.token
-            },
-            data: {
-              id: this.pageId,
-              inviteId: this.userId,
-            }
-          })
-            .then(res => {
-              this.$toast(res.msg)
-              this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
-            }).catch(e => {console.log(e)})
+          let userInfo ={
+            token: res.data.token
+          }
+          this.$store.dispatch('updateUserInfo', userInfo)
+          this.getSharePage()
+        }).catch(e => {console.log(e)})
+    },
+    getSharePage() {
+      this.$http({
+        url: '/order/app/discount/sharePage',
+        method: 'POST',
+        data: {
+          id: this.pageId,
+          inviteId: this.userId,
+        }
+      })
+        .then(res => {
+          this.$toast(res.msg)
+          this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
         }).catch(e => {console.log(e)})
     },
     checkboxChange() {
@@ -117,55 +142,33 @@ export default {
 <style lang="stylus" scoped>
 .couponInvite {
   position: relative
-  min-height 100vh;
+  min-height 100vh
   overflow: hidden
-  background: url(../../assets/img/coupon18.png) center 5em / 100% auto no-repeat,
-    url(../../assets/img/coupon19.png) center bottom / 100% auto no-repeat;
+  background: #792feb url(../../assets/img/coupon23.png) center top / 100% auto no-repeat
 }
-.couponInvite::after {
-  content ""
-  position: absolute
-  z-index: -1;
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  background-image: linear-gradient(#1C9EAA, #000)
-}
-.couponInvite-top {
-  margin-top: 3.5em
-  margin-left: auto;
-  margin-right: auto;
-  width: 20em
-  height: 25em
+.coupon-head{
+  padding: 3em 0 5em
   text-align: center
-  filter: drop-shadow(0 0 1em rgba(0, 0, 0, .5));
-  background: url(../../assets/img/coupon17.png) center top / 20em auto no-repeat
-}
-.couponInvite-top-text1 {
-  padding-top: 3.4em
-  color: #666
-  font-size 16rem
-  h2 {
-    margin-bottom: .5em
-    font-size 22rem
-    font-weight: bold
+  img{
+    height: 4em
   }
 }
-.couponInvite-top-text2 {
-  font-size 16rem
-  padding-top: 6em
-  color: #fff
+.couponInvite-ct{
+  padding-top: 18em
+  padding-bottom: 7em;
+  background: url(../../assets/img/coupon17.png) center bottom / 100% 100% no-repeat
 }
 .couponInvite-form {
+  position: relative
+  z-index: 100
   margin-left: auto
   margin-right: auto
-  padding-bottom: 5em;
-  width: 75%;
+  width: 70%;
   font-size 16rem
 }
 .couponInvite-form .phone-ct {
   btn2()
+  border-radius: 1.3em;
   overflow: hidden
   display: flex
   box-sizing border-box
@@ -173,11 +176,11 @@ export default {
   padding: .2em 0
   line-height: 2.2
   background-color: #fff
-  box-shadow 0 0 1em rgba(133, 255, 237, .5)
+  box-shadow 0 0 1em rgba(0, 0, 0, .2)
 }
 .couponInvite-form .phone-ct .phone {
   flex: 1
-  padding-left: 10px
+  padding-left: 1em
   width: 0
   border-width: 0
 }
@@ -185,15 +188,17 @@ export default {
   display: inline-block
   width: 6em
   text-align: center
+  color: purple
 }
 .couponInvite-form .submit {
+  margin-top: 3em
   btn2()
-  margin-top: 1em
-  color: #fff
+  color: purple
+  font-weight: bold
   border-radius: 1.3em;
   border-width: 0;
-  background-image: linear-gradient(90deg, #44FFDB, #0AA8AD);
-  box-shadow 0 0 1em rgba(149, 255, 240, .5), 0 0 1em rgba(128, 255, 220, 1) inset;
+  background-color: #fff
+  box-shadow 0 0 1em rgba(0, 0, 0, .2), 0 -5px .2em rgba(128,0,128,.2) inset;
 }
 .couponInvite-form .protocol-ct {
   margin-top: 1em
@@ -202,7 +207,7 @@ export default {
   color: #fff
 }
 .couponInvite-form .protocol-ct a {
-  color: #00806f
+  color: #88bdff
 }
 .couponInvite-form .protocol-ct span {
   display: inline-block

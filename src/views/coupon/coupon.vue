@@ -1,31 +1,43 @@
 <template>
   <div class="coupon">
     <div class="coupon-head">
-      <div class="ct">
-        <img class="i1" src="../../assets/img/coupon1.png" alt="">
-        <img class="i2" src="../../assets/img/coupon8.png" alt="">
-        <img class="i3" src="../../assets/img/coupon9.png" alt="">
+      <img src="../../assets/img/coupon1.png" alt="">
+    </div>
+    <div class="coupon-body">
+      <div class="ct clearfix">
+        <img class="i1" src="../../assets/img/coupon15.png" alt="">
+        <img class="i2" src="../../assets/img/coupon6.png" alt="">
+        <img class="i3" src="../../assets/img/coupon14.png" alt="">
+        <img class="i4" src="../../assets/img/coupon16.png" alt="">
+        <img class="i5" src="../../assets/img/coupon7.png" alt="">
+      </div>
+      <div class="share-btn" @click="invokeAppCouponShare">
+        <p>分享好友成功注册领￥<span>365</span>元现金券</p>
       </div>
     </div>
-    <div class="coupon-list">
-      <img class="i1" src="../../assets/img/coupon10.png" alt="">
-      <img class="i2" src="../../assets/img/coupon11.png" alt="">
-      <img class="i3" src="../../assets/img/coupon13.png" alt="">
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li @click="invokeAppCouponShare">
-          <h3>分享好友成功注册</h3>
-          <h4>领 365元现金券</h4>
+    <div class="recommend-goods">
+      <ul class="clearfix">
+        <li v-for="item in goodsList">
+          <div class="ct" v-if="item.type == 1">
+            <div class="img">
+              <img :src="item.tbGoods.listedImage" alt="">
+            </div>
+            <div class="txt">
+              <h3>{{item.tbGoods.title}}</h3>
+              <div class="clearfix"><b>￥<i>{{item.tbGoods.sellPrice}}</i></b><span>{{item.tbGoods.sellNumber}}</span></div>
+            </div>
+          </div>
+          <div class="ct" v-else-if="item.type == 2">
+            <div class="img">
+              <img :src="item.tbPresellGoods.listedImage" alt="">
+            </div>
+            <div class="txt">
+              <h3>{{item.tbPresellGoods.title}}</h3>
+              <div class="clearfix"><b>￥<i>{{item.tbPresellGoods.totalPrice}}</i></b><span>{{item.tbPresellGoods.sellNumber}}</span></div>
+            </div>
+          </div>
         </li>
       </ul>
-      <div class="inviteNumber" v-if="inviteNumber>0">
-        <p><span>已完成{{ inviteNumber }}人</span></p>
-        <i></i>
-      </div>
     </div>
   </div>
 </template>
@@ -37,28 +49,45 @@ export default {
     return {
       userId: '',
       pageId: '',
-      list: [],
+      couponList: [],
       inviteNumber: 0,
+      goodsList: [],
     }
   },
   created() {
     this.userId = this.$route.query.userId
     this.pageId = this.$route.query.pageId
 
-    this.$http({
-      url: '/order/app/discount/sharePage/' + this.userId + '/ls',
-      method: 'GET',
-    })
-      .then(res => {
-        this.list = res.data.discounts
-        this.inviteNumber = res.data.inviteNumber
-      }).catch(e => {
-      console.log(e)
-    })
+    this.getCouponList()
+    this.getGoodsList()
+
   },
   mounted() {
   },
   methods: {
+    getCouponList() {
+      this.$http({
+        url: '/order/app/discount/sharePage/' + this.userId + '/ls',
+        method: 'GET',
+      })
+        .then(res => {
+          this.couponList = res.data.discounts
+          this.inviteNumber = res.data.inviteNumber
+        }).catch(e => {
+        console.log(e)
+      })
+    },
+    getGoodsList() {
+      this.$http({
+        url: '/goodsmanage/app/goods/recommend/list/ls',
+        method: 'GET',
+      })
+        .then(res => {
+          this.goodsList = res.data
+        }).catch(e => {
+        console.log(e)
+      })
+    },
     invokeAppCouponShare() {
       let params = {
         userId: this.userId,
@@ -76,182 +105,106 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.coupon {
-  overflow hidden
-  margin-left: auto;
-  margin-right: auto;
-  max-width 475px
-  background-color: #0A0616
+.coupon-head{
+  padding: 5em 0 8em
+  text-align: center
+  img{
+    height: 4em
+  }
+  background: url(../../assets/img/downloadApp6.png) bottom center/cover no-repeat
 }
-.coupon-head {
-  margin-top: 4em
-  .ct {
-    position relative
-    margin-left: auto;
-    margin-right: auto;
-    width: 20em
-    .i2 {
-      position: absolute;
-      top: -4em;
-      left: -3em;
-      height: 7em;
+.coupon-body{
+  margin-top: -1em
+  padding: 0 1em
+  text-align: center
+  .ct{
+    padding: .8em
+    padding-bottom: 2em
+    border-radius: 1em;
+    background: url(../../assets/img/coupon2.png) center center/cover no-repeat
+    img{
+      float: left
+      display: inline-block
+      &.i1,&.i2,&.i3{
+        width: 32%
+        margin-right: 2%
+      }
+      &.i3{
+        margin-right: 0
+      }
+      &.i4,&.i5{
+        width: 48%
+      }
+      &.i4{
+        margin-right: 4%
+      }
     }
-    .i3 {
-      position: absolute;
-      top: -2.3em;
-      right: -2.3em;
-      height: 3.5em;
+  }
+  .share-btn{
+    btn1()
+    font-size 16rem
+    font-weight: bold
+    height: auto
+    border-radius: 3em;
+    transform translateY(-1.4em)
+    color: purple
+    background-color: #fff
+    box-shadow 0 0 .6em rgba(151,111,217,.8)
+    p{
+      line-height: 1.8
+      padding-bottom: .2em
+      span{
+        font-size 24rem
+      }
     }
   }
 }
-.coupon-list {
-  position relative
-  margin-top: 4em
-  padding-bottom: 15em
-  background: url(../../assets/img/coupon4.png) left 1em / 7em auto no-repeat,
-    url(../../assets/img/coupon5.png) right 1em / 7em auto no-repeat,
-    url(../../assets/img/coupon12.png) left 90% / 12em auto no-repeat;
-  .i1 {
-    position: absolute;
-    top: -3.5em;
-    left: -0.5em;
-    height: 6em;
-  }
-  .i2 {
-    position: absolute;
-    top: -2em;
-    right: .5em;
-    height: 5em;
-  }
-  .i3 {
-    position: absolute;
-    bottom: 0
-    right: 0;
-    width: 12.5em
-  }
-  ul {
-    display: flex;
-    flex-wrap: wrap
-    justify-content space-between
-    margin-left: auto;
-    margin-right: auto;
-    padding 1em 1.5em 1em 1.5em
-    width: 18em
-    background: url(../../assets/img/coupon2.png) center center / 100% 100% no-repeat
-    li {
-      margin-top: 1em
-      width: 8.5em
-      height: 5.2em
-      background: center center / 100% 100% no-repeat
-      &:nth-child(1) {
-        background-image: url(../../assets/img/coupon15.png);
+.recommend-goods{
+  margin-bottom: 2em
+  padding: .6em
+  ul{
+    li{
+      margin-top: .6em
+      float: left
+      width: calc((100% - .6em)/2)
+      margin-right: .6em
+      background-color: #fff
+      border-radius: .5em
+      &:nth-child(2n){
+        margin-right: 0
       }
-      &:nth-child(2) {
-        background-image: url(../../assets/img/coupon6.png);
-      }
-      &:nth-child(3) {
-        background-image: url(../../assets/img/coupon14.png);
-      }
-      &:nth-child(4) {
-        background-image: url(../../assets/img/coupon16.png);
-      }
-      &:nth-child(5) {
-        width: 100%
-        height: 6em
-        background-image: url(../../assets/img/coupon7.png);
-      }
-      &:nth-child(6) {
+      .img{
         position: relative
         width: 100%
-        height: 6em
-        color: #fff
-        text-align: center
-        box-shadow 0 0 1em rgba(0, 0, 0, 0.5), 0 0 2em rgba(255, 255, 255, 1) inset;
-        border-radius: .6em;
-        border: .4em solid #6c40a7
-        background-image: linear-gradient(90deg, #fd818f, #f21d2e)
-        h3 {
-          margin-top: .8em
-          font-size 20rem
-          font-weight: bold
-          font-style: italic;
-        }
-        h4 {
-          font-size 22rem;
-          font-weight: bold
-          font-style: italic;
-        }
-        &::after {
+        padding-bottom: 100%
+        img{
           position: absolute
           top: 0
           left: 0
-          content ""
-          box-sizing border-box
           width: 100%
           height: 100%
-          border: .4em solid #fcb660
-          border-radius: .4em;
         }
       }
-    }
-  }
-}
-.inviteNumber {
-  position: relative
-  margin-top: 3em;
-  margin-left: auto
-  margin-right: auto
-  width: 20em
-  text-align: center
-  color: #fff
-  font-weight: bold
-  p {
-    box-sizing border-box
-    width: 19em
-    height: 4em
-    border: .3em solid #9cf1ff
-    border-radius: 2em;
-    box-shadow 0 0 1em rgb(156, 241, 255),
-    inset 0 0 1em rgb(156, 241, 255);
-    background-image: linear-gradient(90deg, #7242e4, #73d3e2)
-    span {
-      display: inline-block
-      padding-top: .4em
-      font-size 22rem
-      font-weight: bold
-      letter-spacing .1em
-    }
-  }
-  i {
-    position: absolute
-    right: 0;
-    bottom: 0
-    width: 4.6em
-    height: 4.6em
-    border-radius: 50%;
-    border: .3em solid #9cf1ff
-    background-color: #7242e4
-    box-shadow 0 0 1em rgb(156, 241, 255),
-    inset 0 0 1em rgb(156, 241, 255);
-    &::before {
-      content: "";
-      position: absolute;
-      top: 2.45em
-      left: 1.8em;
-      width: .3em;
-      height: 1em;
-      background-color: #9cf1ff;
-      transform: translateY(-.2em) rotate(-45deg);
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      top: 2em
-      left: 2.75em;
-      width: .3em;
-      height: 2.05em;
-      background-color: #9cf1ff;
-      transform: translateY(-.6em) rotate(45deg);
+      .txt{
+        padding: .3em
+        h3{
+          line2()
+          min-height 2.8em
+        }
+        div{
+          b{
+            color: purple
+            i{
+              font-style normal
+            }
+          }
+          span{
+            float: right
+            color: #999
+            font-size 12rem
+          }
+        }
+      }
     }
   }
 }
