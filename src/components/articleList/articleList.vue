@@ -89,8 +89,8 @@ export default {
         this.getArticleList()
       }
     },
-    goArticleDetail(id) {
-      this.$router.push({path: '/articleDetail', query: {id: id, token: this.token}})
+    goArticleDetail(articleId) {
+      this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.token}})
     }
   }
 }

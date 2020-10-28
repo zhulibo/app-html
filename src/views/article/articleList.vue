@@ -85,8 +85,8 @@ export default {
     goArticleSch() {
       this.$router.push({path: '/articleSch', query: {token: this.userInfo.token}})
     },
-    goArticleDetail(id) {
-      this.$router.push({path: '/articleDetail', query: {id: id, token: this.userInfo.token}})
+    goArticleDetail(articleId) {
+      this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.userInfo.token}})
     }
   }
 }
@@ -162,6 +162,10 @@ export default {
         btn1()
         color: purple
         background-color: #fff
+        padding: 0 .8em
+        height: 2em
+        line-height: 2
+        box-shadow 0 0 .5em rgba(0,0,0,.2)
       }
     }
   }

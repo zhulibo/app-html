@@ -1,6 +1,6 @@
 let dateToCustomizeTime = value => {
   if (!value) return ''
-  let createTimestamp = new Date(value).getTime()
+  let createTimestamp = new Date(Number(value)).getTime()
 
   let offTime = new Date().getTime() - createTimestamp
 
@@ -26,7 +26,8 @@ let dateToCustomizeTime = value => {
 }
 
 let timestampToDate = value => {
-  let dt = new Date(value)
+  if (!value) return ''
+  let dt = new Date(Number(value))
 
   let y = dt.getFullYear()
   let m = dt.getMonth() + 1

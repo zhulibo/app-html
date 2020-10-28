@@ -46,7 +46,6 @@ export default {
   },
   created() {
     this.userId = this.$route.query.userId
-    this.pageId = this.$route.query.pageId
   },
   mounted() {
   },

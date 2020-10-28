@@ -24,7 +24,7 @@
 <!--    </div>-->
     <div class="social-comment" v-if="socialCommentList.length>0">
       <dl>
-        <!--        <dt>共{{ socialDetail.commentNum }}条评论</dt>-->
+        <!--        <dt>共{{ social.commentNum }}条评论</dt>-->
         <dd v-for="item in socialCommentList">
           <div class="l"><img :src="item.tbAppUserDetail.header" alt=""></div>
           <div class="r">

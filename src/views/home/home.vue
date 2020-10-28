@@ -1,93 +1,75 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.10.26</span></h1>
+    <h1>app-html交互文档<span>最后修改日期：2020.10.28</span></h1>
 
-    <!--月-->
-    <h2><span>2020.10</span></h2>
     <div>
       <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖</router-link>
-      <span>http://app.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；inviteUserId：邀请人id
+      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；shareId：分享id
     </div>
+
     <div>
-      <router-link :to="{path: '/article'}">article 模玩文化列表</router-link>
-      <span>http://app.mxjclub.com/share/#/article</span>
+      <router-link :to="{path: '/articleList'}">articleList 模玩文化列表</router-link>
+      <span>http://new.mxjclub.com/share/#/articleList</span>参数：token：用户token
     </div>
+
     <div>
       <router-link :to="{path: '/articleDetail'}">articleDetail 模玩文化详情</router-link>
-      <span>http://app.mxjclub.com/share/#/articleDetail</span>参数：id：文章id
+      <span>http://new.mxjclub.com/share/#/articleDetail</span>参数：articleId：文章id
     </div>
-    <div>
-      <router-link :to="{path: '/articleSch'}">articleSch 模玩文化搜索</router-link>
-      <span>http://app.mxjclub.com/share/#/articleSch</span>
-    </div>
-    <!--月-->
-    <h2><span>2020.8</span></h2>
-    <div>
-      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>
-      <span>http://app.mxjclub.com/share/#/agreementUser</span>
-    </div>
-    <div>
-      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>
-      <span>http://app.mxjclub.com/share/#/agreementPrivacy</span>
-    </div>
-    <div>
-      <router-link :to="{path: '/drainageChart'}">drainageChart 引流人数表格</router-link>
-      <span>http://app.mxjclub.com/share/#/drainageChart</span>
-    </div>
-    <!--月-->
-    <h2><span>2020.7</span></h2>
+    <h3>html调app方法：</h3>
+    <p>分享模玩文化详情：invokeAppShareArticleDetail 参数：articleId：文章id</p>
+
     <div>
       <router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link>
-      <span>http://app.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id；type: 1现货 2预售
+      <span>http://new.mxjclub.com/share/#/goodsDetail</span>参数：goodId：商品id；type: 1现货 2预售
     </div>
-    <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
+    <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
+
     <div>
-      <router-link :to="{path: '/socialDetail'}">socialDetail 社区动态详情</router-link>
-      <span>http://app.mxjclub.com/share/#/socialDetail</span>参数：shareId：社区动态id
+      <router-link :to="{path: '/social'}">socialDetail 社区动态详情</router-link>
+      <span>http://new.mxjclub.com/share/#/socialDetail</span>参数：shareId：社区动态id
     </div>
-    <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
+    <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
+
     <div>
       <router-link :to="{path: '/socialDetailVideo'}">socialDetailVideo 社区动态详情视频</router-link>
-      <span>http://app.mxjclub.com/share/#/socialDetailVideo</span>参数：shareId：社区动态id
+      <span>http://new.mxjclub.com/share/#/socialDetailVideo</span>参数：shareId：社区动态id
     </div>
-    <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
+    <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
+
     <div>
-      <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖详情</router-link>
-      <span>http://app.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id
+      <router-link :to="{path: '/lottery'}">lotteryDetail 抽奖详情</router-link>
+      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id
     </div>
-    <h3 class="wx">微信内跳转app：参数：url：页面路径（type：object）</h3>
+    <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
+
     <div>
-      <router-link :to="{path: '/downloadApp'}">downloadApp 下载APP中间页</router-link>
-      <span>http://app.mxjclub.com/share/#/downloadApp</span>
+      <router-link :to="{path: '/coupon'}">couponShare 分享优惠券</router-link>
+      <span>http://new.mxjclub.com/share/#/couponShare</span>参数：userId：用户id
     </div>
-    <div>
-      <router-link :to="{path: '/coupon'}">coupon 分享优惠券</router-link>
-      <span>http://app.mxjclub.com/share/#/coupon</span>参数：userId：用户id；pageId:礼包id
-    </div>
-    <h3>html调app方法：（type：ios：object | android：string）</h3>
-    <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id；pageId:礼包id</p>
-    <!--    <h3 class="app">app调html方法：（type：object）</h3>-->
-    <!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
-    <!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+    <h3 class="html">html调app方法：</h3>
+    <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id</p>
+<!--    <h3 class="app">app调html方法：</h3>-->
+<!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
+
     <div>
       <router-link :to="{path: '/couponInvite'}">couponInvite 分享优惠券邀请新用户注册</router-link>
-      <span>http://app.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id；pageId:礼包id
+      <span>http://new.mxjclub.com/share/#/couponInvite</span>参数：userId：用户id
     </div>
+
     <div>
-      <router-link :to="{path: '/couponActivityRule'}">couponActivityRule 优惠券活动规则</router-link>
+      <router-link :to="{path: '/couponNewUser'}">couponNewUser 新人邀请码礼包</router-link>
+      <span>http://new.mxjclub.com/share/#/couponNewUser</span>参数：userId：用户id
     </div>
+
     <div>
-      <router-link :to="{path: '/couponNewUser'}">couponNewUser 新用户受邀注册</router-link>
+      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementUser</span>
     </div>
+
     <div>
-      <router-link :to="{path: '/couponNewUserHasCode'}">couponNewUserHasCode 邀请码礼包</router-link>
-      <span>http://app.mxjclub.com/share/#/couponNewUserHasCode</span>参数：userId：用户id；pageId:礼包id
-    </div>
-    <div>
-      <router-link :to="{path: '/test1'}">test 测试</router-link>
-    </div>
-    <div>
-      <router-link :to="{path: '/test2'}">test2 测试2</router-link>
+      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementPrivacy</span>
     </div>
 
   </div>

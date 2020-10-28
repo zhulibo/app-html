@@ -49,7 +49,7 @@
       <div class="comment-number" v-if="commentList.length > 0">共{{ detail.totalComment }}条评论</div>
       <ul>
         <li v-for="item in commentList">
-          <div class="l"><img src="http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/11218.jpg" alt=""></div>
+          <div class="l"><img :src="item.detail.header" alt=""></div>
           <div class="r">
             <div class="t" @click="clickComment(1, item.id, item.itemId, item.userId, item.detail.nickName)">
               <h3>{{item.detail.nickName}} <span @click.stop="supportComment(item.id,item.isSupport)" :class="item.isSupport == 1 ? 'on' : ''"><i class="iconfont icon-shoucang"></i> {{item.supportNum}}</span></h3>
@@ -59,14 +59,14 @@
               <dl>
                 <dd v-for="item2 in item.children">
                   <template v-if="item2.level == 2">
-                    <div class="l"><img src="http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/11218.jpg" alt=""></div>
+                    <div class="l"><img :src="item.detail.header" alt=""></div>
                     <div class="r" @click="clickComment(2, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId,)">
                       <h4><span>{{item2.detail.nickName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
                     </div>
                   </template>
                   <template v-if="item2.level == 3">
-                    <div class="l"><img src="http://cartoonthinker-bucket.oss-cn-shanghai.aliyuncs.com/11218.jpg" alt=""></div>
+                    <div class="l"><img :src="item.detail.header" alt=""></div>
                     <div class="r" @click="clickComment(3, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId, item2.secondId)">
                       <h4><span>{{item2.replyUserName}}</span> 回复 <span>{{item2.detail.nickName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
@@ -95,7 +95,7 @@ export default {
       userInfo:{
         token: ''
       },
-      id: '',
+      articleId: '',
       detail: {},
       articleRecommendList: [],
       commentList: [],
@@ -116,7 +116,7 @@ export default {
       this.$store.dispatch('updateUserInfo', this.userInfo)
     }
 
-    this.id = this.$route.query.id
+    this.articleId = this.$route.query.articleId
     this.getArticleDetail()
     this.addNumber()
     this.getArticleRecommendList()
@@ -130,7 +130,7 @@ export default {
         url: this.userInfo.token ? '/userorg/app/news/detail' : '/userorg/app/news/detail/ls',
         method: 'GET',
         params: {
-          id: this.id
+          id: this.articleId
         }
       })
         .then(res => {
@@ -144,7 +144,7 @@ export default {
         url: '/userorg/app/news',
         method: 'PUT',
         data: {
-          id: this.id,
+          id: this.articleId,
           browseNumber: 1
         }
       })
@@ -157,7 +157,7 @@ export default {
         url: '/userorg/app/news',
         method: 'PUT',
         data: {
-          id: this.id,
+          id: this.articleId,
           supportNumber: 1
         }
       })
@@ -179,12 +179,11 @@ export default {
       })
     },
     getCommentList() {
-      console.log(123)
       this.$http({
         url: this.userInfo.token ? '/userorg/app/news/comment' : '/userorg/app/news/comment/ls',
         method: 'GET',
         params: {
-          newsId: this.id,
+          newsId: this.articleId,
           pageSize: this.pageSize,
           pageNumber: this.pageNumber,
         }
@@ -239,7 +238,7 @@ export default {
         url: '/userorg/app/news/collect',
         method: 'POST',
         data: {
-          newsId: this.id,
+          newsId: this.articleId,
           makeType: this.detail.isCollect == 0 ? 1 : 2
         }
       })
@@ -255,7 +254,7 @@ export default {
         url: '/userorg/app/news/newSupport',
         method: 'POST',
         data: {
-          newsId: this.id,
+          newId: this.articleId,
           makeType: this.detail.isSupport == 0 ? 1 : 2
         }
       })
@@ -272,7 +271,7 @@ export default {
       })
     },
     goArticleDetail(id) {
-      if (id == this.id) location.reload()
+      if (id == this.articleId) location.reload()
       this.$router.push({path: '/articleDetail', query: {id: id, token: this.userInfo.token}})
     },
     back() {
@@ -309,6 +308,7 @@ export default {
     },
     clickComment(level, id, itemId, replyUserId, nickName, rootId, secondId) {
       if (!this.userInfo.token) return
+      if (level != 0 && !itemId) return // 不可以评论自己添加的评论
 
       // for(let i=0;i<arguments.length;i++) {
       //   console.log(arguments[i])
@@ -322,7 +322,7 @@ export default {
           this.level = 1
           this.rootId = ''
           this.secondId = ''
-          this.itemId = this.id
+          this.itemId = this.articleId
           this.replyUserId = ''
           this.rootId = ''
         }else if(level == 1){
@@ -359,7 +359,7 @@ export default {
         method: 'POST',
         data: {
           level: this.level,
-          newsId: this.id,
+          newsId: this.articleId,
           rootId: this.rootId,
           secondId: this.secondId,
           itemId: this.itemId,
@@ -368,19 +368,61 @@ export default {
         }
       })
         .then(res => {
-          this.commentFlag = false
-          this.pageNumber = 1
-          this.commentList = []
-          this.getCommentList()
-          // if (this.level == 1){
-          //   this.commentList.unshift({})
-          // }else {
-          //   for (let i = 0; i < this.commentList.length; i++) {
-          //     if (this.commentList[i].id == this.rootId){
-          //
-          //     }
-          //   }
-          // }
+          // this.commentFlag = false
+          // this.pageNumber = 1
+          // this.commentList = []
+          // this.getCommentList()
+          console.log(this.level)
+          console.log(this.rootId)
+          if (this.level == 1){
+            this.commentList.unshift({
+              createTime: (new Date).getTime(),
+              content: this.content,
+              detail: {
+                header: this.header,
+                nickName: this.nickName
+              },
+              hasNextPage: false,
+              isSupport: 0,
+              supportNum: 0,
+            })
+          }else if(this.level == 2){
+            for (let i = 0; i < this.commentList.length; i++) {
+              if (this.commentList[i].id == this.rootId){
+                this.commentList[i].children.unshift({
+                  createTime: (new Date).getTime(),
+                  content: this.content,
+                  detail: {
+                    header: this.header,
+                    nickName: this.nickName
+                  },
+                  hasNextPage: false,
+                  isSupport: 0,
+                  supportNum: 0,
+                })
+              }
+            }
+          }else if(this.level == 3){
+            for (let i = 0; i < this.commentList.length; i++) {
+              if (this.commentList[i].id == this.rootId){
+                for (let j = 0; j < this.commentList[i].children.length; j++) {
+                  if (this.commentList[i].children[j].id == this.itemId){
+                    this.commentList[i].children.splice(j, 0,
+                      {
+                        createTime: (new Date).getTime(),
+                        content: this.content,
+                        detail: {
+                          header: this.header,
+                          nickName: this.nickName
+                        },
+                        hasNextPage: false,
+                      }
+                    )
+                  }
+                }
+              }
+            }
+          }
 
         }).catch(e => {
         console.log(e)

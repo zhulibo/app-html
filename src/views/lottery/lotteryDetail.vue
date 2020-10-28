@@ -144,7 +144,7 @@ export default {
   },
   created() {
     this.drawId = this.$route.query.drawId
-    this.inviteUserId = this.$route.query.inviteUserId
+    this.codeId = this.$route.query.codeId
     this.getDetail()
   },
   mounted() {

@@ -7,13 +7,12 @@
       <li v-for="item in couponList">
         <h3>新人礼包</h3>
         <h4>￥{{ item.price }}</h4>
-        <h5>{{ item.realName }}</h5>
-        <h6>{{ item.realBrandName }}</h6>
-        <p v-if="item.isgetDiscount == 1">已领取</p>
+        <h5>{{ item.name }}</h5>
+        <p>已领取</p>
       </li>
     </ul>
-    <div class="tip" v-if="couponList.length > 0">
-      <p v-if="couponList[0].isgetDiscount == 1">已存入卡包</p>
+    <div class="tip">
+      <p>已存入卡包</p>
     </div>
   </div>
 </template>
@@ -30,18 +29,16 @@ export default {
   },
   created() {
     this.userId = this.$route.query.userId
-    this.pageId = this.$route.query.pageId
 
     this.$http({
-      url: '/order/backadmin/discount/discount',
+      url: '/order/app/discount/InvitationPage/ls',
       method: 'GET',
-      data: {
-        packageId: this.packageId,
-        userId: this.userId,
+      params: {
+        id: this.userId,
       }
     })
       .then(res => {
-        this.couponList = res.data.list
+        this.couponList = res.data.discounts
       }).catch(e => {
       console.log(e)
     })
@@ -55,7 +52,7 @@ export default {
 <style lang="stylus" scoped>
 .couponNewUserHasCode {
   min-height 100vh;
-  background: #6628e2 url(../../assets/img/coupon23.png) top center / 100% auto no-repeat
+  background: #fff url(../../assets/img/coupon23.png) top center / 100% auto no-repeat
   .head {
     padding-top: 1.5em
     text-align: center
@@ -77,7 +74,7 @@ export default {
     margin-right: .6em
     margin-left: .6em
     width: 7em
-    height: 9em
+    height: 8.5em
     text-align: center;
     font-weight: bold
     filter: drop-shadow(0 .2em .5em rgba(103, 39, 226, .5));
@@ -109,11 +106,6 @@ export default {
       color: #7f3b00
       font-size 16rem
       line-height: 1.2
-      line1()
-    }
-    h6 {
-      color: #7f3b00
-      font-size 12rem
       line1()
     }
     p {

@@ -56,7 +56,6 @@ export default {
   },
   created() {
     this.userId = this.$route.query.userId
-    this.pageId = this.$route.query.pageId
 
     this.getCouponList()
     this.getGoodsList()
@@ -72,6 +71,7 @@ export default {
       })
         .then(res => {
           this.couponList = res.data.discounts
+          this.pageId = res.data.id
           this.inviteNumber = res.data.inviteNumber
         }).catch(e => {
         console.log(e)

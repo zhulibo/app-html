@@ -21,10 +21,10 @@
       <h3>{{ socialDetail.content }}</h3>
       <p>{{ socialDetail.createTime | dateToCustomizeTime }}</p>
     </div>
-<!--    <div class="related-goods" v-if="socialDetail.good">-->
+<!--    <div class="related-goods" v-if="social.good">-->
 <!--      <div class="related-goods-ct">-->
-<!--        <img :src="socialDetail.good.icon" mode="">-->
-<!--        <span>{{ socialDetail.good.title }}</span>-->
+<!--        <img :src="social.good.icon" mode="">-->
+<!--        <span>{{ social.good.title }}</span>-->
 <!--      </div>-->
 <!--    </div>-->
 <!--    <div class="like" v-if="likeList.length > 0">-->
@@ -37,7 +37,7 @@
 <!--    </div>-->
     <div class="social-comment" v-if="socialCommentList.length>0">
       <dl>
-<!--        <dt>共{{ socialDetail.commentNum }}条评论</dt>-->
+<!--        <dt>共{{ social.commentNum }}条评论</dt>-->
         <dd v-for="item in socialCommentList">
           <div class="l"><img :src="item.tbAppUserDetail.header" alt=""></div>
           <div class="r">

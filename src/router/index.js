@@ -20,7 +20,7 @@ export default new Router({
     {
       path: '/article',
       name: '/article',
-      component: () => import (/* webpackChunkName: 'article' */ '@/views/article/article'),
+      component: () => import (/* webpackChunkName: 'article' */ '@/views/article/articleList'),
       meta: {
         title: '文章'
       }
@@ -42,9 +42,9 @@ export default new Router({
       }
     },
     {
-      path: '/coupon',
-      name: '/coupon',
-      component: () => import (/* webpackChunkName: 'coupon' */ '@/views/coupon/coupon'),
+      path: '/couponShare',
+      name: '/couponShare',
+      component: () => import (/* webpackChunkName: 'coupon' */ '@/views/coupon/couponShare'),
       meta: {
         title: '分享优惠券'
       }
@@ -52,55 +52,31 @@ export default new Router({
     {
       path: '/couponInvite',
       name: '/couponInvite',
-      component: () => import (/* webpackChunkName: 'couponInvite' */ '@/views/couponInvite/couponInvite'),
+      component: () => import (/* webpackChunkName: 'couponInvite' */ '@/views/coupon/couponInvite'),
       meta: {
         title: '送你漫想家APP优惠券'
       }
     },
     {
-      path: '/couponActivityRule',
-      name: '/couponActivityRule',
-      component: () => import (/* webpackChunkName: 'couponActivityRule' */ '@/views/couponActivityRule/couponActivityRule'),
+      path: '/couponInviteResult',
+      name: '/couponInviteResult',
+      component: () => import (/* webpackChunkName: 'couponInviteResult' */ '@/views/coupon/couponInviteResult'),
       meta: {
-        title: '活动规则'
+        title: '送你漫想家APP优惠券'
       }
     },
     {
       path: '/couponNewUser',
       name: '/couponNewUser',
-      component: () => import (/* webpackChunkName: 'couponNewUser' */ '@/views/couponNewUser/couponNewUser'),
-      meta: {
-        title: '送你漫想家APP优惠券'
-      }
-    },
-    {
-      path: '/couponNewUserHasCode',
-      name: '/couponNewUserHasCode',
-      component: () => import (/* webpackChunkName: 'couponNewUserHasCode' */ '@/views/couponNewUserHasCode/couponNewUserHasCode'),
+      component: () => import (/* webpackChunkName: 'couponNewUser' */ '@/views/coupon/couponNewUser'),
       meta: {
         title: '新人大礼包'
       }
     },
     {
-      path: '/test1',
-      name: '/test1',
-      component: () => import (/* webpackChunkName: 'test1' */ '@/views/test1/test1'),
-      meta: {
-        title: 'test1'
-      }
-    },
-    {
-      path: '/test2',
-      name: '/test2',
-      component: () => import (/* webpackChunkName: 'test2' */ '@/views/test2/test2'),
-      meta: {
-        title: 'test2'
-      }
-    },
-    {
       path: '/goodsDetail',
       name: '/goodsDetail',
-      component: () => import (/* webpackChunkName: 'goodsDetail' */ '@/views/goodsDetail/goodsDetail'),
+      component: () => import (/* webpackChunkName: 'goodsDetail' */ '@/views/goods/goodsDetail'),
       meta: {
         title: '商品详情'
       }
@@ -108,7 +84,7 @@ export default new Router({
     {
       path: '/socialDetail',
       name: '/socialDetail',
-      component: () => import (/* webpackChunkName: 'socialDetail' */ '@/views/socialDetail/socialDetail'),
+      component: () => import (/* webpackChunkName: 'socialDetail' */ '@/views/social/socialDetail'),
       meta: {
         title: '社区详情'
       }
@@ -116,7 +92,7 @@ export default new Router({
     {
       path: '/socialDetailVideo',
       name: '/socialDetailVideo',
-      component: () => import (/* webpackChunkName: 'socialDetailVideo' */ '@/views/socialDetailVideo/socialDetailVideo'),
+      component: () => import (/* webpackChunkName: 'socialDetailVideo' */ '@/views/social/socialDetailVideo'),
       meta: {
         title: '社区详情视频'
       }
@@ -124,7 +100,7 @@ export default new Router({
     {
       path: '/lotteryDetail',
       name: '/lotteryDetail',
-      component: () => import (/* webpackChunkName: 'lotteryDetail' */ '@/views/lotteryDetail/lotteryDetail'),
+      component: () => import (/* webpackChunkName: 'lotteryDetail' */ '@/views/lottery/lotteryDetail'),
       meta: {
         title: '抽奖详情'
       }
@@ -140,7 +116,7 @@ export default new Router({
     {
       path: '/drainageChart',
       name: '/drainageChart',
-      component: () => import (/* webpackChunkName: 'drainageChart' */ '@/views/drainageChart/drainageChart'),
+      component: () => import (/* webpackChunkName: 'drainageChart' */ '@/views/chart/drainageChart'),
       meta: {
         title: '全部正版授权的模玩、潮玩的平台'
       }
@@ -148,7 +124,7 @@ export default new Router({
     {
       path: '/agreementUser',
       name: '/agreementUser',
-      component: () => import (/* webpackChunkName: 'agreementUser' */ '@/views/agreementUser/agreementUser'),
+      component: () => import (/* webpackChunkName: 'agreementUser' */ '@/views/protocol/agreementUser'),
       meta: {
         title: '用户协议'
       }
@@ -156,9 +132,25 @@ export default new Router({
     {
       path: '/agreementPrivacy',
       name: '/agreementPrivacy',
-      component: () => import (/* webpackChunkName: 'agreementPrivacy' */ '@/views/agreementPrivacy/agreementPrivacy'),
+      component: () => import (/* webpackChunkName: 'agreementPrivacy' */ '@/views/protocol/agreementPrivacy'),
       meta: {
         title: '隐私协议'
+      }
+    },
+    {
+      path: '/couponActivityRule',
+      name: '/couponActivityRule',
+      component: () => import (/* webpackChunkName: 'couponActivityRule' */ '@/views/protocol/couponActivityRule'),
+      meta: {
+        title: '抽奖活动规则'
+      }
+    },
+    {
+      path: '/test',
+      name: '/test',
+      component: () => import (/* webpackChunkName: 'test' */ '@/views/test/test'),
+      meta: {
+        title: 'test'
       }
     },
   ]
