@@ -270,9 +270,9 @@ export default {
         console.log(e)
       })
     },
-    goArticleDetail(id) {
-      if (id == this.articleId) location.reload()
-      this.$router.push({path: '/articleDetail', query: {id: id, token: this.userInfo.token}})
+    goArticleDetail(articleId) {
+      if (articleId == this.articleId) location.reload()
+      this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.userInfo.token}})
     },
     back() {
       this.$router.go(-1)

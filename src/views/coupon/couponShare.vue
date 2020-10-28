@@ -48,9 +48,7 @@ export default {
   data() {
     return {
       userId: '',
-      pageId: '',
       couponList: [],
-      inviteNumber: 0,
       goodsList: [],
     }
   },
@@ -91,7 +89,6 @@ export default {
     invokeAppCouponShare() {
       let params = {
         userId: this.userId,
-        pageId: this.pageId,
       }
       if (this.global.isIos) {
         window.webkit.messageHandlers.invokeAppCouponShare.postMessage(params)

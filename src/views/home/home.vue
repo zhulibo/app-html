@@ -4,12 +4,12 @@
 
     <div>
       <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖</router-link>
-      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；shareId：分享id
+      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；codeId：抽奖码id
     </div>
 
     <div>
-      <router-link :to="{path: '/articleList'}">articleList 模玩文化列表</router-link>
-      <span>http://new.mxjclub.com/share/#/articleList</span>参数：token：用户token
+      <router-link :to="{path: '/articleIndex'}">articleIndex 模玩文化列表</router-link>
+      <span>http://new.mxjclub.com/share/#/articleIndex</span>参数：token：用户token
     </div>
 
     <div>
@@ -38,13 +38,7 @@
     <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
 
     <div>
-      <router-link :to="{path: '/lottery'}">lotteryDetail 抽奖详情</router-link>
-      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id
-    </div>
-    <h3 class="wx">微信内跳转app：参数：url：页面路径</h3>
-
-    <div>
-      <router-link :to="{path: '/coupon'}">couponShare 分享优惠券</router-link>
+      <router-link :to="{path: '/couponShare'}">couponShare 分享优惠券</router-link>
       <span>http://new.mxjclub.com/share/#/couponShare</span>参数：userId：用户id
     </div>
     <h3 class="html">html调app方法：</h3>

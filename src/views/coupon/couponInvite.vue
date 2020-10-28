@@ -6,7 +6,7 @@
     <div class="couponInvite-ct">
       <div class="couponInvite-form">
         <div class="phone-ct">
-          <!--        <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>-->
+<!--          <area-select :areaCode="areaCode" @changeAreaCode="changeAreaCode"></area-select>-->
           <input class="phone" type="text" v-model="phone" placeholder="请输入手机号">
           <span @click="getCode">{{content}}</span>
         </div>
@@ -32,7 +32,7 @@ export default {
     return {
       phone: '',
       verificationCode: '',
-      userId: '',
+      inviteUserId: '',
       pageId: '',
       checked: true,
       areaCode: '+86',
@@ -45,7 +45,7 @@ export default {
     areaSelect
   },
   created() {
-    this.userId = this.$route.query.userId
+    this.inviteUserId = this.$route.query.userId
   },
   mounted() {
   },
@@ -108,9 +108,19 @@ export default {
       })
         .then(res => {
           let userInfo ={
-            token: res.data.token
+            token: res.data.token,
           }
           this.$store.dispatch('updateUserInfo', userInfo)
+          this.getPageId()
+        }).catch(e => {console.log(e)})
+    },
+    getPageId() {
+      this.$http({
+        url: '/order/app/discount/sharePage',
+        method: 'GET',
+      })
+        .then(res => {
+          this.pageId = res.data.id
           this.getSharePage()
         }).catch(e => {console.log(e)})
     },
@@ -120,12 +130,12 @@ export default {
         method: 'POST',
         data: {
           id: this.pageId,
-          inviteId: this.userId,
+          inviteId: this.inviteUserId,
         }
       })
         .then(res => {
           this.$toast(res.msg)
-          this.$router.push({path: '/couponNewUser', query: {phone: this.phone}});
+          this.$router.push({path: '/couponInviteResult', query: {phone: this.phone}});
         }).catch(e => {console.log(e)})
     },
     checkboxChange() {

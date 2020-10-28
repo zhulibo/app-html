@@ -18,11 +18,11 @@ export default new Router({
       }
     },
     {
-      path: '/article',
-      name: '/article',
-      component: () => import (/* webpackChunkName: 'article' */ '@/views/article/articleList'),
+      path: '/articleIndex',
+      name: '/articleIndex',
+      component: () => import (/* webpackChunkName: 'articleIndex' */ '@/views/article/articleIndex'),
       meta: {
-        title: '文章'
+        title: '文章列表'
       }
     },
     {

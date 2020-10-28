@@ -2,7 +2,7 @@
   <div>
 <!--    <open-app></open-app>-->
 <!--    <open-app-btn></open-app-btn>-->
-    <we-chat-share v-if="userInfo.userId" :inviteUserId="userInfo.userId" :drawId="drawId" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
+    <we-chat-share v-if="userInfo.userId" :drawId="drawId"  :code="shareCode" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
         <img v-if="detail" :src="detail.tbGoods.skus[0].skuImage" alt="">
@@ -22,9 +22,16 @@
     <div v-swiper:mySwiper="swiperOption" class="banner">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in lotteryList">
-          <div class="item-ct on" @click="itemClick">
-            <h3>{{item.text}}</h3>
-            <p>{{item.code}}</p>
+          <div class="item-ct" :class="item.code ? 'on' : ''" @click="itemClick" v-if="item.code">
+            <div>
+              <h2>我的抽奖码</h2>
+              <p>{{item.code}}</p>
+            </div>
+          </div>
+          <div class="item-ct" :class="item.code ? 'on' : ''" @click="itemClick" v-else="item.code">
+            <div>
+              <h3>{{item.text}}</h3>
+            </div>
           </div>
         </div>
       </div>
@@ -41,7 +48,7 @@
         <div class="li">
           <i class="iconfont icon-xinxi"></i>
           <input type="text" v-model="verificationCode">
-          <span class="code" @click="getCode">{{content}}</span>
+          <span class="code" @click="getVerificationCode">{{content}}</span>
         </div>
         <div class="li">
           <button @click="submitForm">确定</button>
@@ -75,7 +82,8 @@ export default {
       a: '',
       c: '',
       drawId: '',
-      inviteUserId: '',
+      code: '',
+      shareCode: '',
       detail: {},
       leftTime: 0,
       hour: '',
@@ -122,7 +130,6 @@ export default {
       phone: '',
       verificationCode: '',
       userInfo: {
-        userId: '',
         token: '',
       },
       content: '发送验证码',
@@ -140,11 +147,18 @@ export default {
   directives: {
     swiper: directive
   },
-  beforeCreate() {
-  },
   created() {
     this.drawId = this.$route.query.drawId
     this.codeId = this.$route.query.codeId
+
+    // 读取localStorage用户信息
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    if (userInfo) {
+      this.userInfo = userInfo
+      this.$store.dispatch('updateUserInfo', this.userInfo)
+      this.getCodeList()
+    }
+
     this.getDetail()
   },
   mounted() {
@@ -207,8 +221,10 @@ export default {
         this.loginFlag = true
         return
       }
+    },
+    getZeroCode() {
       this.$http({
-        url: '/goodsmanage/app/draw',
+        url: '/goodsmanage/app/draw/h5',
         method: 'POST',
         data: {
           drawId: this.drawId,
@@ -219,9 +235,11 @@ export default {
       })
         .then(res => {
           this.a = res
+          this.lotteryList[0].code = res.data
+          this.getShareCode()
         }).catch(e => {console.log(e)})
     },
-    getCode() {
+    getVerificationCode() {
       let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
       if (!phone.test(this.phone)) {
         console.log(123)
@@ -275,21 +293,41 @@ export default {
         .then(res => {
           this.loginFlag = false
           this.userInfo.token = res.data.token
-          this.userInfo.userId = res.data.id
           this.$store.dispatch('updateUserInfo', this.userInfo)
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
-          // this.getCodeList()
+          this.getCodeList()
         }).catch(e => {console.log(e)})
     },
     getCodeList() {
       this.$http({
-        url: '/goodsmanage/app/draw/userNum',
+        url: '/goodsmanage/app/draw/userNum/detail',
         method: 'GET',
         params:{
           drawId: this.drawId
         }
       })
         .then(res => {
+          this.c = res
+          if (res.data.length > 0){
+            for (let i = 0; i < res.data.length; i++) {
+              this.lotteryList[i].code = res.data[i].number
+            }
+            this.getShareCode()
+          }else{
+            this.getZeroCode()
+          }
+        }).catch(e => {console.log(e)})
+    },
+    getShareCode() {
+      this.$http({
+        url: '/goodsmanage/app/draw/hp/h5',
+        method: 'POST',
+        data:{
+          drawId: this.drawId
+        }
+      })
+        .then(res => {
+          this.shareCode = res.data.id
           this.c = res
         }).catch(e => {console.log(e)})
     },
@@ -426,6 +464,7 @@ export default {
   height: 0
   padding-bottom: 130%
   text-align: center
+  box-shadow 0 0 .6em rgba(101,36,226,.6)
   h3{
     padding-top: 40%
     color: #fff
@@ -433,16 +472,25 @@ export default {
     font-weight: bold
   }
   border-radius: .6em;
-  box-shadow 0 0 .3em rgba(101, 36, 226, .6)
-  background: url(../../assets/img/lotteryDetail1.png) center center/100% 100% no-repeat
+  background: url(../../assets/img/lotteryDetail2.png) center center/100% 100% no-repeat
   &.on{
-    background: url(../../assets/img/lotteryDetail2.png) center center/100% 100% no-repeat
+    color: purple
+    text-shadow 0 0 .2em rgba(0,0,0,.4)
+    background: url(../../assets/img/lotteryDetail1.png) center center/100% 100% no-repeat
+    h2{
+      padding-top: 40%
+      font-weight: bold
+    }
+    p{
+      font-weight: bold
+      font-size 20rem
+    }
   }
 }
 .swiper-slide-active{
   .item-ct{
     h3{
-      text-shadow 0 0 .2em rgba(255,255,255,.8)
+      text-shadow 0 0 .6em rgba(104,255,217,1)
     }
   }
 }

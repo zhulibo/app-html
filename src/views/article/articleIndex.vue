@@ -29,7 +29,7 @@ import 'swiper/css/swiper.css'
 import articleList from "@/components/articleList/articleList"
 
 export default {
-  name: 'article1',
+  name: 'articleIndex',
   data() {
     return {
       userInfo:{
