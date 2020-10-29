@@ -62,19 +62,6 @@ export default {
   mounted() {
   },
   methods: {
-    getCouponList() {
-      this.$http({
-        url: '/order/app/discount/sharePage/' + this.userId + '/ls',
-        method: 'GET',
-      })
-        .then(res => {
-          this.couponList = res.data.discounts
-          this.pageId = res.data.id
-          this.inviteNumber = res.data.inviteNumber
-        }).catch(e => {
-        console.log(e)
-      })
-    },
     getGoodsList() {
       this.$http({
         url: '/goodsmanage/app/goods/recommend/list/ls',

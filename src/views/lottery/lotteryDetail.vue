@@ -26,9 +26,11 @@
             <div>
               <h2>我的抽奖码</h2>
               <p>{{item.code}}</p>
+              <img v-if="item.header" :src="item.header" alt="">
+              <span v-else>默认头像</span>
             </div>
           </div>
-          <div class="item-ct" :class="item.code ? 'on' : ''" @click="itemClick" v-else="item.code">
+          <div class="item-ct" :class="item.code ? 'on' : ''" @click="itemClick" v-else>
             <div>
               <h3>{{item.text}}</h3>
             </div>
@@ -36,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div v-if="loginFlag" class="login">
+    <div v-if="loginLayer" class="login">
       <div class="title">
         <h3>手机验证登录</h3>
       </div>
@@ -55,16 +57,17 @@
         </div>
       </div>
     </div>
-    <div v-if="loginFlag" class="login-bg" @click="loginFlag = false"></div>
-    <br>
-    <br>
-    <br>
-    <button @click="getCodeList">getCodeList</button>
-    <p>0元抽奖结果</p>
-    {{a}}
-    <p>获取抽奖码列表</p>
-    {{c}}
+    <div v-if="loginLayer" class="login-bg" @click="loginLayer = false"></div>
+    <div v-if="zeroCodeLayer" class="zero-code">
+      <h3>恭喜你<br>成功获得1张抽奖码</h3>
+      <p>{{lotteryList[0].code}}</p>
+      <h6>点击右上角<br>分享邀请好友再得1张</h6>
+      <i class="iconfont icon-guanbi" @click="zeroCodeLayer = false"></i>
+    </div>
+    <div v-if="zeroCodeLayer" class="zero-code-bg" @click="zeroCodeLayer = false"></div>
     <div class="h6em"></div>
+    <button @click="getCodeList">ddddd</button>
+    <div>{{c}}</div>
   </div>
 </template>
 
@@ -79,11 +82,10 @@ export default {
   name: 'lotteryDetail',
   data() {
     return {
-      a: '',
-      c: '',
-      drawId: '',
-      code: '',
-      shareCode: '',
+      c: {},
+      drawId: '', // 抽奖id
+      code: '', // 从url中获取的抽奖码
+      shareCode: '', // 要分享出去的抽奖码
       detail: {},
       leftTime: 0,
       hour: '',
@@ -93,48 +95,49 @@ export default {
         {
           text: '0元抽奖',
           code: '',
-          url: '',
+          header: '',
         },
         {
           text: '好友助力',
           code: '',
-          url: '',
+          header: '',
         },
         {
           text: '好友助力',
           code: '',
-          url: '',
+          header: '',
         },
         {
           text: '好友助力',
           code: '',
-          url: '',
+          header: '',
         },
         {
           text: '好友助力',
           code: '',
-          url: '',
+          header: '',
         },
         {
           text: '好友助力',
           code: '',
-          url: '',
+          header: '',
         },
-      ],
+      ], // 抽奖码banner
       swiperOption: {
         slidesPerView: 3.5,
         spaceBetween: 10,
         centeredSlides: true,
       },
-      loginFlag: false,
+      loginLayer: false,
       phone: '',
       verificationCode: '',
       userInfo: {
         token: '',
       },
-      content: '发送验证码',
-      time: 60,
-      canClick: true
+      content: '获取验证码',
+      time: 60, // 获取验证码倒计时
+      canClick: true, // 获取验证码开关
+      zeroCodeLayer: false,
     }
   },
   components: {
@@ -149,14 +152,14 @@ export default {
   },
   created() {
     this.drawId = this.$route.query.drawId
-    this.codeId = this.$route.query.codeId
+    this.code = this.$route.query.code
 
     // 读取localStorage用户信息
     let userInfo = JSON.parse(localStorage.getItem('userInfo'))
     if (userInfo) {
       this.userInfo = userInfo
       this.$store.dispatch('updateUserInfo', this.userInfo)
-      this.getCodeList()
+      this.getCodeList() // 有登录信息直接查询抽奖码
     }
 
     this.getDetail()
@@ -164,7 +167,7 @@ export default {
   mounted() {
   },
   methods: {
-    getDetail() {
+    getDetail() { // 抽奖商品详情
       this.$http({
         url: '/goodsmanage/app/draw/detail/ls',
         method: 'GET',
@@ -178,7 +181,7 @@ export default {
           // let lotteryBeijingTimestamp = new Date(this.detail.drawTime.replace(/-/g, '/')).getTime() // 开奖北京时间戳
           let nowBeijingTimestamp = this.global.getNowBeijingTimestamp()
           if (nowBeijingTimestamp > lotteryBeijingTimestamp) { // 开奖北京时间戳 - 此时北京时间戳
-            this.countdownTime = 0
+            this.leftTime = 0
           } else {
             this.leftTime = (lotteryBeijingTimestamp - nowBeijingTimestamp) / 1000
             this.countdownTime()
@@ -215,31 +218,17 @@ export default {
       this.second = second
       this.leftTime = leftTime - 1
       let timer = setTimeout(this.countdownTime, 1000);
-    },
-    itemClick() {
+    }, // 抽奖商品倒计时
+    itemClick() { // 点击抽奖，判断是否登录了
       if(!this.userInfo.token){
-        this.loginFlag = true
+        this.loginLayer = true
         return
       }
+      if(this.shareCode){
+        this.$toast('点击右上角分享给好友，再得1张')
+      }
     },
-    getZeroCode() {
-      this.$http({
-        url: '/goodsmanage/app/draw/h5',
-        method: 'POST',
-        data: {
-          drawId: this.drawId,
-          level: 1,
-          status: 2,
-          inviteUser: this.inviteUserId,
-        }
-      })
-        .then(res => {
-          this.a = res
-          this.lotteryList[0].code = res.data
-          this.getShareCode()
-        }).catch(e => {console.log(e)})
-    },
-    getVerificationCode() {
+    getVerificationCode() { // 获取邀请码
       let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
       if (!phone.test(this.phone)) {
         console.log(123)
@@ -255,6 +244,7 @@ export default {
         }
       })
         .then(res => {
+
           // 60s验证码倒计时
           this.canClick = false
           this.content = this.time + ' s'
@@ -268,10 +258,11 @@ export default {
             }
             this.time--
             this.content = this.time + ' s'
+
           }, 1000)
         }).catch(e => {console.log(e)})
     },
-    submitForm() {
+    submitForm() { // 手机登录
       let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
       if (!phone.test(this.phone)) {
         this.$toast('请输入正确的手机号')
@@ -291,14 +282,17 @@ export default {
         }
       })
         .then(res => {
-          this.loginFlag = false
+          this.loginLayer = false
+
           this.userInfo.token = res.data.token
           this.$store.dispatch('updateUserInfo', this.userInfo)
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+
           this.getCodeList()
+
         }).catch(e => {console.log(e)})
     },
-    getCodeList() {
+    getCodeList() { // 查询全部抽奖码
       this.$http({
         url: '/goodsmanage/app/draw/userNum/detail',
         method: 'GET',
@@ -311,14 +305,15 @@ export default {
           if (res.data.length > 0){
             for (let i = 0; i < res.data.length; i++) {
               this.lotteryList[i].code = res.data[i].number
+              if(res.data[i].header) this.lotteryList[i].header = res.data[i].header
             }
-            this.getShareCode()
+            this.getShareCode() // 参与过，获取分享给别人的抽奖码
           }else{
-            this.getZeroCode()
+            this.getZeroCode() // 没有参与过，获取0元抽奖码
           }
         }).catch(e => {console.log(e)})
     },
-    getShareCode() {
+    getShareCode() { // 获取要分享给别人的抽奖码
       this.$http({
         url: '/goodsmanage/app/draw/hp/h5',
         method: 'POST',
@@ -328,8 +323,24 @@ export default {
       })
         .then(res => {
           this.shareCode = res.data.id
-          this.c = res
         }).catch(e => {console.log(e)})
+    },
+    getZeroCode() { // 获取自己的0元抽奖码
+      this.$http({
+        url: '/goodsmanage/app/draw/h5',
+        method: 'POST',
+        data: {
+          id: this.code,
+        }
+      })
+        .then(res => {
+          this.zeroCodeLayer = true
+          this.lotteryList[0].code = res.data
+          this.getShareCode() // 获取要分享给别人的抽奖码
+        }).catch(e => {
+        this.getShareCode() // 获取要分享给别人的抽奖码
+        console.log(e)
+        })
     },
   }
 }
@@ -476,7 +487,7 @@ export default {
   &.on{
     color: purple
     text-shadow 0 0 .2em rgba(0,0,0,.4)
-    background: url(../../assets/img/lotteryDetail1.png) center center/100% 100% no-repeat
+    background: url(../../assets/img/lotteryDetail3.png) center center/100% 100% no-repeat
     h2{
       padding-top: 40%
       font-weight: bold
@@ -492,6 +503,58 @@ export default {
     h3{
       text-shadow 0 0 .6em rgba(104,255,217,1)
     }
+  }
+}
+.zero-code-bg{
+  position: fixed
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  z-index: 100
+  background-color: rgba(0,0,0,.4)
+}
+.zero-code{
+  position: fixed
+  z-index: 200
+  top: 50%
+  left: 50%
+  transform translate(-50%, -50%)
+  box-sizing border-box
+  padding: 1em
+  padding-top: 3em
+  width: 15em
+  height: 20em
+  color: purple
+  text-align: center
+  background: url(../../assets/img/lotteryDetail1.png) center center/100% 100% no-repeat
+  border-radius: .5em;
+  box-shadow 0 0 1em rgba(0,0,0,.2)
+  i{
+    position: absolute
+    bottom: -2em
+    left: 50%
+    transform translate(-50%, 0)
+    color: #fff
+    font-size 18rem
+  }
+  h3{
+    font-size 18rem
+  }
+  p{
+    margin-top: 1em
+    font-size 26rem
+    font-weight: bold
+  }
+  h6{
+    margin-top: 2em
+    btn1()
+    background-image: linear-gradient(90deg, #814DFF, #6524E2)
+    color: #fff
+    height: 3.4em
+    line-height: 1.5
+    border-radius: 3.4em
+    padding: .2em 1em
   }
 }
 </style>

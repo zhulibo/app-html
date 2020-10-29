@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '//at.alicdn.com/t/font_1970543_4syl6lpr3j3.css'
+@import '//at.alicdn.com/t/font_1970543_nulnc3dx4i.css'
 @import './assets/css/base.css'
 @import './assets/css/common.css'
 </style>
