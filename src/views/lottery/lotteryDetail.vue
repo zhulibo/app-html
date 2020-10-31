@@ -27,7 +27,7 @@
               <h2>我的抽奖码</h2>
               <p>{{item.code}}</p>
               <img v-if="item.header" :src="item.header" alt="">
-              <span v-else>默认头像</span>
+              <img v-else src="../../assets/img/openApp1.png" alt="">
             </div>
           </div>
           <div class="item-ct" :class="item.code ? 'on' : ''" @click="itemClick" v-else>
@@ -66,8 +66,6 @@
     </div>
     <div v-if="zeroCodeLayer" class="zero-code-bg" @click="zeroCodeLayer = false"></div>
     <div class="h6em"></div>
-    <button @click="getCodeList">ddddd</button>
-    <div>{{c}}</div>
   </div>
 </template>
 
@@ -82,7 +80,7 @@ export default {
   name: 'lotteryDetail',
   data() {
     return {
-      c: {},
+      c: null,
       drawId: '', // 抽奖id
       code: '', // 从url中获取的抽奖码
       shareCode: '', // 要分享出去的抽奖码
@@ -159,7 +157,7 @@ export default {
     if (userInfo) {
       this.userInfo = userInfo
       this.$store.dispatch('updateUserInfo', this.userInfo)
-      this.getCodeList() // 有登录信息直接查询抽奖码
+      this.getCodeList() // 有登录信息直接查询所有抽奖码
     }
 
     this.getDetail()
@@ -190,7 +188,7 @@ export default {
         console.log(e)
       })
     },
-    countdownTime() { // 倒计时
+    countdownTime() { // 抽奖商品倒计时
       let leftTime = this.leftTime
 
       if (leftTime <= 0) { // 倒计时为0时，清除定时器timer
@@ -218,7 +216,7 @@ export default {
       this.second = second
       this.leftTime = leftTime - 1
       let timer = setTimeout(this.countdownTime, 1000);
-    }, // 抽奖商品倒计时
+    },
     itemClick() { // 点击抽奖，判断是否登录了
       if(!this.userInfo.token){
         this.loginLayer = true
@@ -335,7 +333,7 @@ export default {
       })
         .then(res => {
           this.zeroCodeLayer = true
-          this.lotteryList[0].code = res.data
+          this.lotteryList[0].code = res.data.number
           this.getShareCode() // 获取要分享给别人的抽奖码
         }).catch(e => {
         this.getShareCode() // 获取要分享给别人的抽奖码
@@ -489,12 +487,21 @@ export default {
     text-shadow 0 0 .2em rgba(0,0,0,.4)
     background: url(../../assets/img/lotteryDetail3.png) center center/100% 100% no-repeat
     h2{
-      padding-top: 40%
+      padding-top: 30%
       font-weight: bold
+      margin-bottom: .2em
     }
     p{
       font-weight: bold
       font-size 20rem
+    }
+    img{
+      display: inline-block
+      margin-top: .2em
+      width: 2em
+      height: 2em
+      border-radius: 50%;
+      box-shadow 0 0 .6em rgba(0,0,0,.2)
     }
   }
 }

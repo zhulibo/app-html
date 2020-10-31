@@ -4,7 +4,7 @@
 
     <div>
       <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖</router-link>
-      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；codeId：抽奖码id
+      <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；code：要分享抽奖码id
     </div>
 
     <div>
@@ -17,7 +17,7 @@
       <span>http://new.mxjclub.com/share/#/articleDetail</span>参数：articleId：文章id
     </div>
     <h3>html调app方法：</h3>
-    <p>分享模玩文化详情：invokeAppShareArticleDetail 参数：articleId：文章id</p>
+    <p>分享模玩文化详情：invokeAppShareArticleDetail 参数：articleId：文章id；title：文章标题；img：文章图片</p>
 
     <div>
       <router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link>

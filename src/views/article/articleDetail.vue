@@ -308,7 +308,7 @@ export default {
     },
     clickComment(level, id, itemId, replyUserId, nickName, rootId, secondId) {
       if (!this.userInfo.token) return
-      if (level != 0 && !itemId) return // 不可以评论自己添加的评论
+      if (level != 0 && !replyUserId) return // 不可以评论自己添加的评论
 
       // for(let i=0;i<arguments.length;i++) {
       //   console.log(arguments[i])
@@ -354,6 +354,10 @@ export default {
       this.content = ''
     },
     addComment() {
+      if(!this.content) {
+        this.$toast('请输入评论内容')
+        return
+      }
       this.$http({
         url: '/userorg/app/news/comment',
         method: 'POST',
@@ -374,27 +378,33 @@ export default {
           // this.getCommentList()
           console.log(this.level)
           console.log(this.rootId)
-          if (this.level == 1){
+
+          if (this.level == 1){ // 添加一级评论
             this.commentList.unshift({
+              id: res.data.id,
+              level: res.data.level,
               createTime: (new Date).getTime(),
               content: this.content,
               detail: {
-                header: this.header,
-                nickName: this.nickName
+                header: res.data.detail.header,
+                nickName: res.data.detail.nickName,
               },
               hasNextPage: false,
               isSupport: 0,
               supportNum: 0,
             })
-          }else if(this.level == 2){
+          }else if(this.level == 2){  // 评论一级评论
             for (let i = 0; i < this.commentList.length; i++) {
               if (this.commentList[i].id == this.rootId){
+                console.log(2333)
                 this.commentList[i].children.unshift({
+                  id: res.data.id,
+                  level: res.data.level,
                   createTime: (new Date).getTime(),
                   content: this.content,
                   detail: {
-                    header: this.header,
-                    nickName: this.nickName
+                    header: res.data.detail.header,
+                    nickName: res.data.detail.nickName,
                   },
                   hasNextPage: false,
                   isSupport: 0,
@@ -402,20 +412,24 @@ export default {
                 })
               }
             }
-          }else if(this.level == 3){
+          }else if(this.level == 3){ // 评论二三级级评论
             for (let i = 0; i < this.commentList.length; i++) {
               if (this.commentList[i].id == this.rootId){
                 for (let j = 0; j < this.commentList[i].children.length; j++) {
                   if (this.commentList[i].children[j].id == this.itemId){
                     this.commentList[i].children.splice(j, 0,
                       {
+                        id: res.data.id,
+                        level: res.data.level,
                         createTime: (new Date).getTime(),
                         content: this.content,
                         detail: {
-                          header: this.header,
-                          nickName: this.nickName
+                          header: res.data.detail.header,
+                          nickName: res.data.detail.nickName,
                         },
                         hasNextPage: false,
+                        isSupport: 0,
+                        supportNum: 0,
                       }
                     )
                   }
@@ -423,6 +437,9 @@ export default {
               }
             }
           }
+
+          this.commentFlag = false
+          this.content = ''
 
         }).catch(e => {
         console.log(e)
@@ -432,6 +449,8 @@ export default {
       if (!this.userInfo.token) return
       let params = {
         articleId: this.articleId,
+        title: this.detail.title,
+        img: this.detail.topImage,
       }
       if (this.global.isIos) {
         window.webkit.messageHandlers.invokeAppArticleShare.postMessage(params)
