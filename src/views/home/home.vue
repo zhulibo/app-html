@@ -56,15 +56,15 @@
       <span>http://new.mxjclub.com/share/#/couponNewUser</span>参数：userId：用户id
     </div>
 
-    <div>
-      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>
-      <span>http://new.mxjclub.com/share/#/agreementUser</span>
-    </div>
+<!--    <div>-->
+<!--      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>-->
+<!--      <span>http://new.mxjclub.com/share/#/agreementUser</span>-->
+<!--    </div>-->
 
-    <div>
-      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>
-      <span>http://new.mxjclub.com/share/#/agreementPrivacy</span>
-    </div>
+<!--    <div>-->
+<!--      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>-->
+<!--      <span>http://new.mxjclub.com/share/#/agreementPrivacy</span>-->
+<!--    </div>-->
 
   </div>
 </template>
