@@ -3,6 +3,11 @@
     <h1>app-html交互文档<span>最后修改日期：2020.10.28</span></h1>
 
     <div>
+      <router-link :to="{path: '/toBeSeller'}">toBeSeller 申请入驻</router-link>
+      <span>http://new.mxjclub.com/share/#/toBeSeller</span>
+    </div>
+
+    <div>
       <router-link :to="{path: '/lotteryDetail'}">lotteryDetail 抽奖</router-link>
       <span>http://new.mxjclub.com/share/#/lotteryDetail</span>参数：drawId：抽奖id；code：要分享抽奖码id
     </div>
@@ -11,13 +16,24 @@
       <router-link :to="{path: '/articleIndex'}">articleIndex 模玩文化列表</router-link>
       <span>http://new.mxjclub.com/share/#/articleIndex</span>参数：token：用户token
     </div>
+    <h3>html调app方法：</h3>
+    <p>显示app的底部菜单：invokeAppShowTab 参数：url：当前页面url</p>
+
+    <div>
+      <router-link :to="{path: '/articleSch'}">articleSch 模玩文化搜索</router-link>
+      <span>http://new.mxjclub.com/share/#/articleSch</span>参数：articleId：文章id
+    </div>
+    <h3>html调app方法：</h3>
+    <p>隐藏app的底部菜单：invokeAppHiddenTab 参数：url：当前页面url</p>
 
     <div>
       <router-link :to="{path: '/articleDetail'}">articleDetail 模玩文化详情</router-link>
       <span>http://new.mxjclub.com/share/#/articleDetail</span>参数：articleId：文章id
     </div>
     <h3>html调app方法：</h3>
-    <p>分享模玩文化详情：invokeAppShareArticleDetail 参数：articleId：文章id；title：文章标题；img：文章图片</p>
+    <p>隐藏app的底部菜单：invokeAppHiddenTab 参数：url：当前页面url</p>
+    <p>分享模玩文化详情：invokeAppArticleShare 参数：articleId：文章id；title：文章标题；img：文章图片</p>
+    <p>调登录：invokeAppLogin 参数：url：当前页面url</p>
 
     <div>
       <router-link :to="{path: '/goodsDetail'}">goodsDetail 商品详情</router-link>
@@ -56,15 +72,45 @@
       <span>http://new.mxjclub.com/share/#/couponNewUser</span>参数：userId：用户id
     </div>
 
-<!--    <div>-->
-<!--      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>-->
-<!--      <span>http://new.mxjclub.com/share/#/agreementUser</span>-->
-<!--    </div>-->
+    <div>
+      <router-link :to="{path: '/agreementUser'}">agreementUser 用户协议</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementUser</span>
+    </div>
 
-<!--    <div>-->
-<!--      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>-->
-<!--      <span>http://new.mxjclub.com/share/#/agreementPrivacy</span>-->
-<!--    </div>-->
+    <div>
+      <router-link :to="{path: '/agreementPrivacy'}">agreementPrivacy 隐私协议</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementPrivacy</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementLottery'}">agreementLottery APP抽奖规则</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementLottery</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementPresale'}">agreementPresale 预售规则</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementPresale</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementCoupon'}">agreementCoupon 优惠券规则</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementCoupon</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementArticle'}">agreementArticle 模玩文化版权协议</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementArticle</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementBuy'}">agreementBuy 买家须知</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementBuy</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/agreementShopSettle'}">agreementShopSettle 商家入驻须知</router-link>
+      <span>http://new.mxjclub.com/share/#/agreementShopSettle</span>
+    </div>
 
   </div>
 </template>

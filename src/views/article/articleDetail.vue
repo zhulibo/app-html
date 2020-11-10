@@ -110,12 +110,12 @@ export default {
     }
   },
   created() {
+    this.invokeAppHiddenTab()
     // 保存url中的token至vuex
     this.userInfo.token = this.$route.query.token
     if(this.userInfo.token) {
       this.$store.dispatch('updateUserInfo', this.userInfo)
     }
-
     this.articleId = this.$route.query.articleId
     this.getArticleDetail()
     this.addNumber()
@@ -141,7 +141,7 @@ export default {
     },
     addNumber() {
       this.$http({
-        url: '/userorg/app/news',
+        url: '/userorg/app/news/ls',
         method: 'PUT',
         data: {
           id: this.articleId,
@@ -154,7 +154,7 @@ export default {
         console.log(e)
       })
       this.$http({
-        url: '/userorg/app/news',
+        url: '/userorg/app/news/ls',
         method: 'PUT',
         data: {
           id: this.articleId,
@@ -233,7 +233,10 @@ export default {
       })
     },
     collect() {
-      if (!this.userInfo.token) return
+      if (!this.userInfo.token){
+        this.invokeAppLogin()
+        return
+      }
       this.$http({
         url: '/userorg/app/news/collect',
         method: 'POST',
@@ -249,7 +252,10 @@ export default {
       })
     },
     support() {
-      if (!this.userInfo.token) return
+      if (!this.userInfo.token){
+        this.invokeAppLogin()
+        return
+      }
       this.$http({
         url: '/userorg/app/news/newSupport',
         method: 'POST',
@@ -278,7 +284,10 @@ export default {
       this.$router.go(-1)
     },
     supportComment(id, isSupport){
-      if (!this.userInfo.token) return
+      if (!this.userInfo.token){
+        this.invokeAppLogin()
+        return
+      }
 
       console.log(id, isSupport)
       this.$http({
@@ -307,7 +316,10 @@ export default {
       }).catch(e => {console.log(e)})
     },
     clickComment(level, id, itemId, replyUserId, nickName, rootId, secondId) {
-      if (!this.userInfo.token) return
+      if (!this.userInfo.token){
+        this.invokeAppLogin()
+        return
+      }
       if (level != 0 && !replyUserId) return // 不可以评论自己添加的评论
 
       // for(let i=0;i<arguments.length;i++) {
@@ -446,22 +458,59 @@ export default {
       })
     },
     invokeAppArticleShare() {
-      if (!this.userInfo.token) return
+      alert('进入invokeAppArticleShare函数')
+      if (!this.userInfo.token){
+        this.invokeAppLogin()
+        return
+      }
       let params = {
         articleId: this.articleId,
         title: this.detail.title,
         img: this.detail.topImage,
       }
-      if (this.global.isIos) {
-        window.webkit.messageHandlers.invokeAppArticleShare.postMessage(params)
-      } else {
-        window.android.invokeAppArticleShare(JSON.stringify(params))
+      alert('调起invokeAppArticleShare')
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppArticleShare.postMessage(params)
+        } else {
+          window.android.invokeAppArticleShare(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
+    invokeAppHiddenTab() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppHiddenTab.postMessage(params)
+        } else {
+          window.android.invokeAppHiddenTab(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
+    invokeAppLogin() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppLogin.postMessage(params)
+        } else {
+          window.android.invokeAppLogin(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
       }
     },
   },
   beforeRouteLeave(to, from, next){
     if(to.path == '/articleSch') {
-      next({path: '/article'})
+      next({path: '/articleIndex'})
     }else {
       next() // 注意：这边next必须要写
     }
@@ -472,12 +521,14 @@ export default {
 <style lang="stylus" scoped>
 .head-bar{
   position: fixed
-  top: 0
+  top: constant(safe-area-inset-top);
+  top: env(safe-area-inset-top);
   left: 0
   box-sizing border-box
   width: 100%
   display: flex
   padding: .6em
+  padding-top: 0
   color: #ccc
   .l{
     width: 2.6em

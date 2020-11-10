@@ -33,6 +33,7 @@ export default {
     articleList,
   },
   created() {
+    this.invokeAppHiddenTab()
     // 保存url中的token至vuex
     this.userInfo.token = this.$route.query.token
     if(this.userInfo.token) {
@@ -47,7 +48,21 @@ export default {
     },
     back() {
       this.$router.go(-1)
-    }
+    },
+    invokeAppHiddenTab() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppHiddenTab.postMessage(params)
+        } else {
+          window.android.invokeAppHiddenTab(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
   }
 }
 </script>
@@ -56,6 +71,8 @@ export default {
 .sch{
   display: flex
   padding: .6em
+  padding-top: calc(constant(safe-area-inset-top) + .6em);
+  padding-top: calc(env(safe-area-inset-top) + .6em);
   background-color: #fff
   .back{
     width: 2.6em

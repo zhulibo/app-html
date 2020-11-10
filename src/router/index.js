@@ -122,6 +122,30 @@ export default new Router({
       }
     },
     {
+      path: '/toBeSeller',
+      name: '/toBeSeller',
+      component: () => import (/* webpackChunkName: 'toBeSeller' */ '@/views/link/toBeSeller'),
+      meta: {
+        title: '申请入驻'
+      }
+    },
+    {
+      path: '/agreementUserNew',
+      name: '/agreementUserNew',
+      component: () => import (/* webpackChunkName: 'agreementUserNew' */ '@/views/protocol/agreementUserNew'),
+      meta: {
+        title: '用户协议'
+      }
+    },
+    {
+      path: '/agreementPrivacyNew',
+      name: '/agreementPrivacyNew',
+      component: () => import (/* webpackChunkName: 'agreementPrivacyNew' */ '@/views/protocol/agreementPrivacyNew'),
+      meta: {
+        title: '隐私协议'
+      }
+    },
+    {
       path: '/agreementUser',
       name: '/agreementUser',
       component: () => import (/* webpackChunkName: 'agreementUser' */ '@/views/protocol/agreementUser'),
@@ -138,11 +162,51 @@ export default new Router({
       }
     },
     {
-      path: '/couponActivityRule',
-      name: '/couponActivityRule',
-      component: () => import (/* webpackChunkName: 'couponActivityRule' */ '@/views/protocol/couponActivityRule'),
+      path: '/agreementLottery',
+      name: '/agreementLottery',
+      component: () => import (/* webpackChunkName: 'agreementLottery' */ '@/views/protocol/agreementLottery'),
       meta: {
-        title: '抽奖活动规则'
+        title: 'APP抽奖规则'
+      }
+    },
+    {
+      path: '/agreementPresale',
+      name: '/agreementPresale',
+      component: () => import (/* webpackChunkName: 'agreementPresale' */ '@/views/protocol/agreementPresale'),
+      meta: {
+        title: '预售规则'
+      }
+    },
+    {
+      path: '/agreementCoupon',
+      name: '/agreementCoupon',
+      component: () => import (/* webpackChunkName: 'agreementCoupon' */ '@/views/protocol/agreementCoupon'),
+      meta: {
+        title: '优惠券规则'
+      }
+    },
+    {
+      path: '/agreementArticle',
+      name: '/agreementArticle',
+      component: () => import (/* webpackChunkName: 'agreementArticle' */ '@/views/protocol/agreementArticle'),
+      meta: {
+        title: '模玩文化版权协议'
+      }
+    },
+    {
+      path: '/agreementBuy',
+      name: '/agreementBuy',
+      component: () => import (/* webpackChunkName: 'agreementBuy' */ '@/views/protocol/agreementBuy'),
+      meta: {
+        title: '买家须知'
+      }
+    },
+    {
+      path: '/agreementShopSettle',
+      name: '/agreementShopSettle',
+      component: () => import (/* webpackChunkName: 'agreementShopSettle' */ '@/views/protocol/agreementShopSettle'),
+      meta: {
+        title: '商家入驻须知'
       }
     },
     {

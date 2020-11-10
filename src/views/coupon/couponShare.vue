@@ -77,10 +77,14 @@ export default {
       let params = {
         userId: this.userId,
       }
-      if (this.global.isIos) {
-        window.webkit.messageHandlers.invokeAppCouponShare.postMessage(params)
-      } else {
-        window.android.invokeAppCouponShare(JSON.stringify(params))
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppCouponShare.postMessage(params)
+        } else {
+          window.android.invokeAppCouponShare(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
       }
     }
   },

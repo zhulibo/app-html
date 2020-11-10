@@ -41,6 +41,11 @@ html {
     /*16rem = 17.92px*/
   }
 }
+/*隐藏滚动条*/
+::-webkit-scrollbar{
+  display: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar{width:0px;height:0px;}
 body {
   font-size: 14rem !important;
   line-height: 1.4 !important;

@@ -2,7 +2,6 @@
   <div class="ct">
     <div class="sch">
       <div class="back">
-        <i class="iconfont icon-fanhui"></i>
       </div>
       <div class="sch-ct">
         <input type="text" @focus="goArticleSch" placeholder="请输入您要查找的内容">
@@ -60,6 +59,8 @@ export default {
     swiper: directive
   },
   created() {
+    this.invokeAppShowTab()
+
     // 保存url中的token至vuex
     this.userInfo.token = this.$route.query.token
     if(this.userInfo.token) {
@@ -87,13 +88,29 @@ export default {
     },
     goArticleDetail(articleId) {
       this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.userInfo.token}})
-    }
+    },
+    invokeAppShowTab() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppShowTab.postMessage(params)
+        } else {
+          window.android.invokeAppShowTab(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .ct{
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
   background-color: #fff
 }
 .sch{
@@ -104,10 +121,6 @@ export default {
     width: 2.6em
     text-align: center
     line-height: 2.6em
-    i{
-      font-size 20rem
-      color: #ccc
-    }
   }
   .sch-ct{
     flex: 1
@@ -139,7 +152,7 @@ export default {
   }
 }
   .banner{
-    margin-top: 1em
+    margin-top: .6em
     .item-ct{
       position: relative
       padding-bottom: 50%

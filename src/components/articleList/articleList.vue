@@ -91,7 +91,7 @@ export default {
     },
     goArticleDetail(articleId) {
       this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.token}})
-    }
+    },
   }
 }
 </script>
