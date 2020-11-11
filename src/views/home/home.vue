@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <h1>app-html交互文档<span>最后修改日期：2020.10.28</span></h1>
+    <h1>app-html交互文档</h1>
 
     <div>
       <router-link :to="{path: '/toBeSeller'}">toBeSeller 申请入驻</router-link>

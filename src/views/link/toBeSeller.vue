@@ -1,17 +1,37 @@
 <template>
-  <div class="text-ct">
-    <h2>隐私协议</h2>
-    <h3>更新时间：2020年5月29日</h3>
-    <h3>生效时间：2020年5月30日</h3>
-    <h3>引言</h3>
-    <p>*本政策中与您权益（可能）存在重大关系的条款，请您仔细查阅。我们将通过本政策逐一说明我们收集的您的个人信息类型及其对应的用途，以便您了解我们针对某一特定功能所收集的具体个人信息的类别、使用理由及收集方。</p>
-
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <h3>品牌商家入驻</h3>
+        <p>更多优惠政策，期待您的加入</p>
+      </div>
+    </div>
+    <section class="list settle">
+      <div class="title"><h4>入驻条件</h4></div>
+      <div class="ct">
+        <p>1、具备公司主体</p>
+        <p>2、有合法品牌授权或者采购链路证明</p>
+        <p>3、其他平台合作记录或者良好的销售记录</p>
+      </div>
+    </section>
+    <section class="list join">
+      <div class="title"><h4>加入我们</h4></div>
+      <div class="ct">
+        <p>请联系<a href="mailto:bd@mxjclub.com">bd@mxjclub.com</a></p>
+      </div>
+    </section>
+    <div class="welcome">
+      <div class="logo">
+        <img src="../../assets/img/logo.png" alt="">
+        <p>漫想家APP欢迎您的加入</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'agreementUser',
+  name: 'item',
   data() {
     return {}
   },
@@ -24,20 +44,74 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.text-ct {
-  padding: .6em
-}
-h2 {
-  padding: .5em 0
-  font-size 18rem
-  text-align: center
-  font-weight: bold
-  color: #666
-}
-p {
-  margin-top: .6em
-  margin-bottom: .6em
-  text-indent: 2em;
-  text-align: justify;
+.wrap{
+  position: relative
+  height: 100vh
+  background-color: #fff
+  .banner{
+    width: 100%
+    height: 0
+    padding-bottom: 50%
+    color: #fff
+    text-align: center
+    background: url(../../assets/img/toBeSeller1.png) center center/cover no-repeat
+    div{
+      padding-top: 12%
+    }
+    h3{
+      font-size 30rem
+    }
+    p{
+      font-size 16rem
+    }
+  }
+  .list{
+    margin-top: 3em
+    padding: 0 2em
+  }
+  .title{
+    font-size 18rem
+    text-align: center
+    h4{
+      font-weight: bold
+      display: inline-block
+      padding: 0 5em
+      background: url(../../assets/img/toBeSeller2.png) left center/3em auto no-repeat,
+        url(../../assets/img/toBeSeller3.png) right center/3em auto no-repeat,
+    }
+  }
+  .settle{
+    .ct{
+      margin-top: 1em
+      color: #666
+      font-size 16rem
+    }
+  }
+  .join{
+    .ct{
+      margin-top: 1em
+      color: #666
+      font-size 16rem
+      text-align: center
+      a{
+        color: purple
+
+      }
+    }
+  }
+  .welcome{
+    position: absolute
+    left: 0
+    width: 100%
+    bottom: 2em
+    text-align: center
+    img{
+      margin-bottom: .3em
+      width: 4em
+    }
+    p{
+      font-size 18rem
+    }
+  }
 }
 </style>
