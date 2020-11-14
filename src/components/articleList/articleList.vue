@@ -9,8 +9,8 @@
         <div class="r">
           <h3>{{item.title}}</h3>
           <div>
-            <span><i class="iconfont icon-liulan"></i>{{item.browseNumber}}</span>
-            <span><i class="iconfont icon-shoucang"></i>{{item.supportNumber}}</span>
+            <span>{{item.browseNumber}}浏览</span><b>·</b>
+            <span>{{item.totalComment}}评论</span>
           </div>
         </div>
       </li>
@@ -130,11 +130,10 @@ export default {
         color: #999
         span{
           display: inline-block
-          margin-right: .6em
-          i{
-            display: inline-block
-            margin-right: .2em
-          }
+        }
+        b{
+          display: inline-block
+          padding: 0 5px
         }
       }
     }

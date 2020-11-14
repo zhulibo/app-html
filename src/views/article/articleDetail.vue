@@ -1,5 +1,6 @@
 <template>
   <div>
+    <water-mark :src.sync="waterMarkOptions.src" :dialogVisible.sync="waterMarkOptions.dialogVisible"></water-mark>
     <div class="head-bar">
       <div class="l" @click="back"><i class="iconfont icon-fanhui"></i></div>
       <div class="m"></div>
@@ -17,7 +18,7 @@
         <span><i class="iconfont icon-shoucang"></i>{{detail.supportNumber}}</span>
         <span>{{detail.createTime | timestampToDate}}</span>
       </div>
-      <div class="content" v-html="detail.content">
+      <div class="content" v-html="detail.content" @click="previewImg($event)">
       </div>
     </div>
     <div class="article-recommend">
@@ -87,6 +88,7 @@
 </template>
 
 <script>
+import waterMark from "@/components/imgMark/waterMark";
 
 export default {
   name: 'articleDetail',
@@ -106,8 +108,15 @@ export default {
       content: '',
       level: null,
       itemId: null,
-      levelOneCommentLoaded: false
+      levelOneCommentLoaded: false,
+      waterMarkOptions: {
+        src: '',
+        dialogVisible: false,
+      }
     }
+  },
+  components: {
+    waterMark,
   },
   created() {
     this.invokeAppHiddenTab()
@@ -125,6 +134,12 @@ export default {
   mounted() {
   },
   methods: {
+    previewImg(event){
+      let localName = event.target.localName
+      if(localName != 'img') return
+      this.waterMarkOptions.src = event.target.getAttribute("src")
+      this.waterMarkOptions.dialogVisible = true
+    },
     getArticleDetail() {
       this.$http({
         url: this.userInfo.token ? '/userorg/app/news/detail' : '/userorg/app/news/detail/ls',
@@ -281,6 +296,7 @@ export default {
       this.$router.push({path: '/articleDetail', query: {articleId: articleId, token: this.userInfo.token}})
     },
     back() {
+      this.invokeAppBack()
       this.$router.go(-1)
     },
     supportComment(id, isSupport){
@@ -458,7 +474,6 @@ export default {
       })
     },
     invokeAppArticleShare() {
-      alert('进入invokeAppArticleShare函数')
       if (!this.userInfo.token){
         this.invokeAppLogin()
         return
@@ -468,12 +483,25 @@ export default {
         title: this.detail.title,
         img: this.detail.topImage,
       }
-      alert('调起invokeAppArticleShare')
       try {
         if (this.global.isIos) {
           window.webkit.messageHandlers.invokeAppArticleShare.postMessage(params)
         } else {
           window.android.invokeAppArticleShare(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
+    invokeAppBack() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppBack.postMessage(params)
+        } else {
+          window.android.invokeAppBack(JSON.stringify(params))
         }
       } catch (e){
         console.log(e)
@@ -605,6 +633,7 @@ export default {
     >>>img{
       display: block
       width: 100%
+      //pointer-events: none; // 禁止保存图片
     }
   }
 }
@@ -630,6 +659,7 @@ export default {
       height: 8em
       border-radius: .6em;
       overflow hidden
+      background-color: #f1f1f1
       img{
         position: absolute
         top: 50%

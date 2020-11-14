@@ -21,11 +21,11 @@
         <div>打开漫想家</div>
       </div>
     </div>
-    <p v-if="a">请求成功{{a1}}</p>
-    <p v-if="b">wx.ready</p>
-    <p v-if="c">签名失败{{c1}}</p>
-    <p v-if="d">打开成功</p>
-    <p v-if="e">打开失败{{e1}}</p>
+<!--    <p v-if="a">请求成功{{a1}}</p>-->
+<!--    <p v-if="b">wx.ready</p>-->
+<!--    <p v-if="c">签名失败{{c1}}</p>-->
+<!--    <p v-if="d">打开成功</p>-->
+<!--    <p v-if="e">打开失败{{e1}}</p>-->
   </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
           this.a = true
           this.a1 = res
           wx.config({
-            debug: true,
+            // debug: true,
             appId: 'wx626b8475e0bff0a7',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,

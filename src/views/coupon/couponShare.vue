@@ -54,10 +54,7 @@ export default {
   },
   created() {
     this.userId = this.$route.query.userId
-
-    this.getCouponList()
     this.getGoodsList()
-
   },
   mounted() {
   },

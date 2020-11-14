@@ -42,10 +42,10 @@ html {
   }
 }
 /*隐藏滚动条*/
-::-webkit-scrollbar{
-  display: none;
-}
-html::-webkit-scrollbar, body::-webkit-scrollbar{width:0px;height:0px;}
+/*::-webkit-scrollbar{*/
+/*  display: none;*/
+/*}*/
+/*html::-webkit-scrollbar, body::-webkit-scrollbar{width:0px;height:0px;}*/
 body {
   font-size: 14rem !important;
   line-height: 1.4 !important;
@@ -84,7 +84,6 @@ img {
   vertical-align: bottom;
   /*去掉ie8-10黑边*/
   border: none;
-  pointer-events: none; /* 禁止保存图片 */
 }
 .iconfont {
   font-size: inherit;

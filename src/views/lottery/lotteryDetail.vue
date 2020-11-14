@@ -2,7 +2,7 @@
   <div>
 <!--    <open-app></open-app>-->
 <!--    <open-app-btn></open-app-btn>-->
-    <we-chat-share v-if="userInfo.userId" :drawId="drawId"  :code="shareCode" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
+    <we-chat-share v-if="shareCode" :drawId="drawId"  :code="shareCode" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
         <img v-if="detail" :src="detail.tbGoods.skus[0].skuImage" alt="">
@@ -65,6 +65,7 @@
       <i class="iconfont icon-guanbi" @click="zeroCodeLayer = false"></i>
     </div>
     <div v-if="zeroCodeLayer" class="zero-code-bg" @click="zeroCodeLayer = false"></div>
+<!--    <div>{{c}}</div>-->
     <div class="h6em"></div>
   </div>
 </template>

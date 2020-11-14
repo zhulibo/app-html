@@ -12,11 +12,11 @@
     <div class="launch-app-bg">
       <div>APP内打开</div>
     </div>
-    <p v-if="a">请求成功{{a1}}</p>
-    <p v-if="b">wx.ready</p>
-    <p v-if="c">签名失败{{c1}}</p>
-    <p v-if="d">打开成功</p>
-    <p v-if="e">打开失败{{e1}}</p>
+<!--    <p v-if="a">请求成功{{a1}}</p>-->
+<!--    <p v-if="b">wx.ready</p>-->
+<!--    <p v-if="c">签名失败{{c1}}</p>-->
+<!--    <p v-if="d">打开成功</p>-->
+<!--    <p v-if="e">打开失败{{e1}}</p>-->
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default {
         }
       })
         .then(res => {
-          this.a = true
+          // this.a = true
           this.a1 = res
           wx.config({
             debug: true,

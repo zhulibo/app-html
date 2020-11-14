@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>{{url}}</p>
-    <p v-if="a">请求成功{{a1}}</p>
-    <p v-if="b">wx.ready</p>
-    <p v-if="c">签名失败{{c1}}</p>
+<!--    <p>{{url}}</p>-->
+<!--    <p v-if="a">请求成功{{a1}}</p>-->
+<!--    <p v-if="b">wx.ready</p>-->
+<!--    <p v-if="c">签名失败{{c1}}</p>-->
   </div>
 </template>
 
@@ -13,8 +13,8 @@ import wx from 'weixin-js-sdk';
 export default {
   name: 'weChatShare',
   props: {
-    codeId: {},
-    shareCode: {},
+    code: {},
+    drawId: {},
     title: '',
     imgUrl: '',
   },
@@ -65,7 +65,7 @@ export default {
           this.a = true
           this.a1 = res
           wx.config({
-            debug: true,
+            // debug: true,
             appId: 'wx626b8475e0bff0a7',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,

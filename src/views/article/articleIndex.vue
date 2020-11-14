@@ -162,10 +162,10 @@ export default {
       overflow: hidden
       img{
         position: absolute
-        top: 0
+        top: 50%
         left: 0
         width: 100%
-        height: 100%
+        transform translateY(-50%)
       }
       span{
         position: absolute
@@ -177,7 +177,7 @@ export default {
         background-color: #fff
         padding: 0 .8em
         height: 2em
-        line-height: 2
+        line-height: 2.2
         box-shadow 0 0 .5em rgba(0,0,0,.2)
       }
     }

@@ -28,7 +28,7 @@
 
     <div>
       <router-link :to="{path: '/articleDetail'}">articleDetail 模玩文化详情</router-link>
-      <span>http://new.mxjclub.com/share/#/articleDetail</span>参数：articleId：文章id
+      <span>http://new.mxjclub.com/share/#/articleDetail</span>参数：articleId：文章id，token：用户token（个人收藏文章列表跳详情需要token，分享h5文章不需要）
     </div>
     <h3>html调app方法：</h3>
     <p>隐藏app的底部菜单：invokeAppHiddenTab 参数：url：当前页面url</p>
