@@ -21,7 +21,7 @@
       <div class="info">
         <span><img src="../../assets/img/article5.png" alt="">{{detail.browseNumber}}</span>
         <span><img src="../../assets/img/article6.png" alt="">{{detail.supportNumber}}</span>
-        <span>{{detail.createTime | timestampToDate}}</span>
+        <span>{{detail.createTime | timestampToDateDay}}</span>
       </div>
       <div class="content" v-html="detail.content" @click="previewImg($event)">
       </div>
@@ -753,7 +753,8 @@ export default {
     text-align: center
     padding: 3em
     img{
-      height: 8em
+      margin-bottom: .5em
+      height: 7em
     }
   }
   .comment-number{
@@ -803,7 +804,9 @@ export default {
         }
       }
       .b{
-        background-color: #f5f5f5
+        overflow: hidden
+        padding: 0 .3em
+        background-color: #fbfbfb
         dd{
           display: flex
           margin-top: .6em

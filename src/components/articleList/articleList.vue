@@ -85,7 +85,8 @@ export default {
       if (this.articleLoading || this.articleLoaded) {
         return
       }
-      if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.body.scrollHeight - 100) {
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+      if (scrollTop + document.documentElement.clientHeight >= document.body.scrollHeight - 100) {
         this.getArticleList()
       }
     },
