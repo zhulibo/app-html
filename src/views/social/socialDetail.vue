@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <open-app></open-app>-->
+    <open-app></open-app>
     <open-app-btn></open-app-btn>
     <div class="swiper-container gallery-top">
       <div class="swiper-wrapper">

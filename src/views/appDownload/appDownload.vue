@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'downloadApp',
+  name: 'appDownload',
   data() {
     return {}
   },
@@ -40,7 +40,7 @@ export default {
   min-height: 100vh
   text-align: center
   color: #fff
-  background: purple url(../../assets/img/downloadApp6.png) center center / 100% 100% no-repeat
+  background: purple
   .i1 {
     width: 5em
   }

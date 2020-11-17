@@ -35,8 +35,17 @@ new Vue({
 
 // 根据路由设置标题
 router.beforeEach((to, from, next) => {
+
+  store.dispatch("onLoading",true);
+
   if (to.meta.title) {
     document.title = to.meta.title
   }
   next();
+})
+
+router.afterEach((to, from) => {
+  setTimeout(function(){
+    store.dispatch("onLoading",false);
+  },600)
 })

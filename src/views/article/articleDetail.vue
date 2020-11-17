@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div style="background-color: #fff;">
     <water-mark :src.sync="waterMarkOptions.src" :dialogVisible.sync="waterMarkOptions.dialogVisible"></water-mark>
     <div class="head-bar">
-      <div class="l" @click="back"><i class="iconfont icon-fanhui"></i></div>
+      <div class="l" @click="back">
+        <img src="../../assets/img/article2.png" alt="">
+      </div>
       <div class="m"></div>
-      <div class="r"><i class="iconfont icon-wujiaoxingkong" :class="detail.isCollect == 1 ? 'on' : ''" @click="collect"></i></div>
+      <div class="r" @click="collect">
+        <img v-if="detail.isCollect == 1" src="../../assets/img/article4.png" alt="">
+        <img v-else src="../../assets/img/article3.png" alt="">
+      </div>
     </div>
     <div class="article">
       <div class="topImg">
@@ -14,8 +19,8 @@
         <h1>{{detail.title}}</h1>
       </div>
       <div class="info">
-        <span><i class="iconfont icon-liulan"></i>{{detail.browseNumber}}</span>
-        <span><i class="iconfont icon-shoucang"></i>{{detail.supportNumber}}</span>
+        <span><img src="../../assets/img/article5.png" alt="">{{detail.browseNumber}}</span>
+        <span><img src="../../assets/img/article6.png" alt="">{{detail.supportNumber}}</span>
         <span>{{detail.createTime | timestampToDate}}</span>
       </div>
       <div class="content" v-html="detail.content" @click="previewImg($event)">
@@ -26,8 +31,7 @@
         <h2>文章推荐</h2>
       </div>
       <ul>
-        <li v-for="(item, index) in articleRecommendList" @click="goArticleDetail(item.id)">
-          <img :src="item.topImage">
+        <li v-for="(item, index) in articleRecommendList" @click="goArticleDetail(item.id)" :style="{ background: 'url(' + item.topImage + ') center center/cover no-repeat',}">
         </li>
       </ul>
     </div>
@@ -60,16 +64,16 @@
               <dl>
                 <dd v-for="item2 in item.children">
                   <template v-if="item2.level == 2">
-                    <div class="l"><img :src="item.detail.header" alt=""></div>
+                    <div class="l"><img :src="item2.detail.header" alt=""></div>
                     <div class="r" @click="clickComment(2, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId,)">
                       <h4><span>{{item2.detail.nickName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
                     </div>
                   </template>
                   <template v-if="item2.level == 3">
-                    <div class="l"><img :src="item.detail.header" alt=""></div>
+                    <div class="l"><img :src="item2.detail.header" alt=""></div>
                     <div class="r" @click="clickComment(3, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId, item2.secondId)">
-                      <h4><span>{{item2.replyUserName}}</span> 回复 <span>{{item2.detail.nickName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
+                      <h4><span>{{item2.detail.nickName}}</span> 回复 <span>{{item2.replyUserName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
                     </div>
                   </template>
@@ -135,6 +139,7 @@ export default {
   },
   methods: {
     previewImg(event){
+      return
       let localName = event.target.localName
       if(localName != 'img') return
       this.waterMarkOptions.src = event.target.getAttribute("src")
@@ -365,14 +370,14 @@ export default {
           this.commentPlaceholder = nickName
           this.rootId = rootId
           this.secondId = id
-          this.itemId = itemId
+          this.itemId = id
           this.replyUserId = replyUserId
         }else if(level == 3){
           this.level = 3
           this.commentPlaceholder = nickName
           this.rootId = rootId
           this.secondId = secondId
-          this.itemId = itemId
+          this.itemId = id
           this.replyUserId = replyUserId
         }
       })
@@ -443,9 +448,11 @@ export default {
           }else if(this.level == 3){ // 评论二三级级评论
             for (let i = 0; i < this.commentList.length; i++) {
               if (this.commentList[i].id == this.rootId){
+                console.log(1)
                 for (let j = 0; j < this.commentList[i].children.length; j++) {
                   if (this.commentList[i].children[j].id == this.itemId){
-                    this.commentList[i].children.splice(j, 0,
+                    console.log(2)
+                    this.commentList[i].children.splice(j+1, 0,
                       {
                         id: res.data.id,
                         level: res.data.level,
@@ -460,6 +467,7 @@ export default {
                         supportNum: 0,
                       }
                     )
+                    break
                   }
                 }
               }
@@ -521,6 +529,20 @@ export default {
         console.log(e)
       }
     },
+    invokeAppShowTab() {
+      let params = {
+        url: location.href,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppShowTab.postMessage(params)
+        } else {
+          window.android.invokeAppShowTab(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
     invokeAppLogin() {
       let params = {
         url: location.href,
@@ -537,6 +559,7 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next){
+    this.invokeAppShowTab()
     if(to.path == '/articleSch') {
       next({path: '/articleIndex'})
     }else {
@@ -556,17 +579,15 @@ export default {
   width: 100%
   display: flex
   padding: .6em
-  padding-top: 0
+  //padding-top: 0
   color: #ccc
   .l{
     width: 2.6em
     height: 2.6em
     line-height: 2.6em
     text-align: center
-    i{
-      display: inline-block
-      font-size 20rem
-      text-shadow 0 0 10px rgba(0,0,0,.2)
+    img{
+      height: 100%
     }
   }
   .m{
@@ -577,14 +598,6 @@ export default {
     height: 2.6em
     line-height: 2.6em
     text-align: center
-    i{
-      display: inline-block
-      font-size 20rem
-      text-shadow 0 0 10px rgba(0,0,0,.2)
-      &.on{
-        color: purple
-      }
-    }
   }
 }
 .article{
@@ -599,23 +612,20 @@ export default {
     margin-top: 1em
     padding: 0 .6em
     h1{
-      font-size 16rem
+      font-size 19rem
       font-weight: bold
-      text-align: center
       line3()
     }
   }
   .info{
     margin-top: .6em
     padding: 0 .6em
-    color: #999
+    color: #ccc
     span{
       display: inline-block
       margin-right: 1em
-      font-size 13rem
-      i{
-        display: inline-block
-        margin-right: .2em
+      img{
+        height: 1.4em
       }
       &:last-child{
         margin-right: 0
@@ -629,6 +639,7 @@ export default {
       margin-top: .6em
       margin-bottom: .6em
       padding: 0 .6em
+      line-height: 1.6
     }
     >>>img{
       display: block
@@ -643,7 +654,6 @@ export default {
     padding: .6em
     h2{
       padding-top: .6em
-      border-top: 1px solid #ddd
       font-size 18rem
     }
   }
@@ -651,6 +661,9 @@ export default {
     overflow-x auto
     white-space nowrap
     padding: .6em
+    &::-webkit-scrollbar {
+       display: none; /* Chrome Safari */
+     }
     li{
       display: inline-block
       margin-right: .6em
@@ -659,15 +672,6 @@ export default {
       height: 8em
       border-radius: .6em;
       overflow hidden
-      background-color: #f1f1f1
-      img{
-        position: absolute
-        top: 50%
-        left: 50%
-        height: 100%
-        max-width initial
-        transform translate(-50%, -50%)
-      }
     }
   }
 }
@@ -678,7 +682,7 @@ export default {
   padding: 0 20px
   width: 100%
   left: 0
-  bottom: 20px
+  bottom: 40px
   .icon-ct{
     display: inline-block
     margin-right: 10px
@@ -748,6 +752,9 @@ export default {
   .none-comment{
     text-align: center
     padding: 3em
+    img{
+      height: 8em
+    }
   }
   .comment-number{
     color: #999

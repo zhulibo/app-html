@@ -47,7 +47,8 @@ let timestampToDate = value => {
   hh = checkTime(hh)
   mm = checkTime(mm)
 
-  return y + "-" + m + "-" + d + "  " + hh + ":" + mm
+  return y + "-" + m + "-" + d
+  // return y + "-" + m + "-" + d + "  " + hh + ":" + mm
 }
 
 let noneToLine = value => {

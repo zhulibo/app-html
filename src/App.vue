@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <router-view :key="$route.fullPath"></router-view>
+    <loading v-if="isLoading"></loading>
+    <keep-alive include="articleIndex">
+      <router-view :key="$route.fullPath"></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
+import loading from "@/components/loading/loading";
+
 export default {
   name: 'App',
   data() {
     return {
     }
+  },
+  components: {
+    loading
   },
   created() {
   },
@@ -17,7 +25,12 @@ export default {
     window.onload = () => {
       document.title = this.$route.meta.title
     }
-  }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.isLoading
+    },
+  },
 }
 </script>
 

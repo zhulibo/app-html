@@ -1,7 +1,7 @@
 <template>
   <div>
-<!--    <open-app></open-app>-->
-<!--    <open-app-btn></open-app-btn>-->
+    <open-app></open-app>
+    <open-app-btn></open-app-btn>
     <we-chat-share v-if="shareCode" :drawId="drawId"  :code="shareCode" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
@@ -140,8 +140,8 @@ export default {
     }
   },
   components: {
-    // openApp,
-    // openAppBtn,
+    openApp,
+    openAppBtn,
     weChatShare,
     Swiper,
     SwiperSlide,
@@ -154,12 +154,12 @@ export default {
     this.code = this.$route.query.code
 
     // 读取localStorage用户信息
-    let userInfo = JSON.parse(localStorage.getItem('userInfo'))
-    if (userInfo) {
-      this.userInfo = userInfo
-      this.$store.dispatch('updateUserInfo', this.userInfo)
-      this.getCodeList() // 有登录信息直接查询所有抽奖码
-    }
+    // let userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    // if (userInfo) {
+    //   this.userInfo = userInfo
+    //   this.$store.dispatch('updateUserInfo', this.userInfo)
+    //   this.getCodeList() // 有登录信息直接查询所有抽奖码
+    // }
 
     this.getDetail()
   },
@@ -230,7 +230,6 @@ export default {
     getVerificationCode() { // 获取邀请码
       let phone = /^[1][3,4,5,6,7,8,9][0-9]{9}$/
       if (!phone.test(this.phone)) {
-        console.log(123)
         this.$toast('请输入正确的手机号')
         return false
       }

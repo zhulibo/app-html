@@ -106,9 +106,9 @@ export default new Router({
       }
     },
     {
-      path: '/downloadApp',
-      name: '/downloadApp',
-      component: () => import (/* webpackChunkName: 'downloadApp' */ '@/views/downloadApp/downloadApp'),
+      path: '/appDownload',
+      name: '/appDownload',
+      component: () => import (/* webpackChunkName: 'appDownload' */ '@/views/appDownload/appDownload'),
       meta: {
         title: '下载漫想家APP'
       }
@@ -207,6 +207,30 @@ export default new Router({
       component: () => import (/* webpackChunkName: 'agreementShopSettle' */ '@/views/protocol/agreementShopSettle'),
       meta: {
         title: '商家入驻须知'
+      }
+    },
+    {
+      path: '/newPeopleRead',
+      name: '/newPeopleRead',
+      component: () => import (/* webpackChunkName: 'newPeopleRead' */ '@/views/protocol/newPeopleRead'),
+      meta: {
+        title: '新手必看'
+      }
+    },
+    {
+      path: '/repairRead',
+      name: '/repairRead',
+      component: () => import (/* webpackChunkName: 'repairRead' */ '@/views/protocol/repairRead'),
+      meta: {
+        title: '维修须知'
+      }
+    },
+    {
+      path: '/userCard',
+      name: '/userCard',
+      component: () => import (/* webpackChunkName: 'userCard' */ '@/views/user/userCard'),
+      meta: {
+        title: '用户卡片'
       }
     },
     {

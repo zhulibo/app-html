@@ -3,6 +3,16 @@
     <h1>app-html交互文档</h1>
 
     <div>
+      <router-link :to="{path: '/userCard'}">userCard 分享用户卡片</router-link>
+      <span>http://new.mxjclub.com/share/#/userCard</span>参数：userId：用户id
+    </div>
+
+    <div>
+      <router-link :to="{path: '/appDownload'}">appDownload 下载app页面</router-link>
+      <span>http://new.mxjclub.com/share/#/appDownload</span>
+    </div>
+
+    <div>
       <router-link :to="{path: '/toBeSeller'}">toBeSeller 申请入驻</router-link>
       <span>http://new.mxjclub.com/share/#/toBeSeller</span>
     </div>
@@ -110,6 +120,16 @@
     <div>
       <router-link :to="{path: '/agreementShopSettle'}">agreementShopSettle 商家入驻须知</router-link>
       <span>http://new.mxjclub.com/share/#/agreementShopSettle</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/newPeopleRead'}">newPeopleRead 新手必看</router-link>
+      <span>http://new.mxjclub.com/share/#/newPeopleRead</span>
+    </div>
+
+    <div>
+      <router-link :to="{path: '/repairRead'}">repairRead 维修须知</router-link>
+      <span>http://new.mxjclub.com/share/#/repairRead</span>
     </div>
 
   </div>

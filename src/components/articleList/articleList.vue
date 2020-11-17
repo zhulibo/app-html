@@ -10,7 +10,7 @@
           <h3>{{item.title}}</h3>
           <div>
             <span>{{item.browseNumber}}浏览</span><b>·</b>
-            <span>{{item.totalComment}}评论</span>
+            <span>{{item.supportNumber}}点赞</span>
           </div>
         </div>
       </li>
@@ -123,6 +123,7 @@ export default {
       h3{
         margin-top: .3em
         line2()
+        font-size 16rem
         height: 2.8em
       }
       div{

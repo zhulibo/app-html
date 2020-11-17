@@ -80,7 +80,7 @@ export default {
           // this.a = true
           this.a1 = res
           wx.config({
-            debug: true,
+            // debug: true,
             appId: 'wx626b8475e0bff0a7',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,

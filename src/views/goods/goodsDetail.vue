@@ -1,7 +1,7 @@
 <template>
   <div>
     <open-app></open-app>
-<!--    <open-app-btn></open-app-btn>-->
+    <open-app-btn></open-app-btn>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(item, index) in bannerList">

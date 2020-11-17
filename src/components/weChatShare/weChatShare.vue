@@ -82,7 +82,7 @@ export default {
               link: 'http://new.mxjclub.com/share/#/lotteryDetail?drawId=' + this.drawId + '&code=' + this.code, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: this.imgUrl, // 分享图标
               success: () => {
-                alert('更新updateAppMessageShareData成功')
+                // alert('更新updateAppMessageShareData成功')
               }
             })
           })
