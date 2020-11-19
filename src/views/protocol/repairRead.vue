@@ -1,7 +1,7 @@
 <template>
   <div class="text-ct">
-    <h2>维修须知</h2>
-    <img src="../../assets/img/newPeopleRead1.jpg" alt="">
+<!--    <h2>维修须知</h2>-->
+    <img src="../../assets/img/repairRead.jpg" alt="">
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
 
 <style lang="stylus" scoped>
 .text-ct {
-  padding: .6em
+  //padding: .6em
 }
 h2 {
   padding: .5em 0

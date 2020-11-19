@@ -17,7 +17,7 @@
     </div>
     <div class="recommend-goods">
       <ul class="clearfix">
-        <li v-for="item in goodsList">
+        <li v-for="item in goodsList" @click="invokeAppGoodsDetail(item.goodId, item.type)">
           <div class="ct" v-if="item.type == 1">
             <div class="img">
               <img :src="item.tbGoods.listedImage" alt="">
@@ -72,7 +72,7 @@ export default {
     },
     invokeAppCouponShare() {
       let params = {
-        userId: this.userId,
+        goodsId: this.goodsId,
       }
       try {
         if (this.global.isIos) {
@@ -83,7 +83,22 @@ export default {
       } catch (e){
         console.log(e)
       }
-    }
+    },
+    invokeAppGoodsDetail(goodsId, type) {
+      let params = {
+        goodsId: goodsId,
+        type: type,
+      }
+      try {
+        if (this.global.isIos) {
+          window.webkit.messageHandlers.invokeAppGoodsDetail.postMessage(params)
+        } else {
+          window.android.invokeAppGoodsDetail(JSON.stringify(params))
+        }
+      } catch (e){
+        console.log(e)
+      }
+    },
   },
   computed: {},
 }
@@ -174,7 +189,7 @@ export default {
         padding: .3em
         h3{
           line2()
-          min-height 2.8em
+          height 2.8em
         }
         div{
           b{

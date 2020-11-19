@@ -69,6 +69,7 @@
     </div>
     <h3 class="html">html调app方法：</h3>
     <p>分享优惠券：invokeAppCouponShare 参数：userId：用户id</p>
+    <p>跳转商品详情：invokeAppGoodsDetail 参数：goodId：商品id；type: 1现货 2预售</p>
 <!--    <h3 class="app">app调html方法：</h3>-->
 <!--    <p>测试：invokeHtmlTest 参数：userId：用户id</p>-->
 

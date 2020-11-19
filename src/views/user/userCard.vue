@@ -3,7 +3,10 @@
     <div class="ct-center">
       <div>
         <div class="info">
-          <div class="pic"><img :src="detail.header" alt=""></div>
+          <div class="pic">
+            <img v-if="detail.header" :src="detail.header" alt="">
+            <img v-else src="../../assets/img/c.png" alt="">
+          </div>
           <div class="name">
             <h3>{{detail.nickName}}</h3>
             <img v-if="detail.sex == '男'" src="../../assets/img/sex1.png" alt="">

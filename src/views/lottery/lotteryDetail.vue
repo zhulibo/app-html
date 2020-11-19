@@ -5,9 +5,9 @@
     <we-chat-share v-if="shareCode" :drawId="drawId"  :code="shareCode" :imgUrl="detail.tbGoods.listedImage" :title="detail.tbGoods.title"></we-chat-share>
     <div class="lottery" v-if="detail.tbGoods">
       <div class="goods-banner">
-        <img v-if="detail" :src="detail.tbGoods.skus[0].skuImage" alt="">
+        <img v-if="detail" :src="detail.tbGoods.listedImage" alt="">
       </div>
-      <h2>{{detail.tbGoods.skus[0].name}}</h2>
+      <h2>{{detail.tbGoods.title}}</h2>
       <div class="info">
         <span class="s1">￥<b>0</b> 抽奖价</span>
         <span class="s2">￥{{ detail.tbGoods.skus[0].price }}</span>
@@ -458,7 +458,7 @@ export default {
   }
 }
 .banner{
-  padding: 1em 0
+  padding: 1em 0 3em
   background-color: #fff
 }
 .swiper-slide {

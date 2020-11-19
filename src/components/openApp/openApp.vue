@@ -11,7 +11,7 @@
     <div class="launch-app" v-else @click="openApp"></div>
     <div class="launch-app-bg">
       <div class="l">
-        <img src="../../assets/img/openApp1.png" alt="">
+        <img src="../../assets/img/logo.png" alt="">
       </div>
       <div class="m">
         <img src="../../assets/img/openApp2.png" alt="">

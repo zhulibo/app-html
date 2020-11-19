@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: #fff;">
     <water-mark :src.sync="waterMarkOptions.src" :dialogVisible.sync="waterMarkOptions.dialogVisible"></water-mark>
-    <div class="head-bar">
+    <div class="head-bar" v-if="!wechatState">
       <div class="l" @click="back">
         <img src="../../assets/img/article2.png" alt="">
       </div>
@@ -25,6 +25,10 @@
       </div>
       <div class="content" v-html="detail.content" @click="previewImg($event)">
       </div>
+      <div class="reship">
+        <p v-if="detail.reship">文章转自 {{detail.reship}}</p>
+        <p v-else>文章为原创作品</p>
+      </div>
     </div>
     <div class="article-recommend">
       <div class="title">
@@ -35,7 +39,7 @@
         </li>
       </ul>
     </div>
-    <div v-show="!commentFlag" class="fixed-icon">
+    <div v-show="!commentFlag && !wechatState" class="fixed-icon">
       <div class="icon-ct" @click="clickComment(0)"><i class="iconfont icon-pinglun"></i></div>
       <div class="icon-ct" @click="invokeAppArticleShare"><i class="iconfont icon-fenxiang"></i></div>
       <div class="icon-ct" :class="{on: detail.isSupport}" @click="support"><i class="iconfont icon-shoucang"></i></div>
@@ -98,6 +102,7 @@ export default {
   name: 'articleDetail',
   data() {
     return {
+      wechatState: false,
       userInfo:{
         token: ''
       },
@@ -134,6 +139,18 @@ export default {
     this.addNumber()
     this.getArticleRecommendList()
     this.getCommentList()
+    try {
+      let wechat = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i)
+      let judgewechat = wechat[1].split('.')
+      if (judgewechat[0] >= 7) {
+        if (judgewechat[1] >= 0) {
+          if (judgewechat[2] >= 12) {
+            this.wechatState = true
+          }
+        }
+      }
+    } catch (e) {
+    }
   },
   mounted() {
   },
@@ -646,6 +663,11 @@ export default {
       width: 100%
       //pointer-events: none; // 禁止保存图片
     }
+  }
+  .reship{
+    padding-left: .6em
+    font-style italic
+    color: #666
   }
 }
 .article-recommend{
