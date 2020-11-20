@@ -1,5 +1,6 @@
 <template>
   <div style="background-color: #fff;">
+    <open-app v-if="wechatState"></open-app>
     <water-mark :src.sync="waterMarkOptions.src" :dialogVisible.sync="waterMarkOptions.dialogVisible"></water-mark>
     <div class="head-bar" v-if="!wechatState">
       <div class="l" @click="back">
@@ -58,7 +59,10 @@
       <div class="comment-number" v-if="commentList.length > 0">共{{ detail.totalComment }}条评论</div>
       <ul>
         <li v-for="item in commentList">
-          <div class="l"><img :src="item.detail.header" alt=""></div>
+          <div class="l">
+            <img v-if="item.detail.header" :src="item.detail.header" alt="">
+            <img v-else src="../../assets/img/c.png" alt="">
+          </div>
           <div class="r">
             <div class="t" @click="clickComment(1, item.id, item.itemId, item.userId, item.detail.nickName)">
               <h3>{{item.detail.nickName}} <span @click.stop="supportComment(item.id,item.isSupport)" :class="item.isSupport == 1 ? 'on' : ''"><i class="iconfont icon-shoucang"></i> {{item.supportNum}}</span></h3>
@@ -68,14 +72,20 @@
               <dl>
                 <dd v-for="item2 in item.children">
                   <template v-if="item2.level == 2">
-                    <div class="l"><img :src="item2.detail.header" alt=""></div>
+                    <div class="l">
+                      <img v-if="item2.detail.header" :src="item2.detail.header" alt="">
+                      <img v-else src="../../assets/img/c.png" alt="">
+                    </div>
                     <div class="r" @click="clickComment(2, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId,)">
                       <h4><span>{{item2.detail.nickName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
                     </div>
                   </template>
                   <template v-if="item2.level == 3">
-                    <div class="l"><img :src="item2.detail.header" alt=""></div>
+                    <div class="l">
+                      <img v-if="item2.detail.header" :src="item2.detail.header" alt="">
+                      <img v-else src="../../assets/img/c.png" alt="">
+                    </div>
                     <div class="r" @click="clickComment(3, item2.id, item2.itemId, item2.userId, item2.detail.nickName, item2.rootId, item2.secondId)">
                       <h4><span>{{item2.detail.nickName}}</span> 回复 <span>{{item2.replyUserName}}</span><i>{{item2.createTime | dateToCustomizeTime}}</i></h4>
                       <p>{{item2.content}}</p>
@@ -97,12 +107,13 @@
 
 <script>
 import waterMark from "@/components/imgMark/waterMark";
+import openApp from "@/components/openApp/openApp";
 
 export default {
   name: 'articleDetail',
   data() {
     return {
-      wechatState: false,
+      wechatState: true,
       userInfo:{
         token: ''
       },
@@ -126,6 +137,7 @@ export default {
   },
   components: {
     waterMark,
+    openApp,
   },
   created() {
     this.invokeAppHiddenTab()
