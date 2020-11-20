@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="launch-app-ct" v-if="wechatState">
-      <wx-open-launch-app class="launch-app" @launch="launch" @error="error" appid="wxc0c9a1b05291389d"
+      <wx-open-launch-app class="launch-app" @launch="launch" @error="error" appid="wx0bbdce2da9ec10e2"
                           :extinfo="extinfo">
         <script type="text/wxtag-template">
           <div class="btn" style="opacity: 0;height: 2.4em;">打开漫想家APP</div>

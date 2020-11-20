@@ -17,7 +17,7 @@
     <section class="list join">
       <div class="title"><h4>加入我们</h4></div>
       <div class="ct">
-        <p>请联系<a href="mailto:bd@mxjclub.com">bd@mxjclub.com</a></p>
+        <p>请联系<a>bd@mxjclub.com</a></p>
       </div>
     </section>
     <div class="welcome">

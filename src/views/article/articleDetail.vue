@@ -113,7 +113,7 @@ export default {
   name: 'articleDetail',
   data() {
     return {
-      wechatState: true,
+      wechatState: false,
       userInfo:{
         token: ''
       },
