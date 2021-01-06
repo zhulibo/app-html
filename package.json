@@ -9,7 +9,7 @@
     "a": "vue-cli-service build && vue-cli-service build --mode test"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "echarts": "^4.8.0",
     "mint-ui": "^2.2.13",
     "swiper": "^5.4.5",
